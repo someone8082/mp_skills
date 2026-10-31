@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="420" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 1</text>
+<text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">正方体的斜截面</text>
+<text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">平面与实体的交</text>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">截面形状：正六边形，面积 ≈ 5.196</text>
+<g transform="translate(340 226.37) scale(3.03)" class="iso-label"><path d="M 48.08 24.04 L 0 48.08 L 0 -10.81 L 48.08 -34.85 Z" fill="#2563eb" stroke="#234fac" stroke-width="0.8" opacity="1" />
+<path d="M 0 48.08 L -48.08 24.04 L -48.08 -34.85 L 0 -10.81 Z" fill="#2457c7" stroke="#234fac" stroke-width="0.8" opacity="1" />
+<path d="M 0 -58.89 L 48.08 -34.85 L 0 -10.81 L -48.08 -34.85 Z" fill="#6b95f1" stroke="#234fac" stroke-width="0.8" opacity="1" />
+<path d="M 24.04 -46.87 L -24.04 -46.87 L -48.08 -5.40 L -24.04 36.06 L 24.04 36.06 L 48.08 -5.40 Z" fill="rgba(220,38,38,0.35)" stroke="#dc2626" stroke-width="2"/></g>
+</svg>

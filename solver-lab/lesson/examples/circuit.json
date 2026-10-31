@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "topic": "circuit",
+  "title": "同一电流，不同分压",
+  "problemText": "自编示例：60 V 理想直流电源连接 10 Ω 与 20 Ω 两个串联电阻，忽略导线电阻。求电流、分压和功率。",
+  "givens": {
+    "voltage": { "value": 60, "unit": "V", "source": "60 V 理想直流电源" },
+    "resistors": [
+      { "value": 10, "unit": "Ω", "source": "10 Ω" },
+      { "value": 20, "unit": "Ω", "source": "20 Ω" }
+    ]
+  },
+  "solutionText": "示例解法：先求总电阻30Ω，再用欧姆定律求电流2A。这里仅结构化核验下面的数值结论，不自动证明这段文字。",
+  "claims": [{ "quantity": "current", "value": 2, "unit": "A" }]
+}

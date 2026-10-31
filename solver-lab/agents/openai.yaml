@@ -1,0 +1,4 @@
+interface:
+  display_name: "数理解题实验室"
+  short_description: "高中数理解题、用户解法数值核验与交互演示，使用确定性内核并保留待审查项"
+  default_prompt: "使用 $solver-lab 解答这道数理题，核验我的解法，并按需要生成讲解或交互演示。"

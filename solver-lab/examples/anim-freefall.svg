@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="420" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 6</text>
+<text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">自由落体</text>
+<text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">s = v₀t + ½at²；v = v₀ + at（真实时间）</text>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">自由落体（运动学）：v = ≈ 19.6 m/s</text>
+<g transform="translate(338.31 329.25) scale(0.45)" class="iso-label"><line x1="16.41" y1="-561.25" x2="16.41" y2="39.15" stroke="#6b7280" stroke-width="1" stroke-dasharray="4 4"/>
+<path d="M -15.15 -35.39 L 136.45 28.7 L 22.7 88.01 L -128.9 23.92 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 22.7 95.51 L -128.9 31.43 L -128.9 23.92 L 22.7 88.01 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 136.45 36.2 L 22.7 95.51 L 22.7 88.01 L 136.45 28.7 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<circle cx="16.408" cy="-561.25" r="3" fill="#d97706"><animate attributeName="opacity" values="1;0.15;1" dur="1.4s" begin="0s" calcMode="linear" repeatCount="indefinite"/></circle>
+<text x="2.41" y="-557.25" font-size="11" fill="#6b7280" text-anchor="end" font-weight="400" opacity="1">释放点</text>
+<g transform="translate(16.40818720816104 39.154523312560286)"><animateTransform attributeName="transform" type="translate" values="0 -600.404;0 -600.241;0 -599.751;0 -598.933;0 -597.789;0 -596.318;0 -594.52;0 -592.396;0 -589.944;0 -587.165;0 -584.06;0 -580.628;0 -576.869;0 -572.782;0 -568.369;0 -563.63;0 -558.563;0 -553.169;0 -547.449;0 -541.401;0 -535.027;0 -528.326;0 -521.298;0 -513.943;0 -506.261;0 -498.252;0 -489.917;0 -481.254;0 -472.265;0 -462.948;0 -453.305;0 -443.335;0 -433.038;0 -422.414;0 -411.464;0 -400.186;0 -388.582;0 -376.65;0 -364.392;0 -351.807;0 -338.895;0 -325.656;0 -312.09;0 -298.197;0 -283.978;0 -269.431;0 -254.558;0 -239.358;0 -223.831;0 -207.977;0 -191.796;0 -175.288;0 -158.453;0 -141.292;0 -123.803;0 -105.988;0 -87.846;0 -69.377;0 -50.581;0 -31.458;0 -12.008" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><circle cx="0" cy="0" r="15.3" fill="#d97706" stroke="#92400e" stroke-width="1" opacity="1"/></g>
+<line x1="97.26" y1="73.33" x2="97.26" y2="-527.07" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="97.26" y1="73.33" x2="104.26" y2="73.33" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="77.33" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">0</text>
+<line x1="97.26" y1="-46.75" x2="104.26" y2="-46.75" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="-42.75" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">4.4</text>
+<line x1="97.26" y1="-166.83" x2="104.26" y2="-166.83" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="-162.83" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">8.8</text>
+<line x1="97.26" y1="-286.91" x2="104.26" y2="-286.91" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="-282.91" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">13.2</text>
+<line x1="97.26" y1="-406.99" x2="104.26" y2="-406.99" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="-402.99" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">17.6</text>
+<line x1="97.26" y1="-527.07" x2="104.26" y2="-527.07" stroke="#6b7280" stroke-width="1"/>
+<text x="108.26" y="-523.07" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">22</text>
+<text x="91.26" y="-537.07" font-size="11" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">v/m/s</text>
+<g><animateTransform attributeName="transform" type="translate" values="13.897 5.874;13.897 -3.041;13.897 -11.956;13.897 -20.871;13.897 -29.786;13.897 -38.701;13.897 -47.616;13.897 -56.531;13.897 -65.446;13.897 -74.361;13.897 -83.277;13.897 -92.192;13.897 -101.107;13.897 -110.022;13.897 -118.937;13.897 -127.852;13.897 -136.767;13.897 -145.682;13.897 -154.597;13.897 -163.512;13.897 -172.428;13.897 -181.343;13.897 -190.258;13.897 -199.173;13.897 -208.088;13.897 -217.003;13.897 -225.918;13.897 -234.833;13.897 -243.748;13.897 -252.663;13.897 -261.578;13.897 -270.494;13.897 -279.409;13.897 -288.324;13.897 -297.239;13.897 -306.154;13.897 -315.069;13.897 -323.984;13.897 -332.899;13.897 -341.814;13.897 -350.729;13.897 -359.645;13.897 -368.56;13.897 -377.475;13.897 -386.39;13.897 -395.305;13.897 -404.22;13.897 -413.135;13.897 -422.05;13.897 -430.965;13.897 -439.88;13.897 -448.795;13.897 -457.711;13.897 -466.626;13.897 -475.541;13.897 -484.456;13.897 -493.371;13.897 -502.286;13.897 -511.201;13.897 -520.116;13.897 -529.031" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M -6 0 L 6 0 L 0 7 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /></g></g>
+</svg>

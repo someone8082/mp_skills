@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" width="640" height="420" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="640" height="420" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<line x1="0" y1="0" x2="0" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="160" y1="0" x2="160" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="240" y1="0" x2="240" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="320" y1="0" x2="320" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="400" y1="0" x2="400" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="480" y1="0" x2="480" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="560" y1="0" x2="560" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="640" y1="0" x2="640" y2="420" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="0" y1="0" x2="640" y2="0" stroke="#e5e7eb" stroke-width="0.6"/>
+<line x1="0" y1="360" x2="640" y2="360" stroke="#1f2937" stroke-width="1.2"/>
+<line x1="80" y1="0" x2="80" y2="420" stroke="#1f2937" stroke-width="1.2"/>
+<text x="632" y="352" font-size="13" fill="#1f2937" text-anchor="end" font-weight="400" opacity="1">x</text>
+<text x="90" y="14" font-size="13" fill="#1f2937" text-anchor="start" font-weight="400" opacity="1">y</text>
+<path d="M 80 360 L 560 360 L 80 -120 Z" fill="none" stroke="#1f2937" stroke-width="1.8" opacity="1" />
+<circle cx="80" cy="360" r="3.5" fill="#d97706" stroke="none" stroke-width="1" opacity="1"/>
+<text x="80" y="350" font-size="13" fill="#d97706" text-anchor="middle" font-weight="600" opacity="1">A</text>
+<circle cx="560" cy="360" r="3.5" fill="#d97706" stroke="none" stroke-width="1" opacity="1"/>
+<text x="560" y="350" font-size="13" fill="#d97706" text-anchor="middle" font-weight="600" opacity="1">B</text>
+<circle cx="80" cy="-120" r="3.5" fill="#d97706" stroke="none" stroke-width="1" opacity="1"/>
+<text x="80" y="-130" font-size="13" fill="#d97706" text-anchor="middle" font-weight="600" opacity="1">C</text>
+<circle cx="320" cy="120" r="3" fill="#2563eb" stroke="none" stroke-width="1" opacity="1"/>
+<text x="320" y="138" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">O</text>
+<circle cx="320" cy="120" r="0" fill="none" stroke="#2563eb" stroke-width="1.8"><animate attributeName="r" values="0;400" dur="1.6s" begin="0.3s" calcMode="linear" repeatCount="1" fill="freeze"/></circle>
+<g transform="translate(320 120)"><animateTransform attributeName="transform" type="rotate" values="0;360" dur="1.6s" begin="0.3s" additive="replace" repeatCount="1" fill="freeze"/><line x1="0" y1="0" x2="-240" y2="240" stroke="#dc2626" stroke-width="1.4"/><text x="-120" y="114" font-size="11" fill="#dc2626" text-anchor="middle" font-weight="400" opacity="1">R</text></g>
+<circle cx="320" cy="120" r="2" fill="none" stroke="#2563eb" stroke-width="2"><animate attributeName="r" values="2;12" dur="1.4s" begin="2s" calcMode="linear" repeatCount="1" fill="freeze"/><animate attributeName="opacity" values="0.9;0" dur="1.4s" begin="2s" calcMode="linear" repeatCount="1" fill="freeze"/></circle>
+</svg>

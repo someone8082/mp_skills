@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="560" height="320" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<rect x="18" y="18" width="524" height="284" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 4</text>
+<text x="526" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">串联电路</text>
+<text x="526" y="288" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">串联电阻（电磁学）：R = ≈ 30 Ω</text>
+<line x1="120" y1="70" x2="440" y2="70" stroke="#1f2937" stroke-width="1.8"/>
+<line x1="120" y1="70" x2="120" y2="194" stroke="#1f2937" stroke-width="1.8"/>
+<line x1="120" y1="208" x2="120" y2="240" stroke="#1f2937" stroke-width="1.8"/>
+<line x1="440" y1="70" x2="440" y2="240" stroke="#1f2937" stroke-width="1.8"/>
+<line x1="120" y1="240" x2="440" y2="240" stroke="#1f2937" stroke-width="1.8"/>
+<line x1="104" y1="194" x2="136" y2="194" stroke="#1f2937" stroke-width="3"/>
+<line x1="111" y1="208" x2="129" y2="208" stroke="#1f2937" stroke-width="3"/>
+<text x="120" y="182" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">电源</text>
+<rect x="172" y="59" width="56" height="22" rx="0" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<text x="200" y="51" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">R1</text>
+<rect x="332" y="59" width="56" height="22" rx="0" fill="#ffffff" stroke="#1f2937" stroke-width="1.6"/>
+<text x="360" y="51" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">R2</text>
+<circle cx="440" cy="180" r="16" fill="#ffffff" stroke="#1f2937" stroke-width="1.6" opacity="1"/>
+<text x="440" y="184" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">A</text>
+<line x1="126" y1="70" x2="156" y2="70" stroke="#2563eb" stroke-width="1.4"/>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="420" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 2</text>
+<text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">斜面滑块：位移</text>
+<text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">受力与运动分析</text>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">位移与时间（运动学）：s = ≈ 32 m</text>
+<g transform="translate(252.33 199.39) scale(0.95)" class="iso-label"><path d="M -16.41 -46.66 L 337.33 102.87 L 200.83 174.04 L -152.91 24.51 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 200.83 181.55 L -152.91 32.02 L -152.91 24.51 L 200.83 174.04 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 337.33 110.38 L 200.83 181.55 L 200.83 174.04 L 337.33 102.87 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 0 0 L 175.05 -46.08 L 106.8 -10.5 L -68.25 35.59 Z" fill="#5ab6ae" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 106.8 109.58 L -68.25 35.59 L 106.8 -10.5 Z" fill="#117f78" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 175.05 74 L 106.8 109.58 L 106.8 -10.5 L 175.05 -46.08 Z" fill="#0d9488" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<line x1="-34.13" y1="17.79" x2="140.93" y2="-28.29" stroke="#6b7280" stroke-width="1.6"/>
+<path d="M 140.93 -28.29 L 135.47 -23.9 L 134.02 -29.42 Z" fill="#6b7280" stroke="none" stroke-width="1" opacity="1" />
+<path d="M 68.69 -7.94 L 48.22 2.74 L 48.22 -24.28 L 68.69 -34.96 Z" fill="#d97706" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 48.22 2.74 L 25.48 -6.88 L 25.48 -33.9 L 48.22 -24.28 Z" fill="#b46710" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 45.95 -44.57 L 68.69 -34.96 L 48.22 -24.28 L 25.48 -33.9 Z" fill="#e5a356" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<text x="47.08" y="-53.23" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">m</text>
+<line x1="47.08" y1="-20.92" x2="47.08" y2="24.11" stroke="#dc2626" stroke-width="1.6"/>
+<path d="M 47.08 24.11 L 44.23 17.72 L 49.94 17.72 Z" fill="#dc2626" stroke="none" stroke-width="1" opacity="1" />
+<text x="47.08" y="14.11" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="600" opacity="1">G</text>
+<line x1="47.08" y1="-20.92" x2="28.13" y2="-67.93" stroke="#2563eb" stroke-width="1.6"/>
+<path d="M 28.13 -67.93 L 33.17 -63.06 L 27.88 -60.93 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" />
+<text x="28.13" y="-77.93" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">N</text></g>
+</svg>

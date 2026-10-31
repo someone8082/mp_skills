@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" font-family="system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+<rect x="0" y="0" width="680" height="420" fill="#ffffff"/>
+<style>
+.iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.iso-readout { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+</style>
+<rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 5</text>
+<text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">斜面匀加速下滑</text>
+<text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">s = v₀t + ½at²；v = v₀ + at（真实时间）</text>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">速度与时间（运动学）：v = ≈ 10 m/s</text>
+<g transform="translate(235.73 208.18) scale(0.73)" class="iso-label"><path d="M -16.41 -46.66 L 438.4 145.59 L 301.89 216.77 L -152.91 24.51 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 301.89 224.27 L -152.91 32.02 L -152.91 24.51 L 301.89 216.77 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 438.4 153.1 L 301.89 224.27 L 301.89 216.77 L 438.4 145.59 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 0 0 L 262.58 -69.12 L 194.33 -33.54 L -68.25 35.59 Z" fill="#5ab6ae" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 194.33 146.58 L -68.25 35.59 L 194.33 -33.54 Z" fill="#117f78" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 262.58 111 L 194.33 146.58 L 194.33 -33.54 L 262.58 -69.12 Z" fill="#0d9488" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<line x1="-34.13" y1="17.79" x2="228.46" y2="-51.33" stroke="#6b7280" stroke-width="1.6"/>
+<path d="M 228.46 -51.33 L 223 -46.94 L 221.55 -52.46 Z" fill="#6b7280" stroke="none" stroke-width="1" opacity="1" />
+<g><animateTransform attributeName="transform" type="translate" values="0 0;0.061 -0.016;0.243 -0.064;0.547 -0.144;0.973 -0.256;1.52 -0.4;2.188 -0.576;2.978 -0.784;3.89 -1.024;4.923 -1.296;6.078 -1.6;7.355 -1.936;8.753 -2.304;10.272 -2.704;11.913 -3.136;13.676 -3.6;15.56 -4.096;17.566 -4.624;19.694 -5.184;21.943 -5.776;24.313 -6.4;26.805 -7.056;29.419 -7.744;32.154 -8.465;35.011 -9.217;37.989 -10.001;41.089 -10.817;44.311 -11.665;47.654 -12.545;51.118 -13.457;54.704 -14.401;58.412 -15.377;62.242 -16.385;66.192 -17.425;70.265 -18.497;74.459 -19.601;78.774 -20.737;83.212 -21.905;87.77 -23.105;92.451 -24.338;97.252 -25.602;102.176 -26.898;107.221 -28.226;112.387 -29.586;117.675 -30.978;123.085 -32.402;128.616 -33.858;134.269 -35.346;140.044 -36.866;145.939 -38.418;151.957 -40.003;158.096 -41.619;164.357 -43.267;170.739 -44.947;177.243 -46.659;183.868 -48.403;190.615 -50.179;197.483 -51.987;204.473 -53.827;211.585 -55.7;218.818 -57.604" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M 112.46 -19.46 L 91.98 -8.78 L 91.98 -35.8 L 112.46 -46.48 Z" fill="#d97706" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 91.98 -8.78 L 69.24 -18.4 L 69.24 -45.42 L 91.98 -35.8 Z" fill="#b46710" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 89.72 -56.09 L 112.46 -46.48 L 91.98 -35.8 L 69.24 -45.42 Z" fill="#e5a356" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<text x="90.85" y="-64.75" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">m</text>
+<line x1="90.85" y1="-32.44" x2="90.85" y2="15.59" stroke="#dc2626" stroke-width="1.6"/>
+<path d="M 90.85 15.59 L 87.99 9.2 L 93.7 9.2 Z" fill="#dc2626" stroke="none" stroke-width="1" opacity="1" />
+<text x="90.85" y="5.59" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="600" opacity="1">G</text>
+<line x1="90.85" y1="-32.44" x2="71.9" y2="-79.45" stroke="#2563eb" stroke-width="1.6"/>
+<path d="M 71.9 -79.45 L 76.94 -74.59 L 71.64 -72.45 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" />
+<text x="71.9" y="-89.45" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">N</text></g>
+<line x1="289.1" y1="154.42" x2="289.1" y2="-25.7" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="289.1" y1="154.42" x2="296.1" y2="154.42" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="158.42" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">0</text>
+<line x1="289.1" y1="118.4" x2="296.1" y2="118.4" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="122.4" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">2.4</text>
+<line x1="289.1" y1="82.38" x2="296.1" y2="82.38" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="86.38" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">4.8</text>
+<line x1="289.1" y1="46.35" x2="296.1" y2="46.35" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="50.35" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">7.2</text>
+<line x1="289.1" y1="10.33" x2="296.1" y2="10.33" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="14.33" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">9.6</text>
+<line x1="289.1" y1="-25.7" x2="296.1" y2="-25.7" stroke="#6b7280" stroke-width="1"/>
+<text x="300.1" y="-21.7" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">12</text>
+<text x="283.1" y="-35.7" font-size="11" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">v/m/s</text>
+<g><animateTransform attributeName="transform" type="translate" values="13.897 5.874;13.897 3.373;13.897 0.871;13.897 -1.631;13.897 -4.132;13.897 -6.634;13.897 -9.136;13.897 -11.637;13.897 -14.139;13.897 -16.641;13.897 -19.142;13.897 -21.644;13.897 -24.146;13.897 -26.648;13.897 -29.149;13.897 -31.651;13.897 -34.153;13.897 -36.654;13.897 -39.156;13.897 -41.658;13.897 -44.159;13.897 -46.661;13.897 -49.163;13.897 -51.664;13.897 -54.166;13.897 -56.668;13.897 -59.169;13.897 -61.671;13.897 -64.173;13.897 -66.674;13.897 -69.176;13.897 -71.678;13.897 -74.18;13.897 -76.681;13.897 -79.183;13.897 -81.685;13.897 -84.186;13.897 -86.688;13.897 -89.19;13.897 -91.691;13.897 -94.193;13.897 -96.695;13.897 -99.196;13.897 -101.698;13.897 -104.2;13.897 -106.701;13.897 -109.203;13.897 -111.705;13.897 -114.206;13.897 -116.708;13.897 -119.21;13.897 -121.712;13.897 -124.213;13.897 -126.715;13.897 -129.217;13.897 -131.718;13.897 -134.22;13.897 -136.722;13.897 -139.223;13.897 -141.725;13.897 -144.227" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M -6 0 L 6 0 L 0 7 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /></g></g>
+</svg>

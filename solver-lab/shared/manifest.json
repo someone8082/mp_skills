@@ -1,0 +1,33 @@
+{
+  "generator": "scripts/build-solver-core.mjs",
+  "typescript": "5.9.3",
+  "entries": [
+    "analyticSection",
+    "section",
+    "vector",
+    "numericExpression",
+    "numericTolerance",
+    "createSolid"
+  ],
+  "fingerprint": "1951b260104603cdd43d684aa541084a988eea316900be28afd75b5b0b15bbd2",
+  "sources": {
+    "src/domain/geometry/analyticSection.ts": "ccc7561da67750c58fa7e1a2253f32eb33eca004d2d849d954b496a658ed9cb7",
+    "src/domain/geometry/createSolid.ts": "8523a86805b1d533b6884ad7eb3805ec50e4b651b6836f065df19f916fd20302",
+    "src/domain/geometry/footprint.ts": "37ce9af2c788ab83ecd3ae00bc38f164fe4d28425cdc33822ccbdf9ea488ab30",
+    "src/domain/geometry/numericExpression.ts": "4c5b314944b7e5c3fc59069f9e72868da7ac4cd51fd1e7f049e56342a8608e71",
+    "src/domain/geometry/numericTolerance.ts": "86c05e307131ecc9c806cd5ba927a689f55463419bd5730b76a86438493b830d",
+    "src/domain/geometry/section.ts": "ef1a84d6529c10e21b374c4c2ef0804e53cbbea9734e002bb4d21e79db30a3aa",
+    "src/domain/geometry/types.ts": "6c1160abd2c629627c5dd7fcc9af865a8684246b1ee2b8770c674fdae966118f",
+    "src/domain/geometry/vector.ts": "f31d781e43b3c3a3ef3e3c18be835c8bad159843a5f7160df1b24eaf0bad4e9c"
+  },
+  "outputs": {
+    "geometry/analyticSection.mjs": "ef1b91360d6fb42e3edf885350ab0a52744c279ba6b46f1bb54adafd953c4754",
+    "geometry/createSolid.mjs": "0e33d965cd96635b3b89c5dd306423af082cca8c88a4679ffc32f570573a3ad0",
+    "geometry/footprint.mjs": "826a86211c356fd4887fd32de143c90b5f09d78283e9cb4570b38d14e283731f",
+    "geometry/numericExpression.mjs": "84081fc8c7fb9b51707728f5a7f1837074362defb16694ce6fbb15b878b002f7",
+    "geometry/numericTolerance.mjs": "879a4485ce794cd3ec2523080c2d7e8527950600603b67e135bcaf376772edd1",
+    "geometry/section.mjs": "9ab6f844ad3280be895fb9c21330a65bbaf22c2d0504b548d859cabf69652c61",
+    "geometry/types.mjs": "c8f558fa3ba30ab0ee93bc8c982bfaf588dd2f7a9ef9babdf724a4a950e8013c",
+    "geometry/vector.mjs": "a346f221570fcbf42dd3d254e1554fac5924a756f701fa39537bd2c90c9ccbc4"
+  }
+}
