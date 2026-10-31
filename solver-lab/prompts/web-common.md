@@ -23,6 +23,8 @@ Quantity 写成 {"value":有限数字,"unit":"单位","source":"题干中的原�
 
 不要添加 givens 的其他字段。problemText 最多 12000 字，claims 最多 100 项。只做上述范围，不能把旧的 domain/task/figure 格式混进来。
 
+截面题需要“作图思路”时，图中必须有与原题对应的点名；只有旋转模型和面积不能作为解题过程。新模板支持在section规格顶层提供construction={points,through,operations}：points用{name,edge:[端点名,端点名],ratio}定义棱内给定点；through列三个已知截面点；operations依次为join（points两点）、intersect（name新点、lines两组端点）和最后的finish（points按边界循环排列）。限长方体/正方体，标准顶点为A、B、C、D及A1、B1、C1、D1；不得编造原图点位或给交点硬填坐标。完整例见随包lesson/examples/section-construction.json。附件若是旧模板、无法确认支持此字段，就明确缺少逐步作图能力，不静默忽略后声称已经演示。
+
 ## 交付方式
 
 1. 首次：若能读取并编辑附件且能原样保留其他内容，仅替换 `<script id="lesson-data" type="application/json">` 的 JSON 数据，返回完整 HTML 文件并尝试当前平台的 HTML 预览。模板内核、CSS、SVG 绘图、检查逻辑和状态文字全部保持原样；不要手写答案覆盖内核，也不要生成每帧坐标数组。嵌入 JSON 时把 `<` 序列化为 `\u003c`，避免题干中的 `</script>` 关闭数据块。

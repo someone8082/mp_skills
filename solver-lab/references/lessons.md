@@ -114,6 +114,38 @@ assumptions?: 字符串数组
 
 此例为正六边形，面积 `3√3 cm²`，页面以近似小数和 `≈` 显示。输出目标包括有数值时的 `area/perimeter/radius`。未相交或相切的退化情形按实际分类展示，面积可能为 `null`，不编造指标；不支持或数值非法则拒绝课件。曲线边界可能采样显示，动画旋转仅改变相机，不改变几何结论。
 
+### 带点名的逐步作图
+
+长方体/正方体默认使用下底面A、B、C、D与上底面A₁、B₁、C₁、D₁点名，对应坐标(0,0,0)、(a,0,0)、(a,b,0)、(0,b,0)，上底面z=c。若原题采用其他顺序，先正确建立坐标对应，不能只换文字标签而保留错误位置。
+
+要求作图思路时，在规格**顶层**加可选的`construction`，不要塞进givens。完整可运行例见 [section-construction.json](../lesson/examples/section-construction.json)。目前限长方体/正方体逐面连线，不覆盖任意作图证明。
+
+```json
+{
+  "points": [
+    {"name":"E","edge":["A","B"],"ratio":0.5},
+    {"name":"F","edge":["C","C1"],"ratio":0.5}
+  ],
+  "through":["D1","E","F"],
+  "operations":[
+    {"type":"join","points":["D1","F"]},
+    {"type":"intersect","name":"G","lines":[["D1","F"],["D","C"]]},
+    {"type":"join","points":["G","E"]},
+    {"type":"intersect","name":"M","lines":[["G","E"],["B","C"]]},
+    {"type":"intersect","name":"H","lines":[["G","E"],["D","A"]]},
+    {"type":"join","points":["D1","H"]},
+    {"type":"intersect","name":"N","lines":[["D1","H"],["A","A1"]]},
+    {"type":"finish","points":["D1","N","E","M","F"]}
+  ]
+}
+```
+
+这里的代码块只是construction对象，需放入完整LessonSpec。points仅定义题设棱内的给定点，ratio为从edge第一个端点量起的比例；中点取0.5。through必须是三个已定义、不共线且在输入截平面上的点。点名采用不重复的字母数字写法，A1会显示为A₁。点名映射本身仍需对照原题。
+
+join两端必须同属截平面，也同属实体某个面的所在平面；intersect需要真实相交的两条直线，其中至少一条已经位于截平面内，交点由内核计算，不能提供坐标硬填答案。finish必须为最后一步，点名、边界数量与循环顺序须和真实截面一致。错误取点、平行/异面直线、跳点或自交闭合均拒绝生成课件。截平面与实体表面重合时不套用这个流程。
+
+模板据操作生成“为什么找这个交点”的讲解；点击步骤或播放依次显示辅助点和交线。拖动图形只改变相机。没有construction时只有完整截面的观察说明，不声称演示了逐步作图；不要把JSON、法向量计算或程序分类当成学生解题思路。
+
 ## 核验层级与报告
 
 每项检查都有 `id/scope/status/detail`；`status` 为 `passed/failed/pending`。

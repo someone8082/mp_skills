@@ -8,6 +8,35 @@
 
 Agent 负责读题、选择模型和组织讲解，内置确定性内核负责受支持的计算与数值检查。目前提供 9 类固定任务，以及匀变速运动、理想串联电路、标准截面 3 类交互课件。数值核验不等于自动证明；题意、模型条件与文字推理仍需核对。
 
+### 截面逐步作图演示
+
+在棱长为1的正方体 ABCD–A₁B₁C₁D₁ 中，E、F 分别为 AB、CC₁ 的中点，作经过 D₁、E、F 的截面。
+
+图中标出顶点与辅助点。讲解从“为什么先找 G”展开：延长 D₁F 与 DC 相交于 G，连接 GE 找到 M、H，再用 D₁H 找到 N，最后闭合为五边形 D₁NEMF。点击步骤、播放或拖动进度，辅助点和交线会依次出现。
+
+![最终截面：标有正方体顶点、E和F、辅助点G和H，以及五边形D₁NEMF](docs/images/section-finished.png)
+
+<details>
+<summary>查看中间作图阶段</summary>
+
+先识别题设给出的点，核对 E、F 所在的棱。
+
+![第一阶段：正方体顶点与已知中点E、F](docs/images/section-start.png)
+
+D₁、F 同在侧面 DCC₁D₁ 内。延长 D₁F 与 DC 找到 G，便能利用底面内的 E、G 确定截线 GE。
+
+![中间阶段：延长D₁F和DC，得到辅助点G](docs/images/section-find-G.png)
+
+</details>
+
+[下载完整单文件演示](docs/demos/section-construction.html)后用浏览器打开，或运行：
+
+```sh
+node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/section-construction.json --out ./section-result --html
+```
+
+输出目录需为新目录。图片来自课件实际生成的 SVG 渲染；示例已通过步骤联动和几何检查，并获得用户本地预览反馈。各家聊天平台内的兼容性仍需分别实测。当前逐步作图支持长方体/正方体，详细字段见[作图规格](solver-lab/references/lessons.md#带点名的逐步作图)。
+
 ### 在 Agent 中使用
 
 需要 Node.js 18+，实际验证版本为 22.22.2；运行包无需 npm install、网络或 API Key。

@@ -16,6 +16,7 @@ function validateBase(spec, topic) {
   if (!spec || typeof spec !== 'object' || Array.isArray(spec)) throw new Error('LessonSpec 必须是对象')
   if (spec.version !== 1) throw new Error('LessonSpec.version 必须为 1')
   if (spec.topic !== topic) throw new Error(`本模板只支持 ${topic}`)
+  if (spec.construction !== undefined && topic !== 'section') throw new Error('construction作图规格仅用于section题型')
   if (typeof spec.problemText !== 'string' || spec.problemText.length > 12000) throw new Error('problemText 必须为不超过 12000 字的题干；仅有解法时填空字符串')
   if (!spec.givens || typeof spec.givens !== 'object' || Array.isArray(spec.givens)) throw new Error('缺少 givens 对象')
   if (spec.claims !== undefined && (!Array.isArray(spec.claims) || spec.claims.length > 100)) throw new Error('claims 必须为最多 100 条的数组')
