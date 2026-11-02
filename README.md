@@ -37,6 +37,14 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/section-constructio
 
 输出目录需为新目录。图片来自课件实际生成的 SVG 渲染；示例已通过步骤联动和几何检查，并获得用户本地预览反馈。各家聊天平台内的兼容性仍需分别实测。当前逐步作图支持长方体/正方体，详细字段见[作图规格](solver-lab/references/lessons.md#带点名的逐步作图)。
 
+### 综合题与图解查看
+
+分阶段力学、临界条件、解析几何范围/定值和三维约束题，按[综合题与证明核验](solver-lab/references/advanced-problems.md)独立推导，再用固定内核核验其支持的子关系。阶段切换、完整证明和题意对应分别说明证据；几个公式通过不等于整题自动认证。
+
+图解优先保留原题点名、方向、单位和辅助关系。自定义报告可使用包内[SVG图解查看器](solver-lab/references/graphical-explanations.md)，支持缩放、拖动、复位、键盘和双指手势；放大查看、构造步进、时间动画与参数联动是不同能力，分别验收。
+
+查看器资源已随skill打包。基础求解仍只需Node.js；可选的图解嵌入器在生成阶段使用Python 3标准库，生成的单文件HTML不需要Python、Node或网络。它不会自动给三个固定LessonSpec模板增加缩放功能。
+
 ### 在 Agent 中使用
 
 需要 Node.js 18+，实际验证版本为 22.22.2；运行包无需 npm install、网络或 API Key。
@@ -55,6 +63,10 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 ### 在聊天网页版中使用
 
+**复杂题或没有适用模板：**直接复制[复杂题图解提示词](solver-lab/prompts/web-advanced.md)，附题目和下列对应平台补充词即可。生成的图解以SVG、步骤对应和可操作的缩放/拖动为重点，明确标注独立探索与实际核验范围。无需为了使用提示词先上传三个不适用模板。
+
+**完整适用三个固定模型的题：**
+
 1. 选一份完整 HTML 模板：[运动](solver-lab/examples/lesson-motion.html)、[串联电路](solver-lab/examples/lesson-circuit.html)、[标准截面](solver-lab/examples/lesson-section.html)。在 GitHub 文件页通过下载按钮或 Raw 保存原文件，再附到聊天中。
 2. 使用[通用提示词](solver-lab/prompts/web-common.md)，再附上 [ChatGPT](solver-lab/prompts/chatgpt.md)、[DeepSeek](solver-lab/prompts/deepseek.md)、[豆包](solver-lab/prompts/doubao.md) 或 [Qwen/千问](solver-lab/prompts/qwen.md) 对应提示词及原题。
 3. 优先复用模板，只让模型生成题目 JSON，粘贴到课件输入框并“载入并核验”。播放、暂停和拖动均在本地计算，不消耗模型调用。
@@ -64,5 +76,7 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 ### 发布内容与验证范围
 
 此仓库存放可直接使用的运行包与提示词，包含 `agent-manifest.json` 文件清单。`--doctor` 检查列出文件的完整性和内核加载，不是数字签名，也不认证题意或平台预览。
+
+本次更新在开发环境通过215项skill测试与10项图解DOM交互测试，并在仓库外验证了基础求解和可选图解嵌入器。真实浏览器布局、手机实机触控和各平台账号内预览仍需分别实测。
 
 `solver-lab/docs/` 中的验证记录描述开发时的检查；其中源码构建、npm 测试和临时证据路径属于开发仓库环境，本运行包不包含相应开发工具。安装和使用以本页及 Agent 工作流为准。
