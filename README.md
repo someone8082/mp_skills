@@ -45,6 +45,12 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/section-constructio
 
 查看器资源已随skill打包。基础求解仍只需Node.js；可选的图解嵌入器在生成阶段使用Python 3标准库，生成的单文件HTML不需要Python、Node或网络。它不会自动给三个固定LessonSpec模板增加缩放功能。
 
+### 动态图解与公式显示
+
+静态关系、构造步进、物理时间播放与几何参数演示按教学需要选择。需要暂停、时间轴、关键事件和同步读数时，按[模型驱动的交互演示](solver-lab/references/model-driven-animation.md)制作独立HTML/SVG；简单SVG场景仍可用SMIL。此工作流不新增CLI电磁场题型，也不改三个固定模板。
+
+图、向量、读数和阶段说明取自同一状态；跨界、零速、受力和终点分别核验。根号、分数与上下标避免隐含的宿主字体依赖，SVG可使用字形轮廓，正文保留公式。已有独立图解可用[短续接提示词](solver-lab/prompts/README.md)补动态展示，无需重复输出整套提示词或逐帧请求模型。
+
 ### 在 Agent 中使用
 
 需要 Node.js 18+，实际验证版本为 22.22.2；运行包无需 npm install、网络或 API Key。
@@ -77,6 +83,6 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 此仓库存放可直接使用的运行包与提示词，包含 `agent-manifest.json` 文件清单。`--doctor` 检查列出文件的完整性和内核加载，不是数字签名，也不认证题意或平台预览。
 
-本次更新在开发环境通过215项skill测试与10项图解DOM交互测试，并在仓库外验证了基础求解和可选图解嵌入器。真实浏览器布局、手机实机触控和各平台账号内预览仍需分别实测。
+此前功能版本在开发环境通过215项skill测试与10项图解DOM交互测试，并在仓库外验证了基础求解和可选图解嵌入器。2026-11-02本次修订只更新指令与文档，通过skill格式、本地引用、安装包完整性与包内运动示例检查；另做了三个场景的只读使用评估，不作为实际课件或平台运行测试。真实浏览器布局、手机实机触控和各平台账号内预览仍需分别实测。
 
 `solver-lab/docs/` 中的验证记录描述开发时的检查；其中源码构建、npm 测试和临时证据路径属于开发仓库环境，本运行包不包含相应开发工具。安装和使用以本页及 Agent 工作流为准。

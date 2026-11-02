@@ -1,24 +1,26 @@
-# 动画演示（motion）
+# 现有简单SVG动画（SMIL）
 
-面向“一个过程”而非“一个状态”的教学场景：滑块下滑、电流流动、光路绘制、截面扫掠、圆规画圆。产物是**单个带动画的 SVG 文件**，浏览器直接打开即播放，无需 JS 运行时。
+本页描述ProblemSpec已有的简单动画：滑块下滑、电流流动、光路绘制、截面扫掠、圆规画圆。产物是**单个带动画的 SVG 文件**，不需要JavaScript；是否播放取决于打开它的宿主。
+
+需要暂停、拖动时间轴、阶段跳转与动态文字读数的综合题，可按 [模型驱动的交互演示](model-driven-animation.md) 制作独立HTML/SVG。不要把本页的SVG文件选型当成禁止HTML，也不要将复杂电磁场题硬套 `motion`。
 
 ## 1. 技术选型：SVG 原生 SMIL
 
 | 方案 | 结论 |
 |---|---|
-| SMIL（`<animate>`/`<animateTransform>`/`<animateMotion>`） | ✅ 采用：浏览器全平台原生播放、零依赖、零运行时、文件即动画 |
-| requestAnimationFrame + JS | ❌ 需要 HTML 宿主与 JS 运行时，违背“产物是文件”的轻量红线 |
-| 逐帧静态 SVG 序列 | ❌ 体积大、需播放器、无法响应 reduced-motion |
+| SMIL（`<animate>`/`<animateTransform>`/`<animateMotion>`） | 现有SVG场景采用；不依赖JS，但静态图片或受限聊天预览未必播放 |
+| requestAnimationFrame + JS | 独立HTML播放器可采用；适合时间轴、分段事件和同步读数，需允许执行内嵌脚本 |
+| 逐帧静态 SVG 序列 | 通常不选：重复数据大；优先保存模型并在本地计算 |
 
- anatomy 的做法是“构建时生成几何 + JS 逐帧变换”（面向网页宿主）；solver-lab 面向 CLI/文件产物，因此取其思想（模型驱动每一帧）而换实现为 SMIL。
+现有CLI简单场景输出SMIL，自定义HTML保持同样的模型驱动原则；两者都可离线交付，但不代表任意聊天平台均可预览。
 
 ## 2. 核心纪律：模型驱动
 
 与 anatomy「every number the figure shows comes from the same small model that moves its parts」同口径，并延续本 skill 的确定性纪律：
 
-- **values 由模型函数逐帧采样产生**（`modelTrack({ at })`），浏览器只做线性播放，不存在“手调关键帧”；
-- 运动学动画的模型就是题目公式：`s(t) = v₀t + ½at²`、`v(t) = v₀ + at`——动画 1 秒 = 模型 1 秒（真实时间）；
-- 电流粒子周期 ∝ 1/I；像点位置由透镜公式 `1/f = 1/u + 1/v` 定；截面扫掠的起止由平面法向与实体包围盒定；
+- **values 由模型函数采样产生**（`modelTrack({ at })`）；浏览器在样本间插值，需区别绘图近似与精确模型，不能手调轨迹凑答案；
+- 运动学模型使用 `s(t) = v₀t + ½at²`、`v(t) = v₀ + at`，物理时间用linear。默认按模型秒播放；变速或归一化须标明，不能额外缓动时间来改变运动规律；
+- 电路粒子是电流方向/大小的教学示意，循环周期有显示限幅，不表示电子实际运动速度；像点位置由透镜公式 `1/f = 1/u + 1/v` 定；截面扫掠起止由平面法向与实体包围盒定；
 - 单元测试对末帧做**手算数值断言**（屏幕位移、游标位置、周期），模型改了测试会红。
 
 ## 3. figure kind 一览
@@ -37,8 +39,9 @@
 - **到达轨道末端即停**：`tEnd = min(duration, 到达底端/落地时刻)`。斜面上 `a=5、length=12` 最多演 2.19 s；超出duration 以 duration 为准，绝不滑块冲出斜面/小球穿地；
 - **v 标尺游标表达实时读数**：SMIL 不能动画文本内容，故不用闪动的数字，而用“游标位置 ∝ v(t)”+ 静态刻度（游标指到几就是几 m/s），更适合教学对照；
 - **循环与单次**：演示型（运动/流动/扫掠）`repeatCount="indefinite"` 循环播放；绘制型（光线/圆规/像点）播放一次并 `fill="freeze"` 保持终值；
+- 上述循环是现有SVG场景的重演，终点回初态不是连续物理运动；自定义综合题播放器按交互参考默认暂停、终点停止。
 - **reduced-motion**：所有 SVG 内置 `@media (prefers-reduced-motion: reduce)` 规则隐藏动画元素，系统开启减少动态时图形退化为静态首帧（运动学即 t=0 初始态）；
-- **自检**：动画 SVG 与静态图一样过 `checkSvg`（闭合、无 NaN/undefined），并断言 SMIL 结构（values/keyTimes 等长、首末 0/1）。
+- **自检**：动画 SVG 与静态图一样过 `checkSvg`（闭合、无 NaN/undefined），并断言 SMIL 结构（values/keyTimes 等长、首末 0/1）。结构通过不代表运动方向、阶段条件、讲解或宿主播放已验证。
 
 ## 5. 输入示例
 
