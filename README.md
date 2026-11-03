@@ -57,6 +57,21 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/section-constructio
 
 Agent可直接说`图解评审：开启`（默认仅本题），或明确说`本会话开启图解评审`沿用；本题设置优先，会话设置可明确关闭。这是对话约定，不是新增CLI参数、LessonSpec字段或课件按钮。标准见[可选图解评审](solver-lab/references/visual-review.md)。网页端首次开启时额外粘贴[评审附加提示词](solver-lab/prompts/web-visual-review.md)全文；不用时无需附上。
 
+### 按题查找数学与力学方法
+
+技能新增数学58讲、力学15专题的方法卡，包含适用前提、解题步骤、反例、变式检查和源书PDF页码。先按关键词查找，再按返回ID读取完整卡：
+
+```sh
+node solver-lab/scripts/study.mjs --query "物块和皮带共速后摩擦力" --subject physics
+node solver-lab/scripts/study.mjs --id physics-05
+node solver-lab/scripts/study.mjs --id math-30
+node solver-lab/scripts/study.mjs --list --subject math
+```
+
+这是确定性的离线词面检索，不需要API、网络、Python或原书PDF。匹配结果只提供方法参考；卡片条件必须与原题核对，不等于新增73种原生求解器。未命中可换成模型名、物理量或数学关系词，也可列目录。详见[方法调用指南](solver-lab/references/study-guide.md)。
+
+[仓库目录导航](docs/README.md)区分可安装技能、演示、开发测试和验证记录。资料原文、逐页全文、临时安装副本、凭证和本地归档不属于发布内容。
+
 ### 在 Agent 中使用
 
 需要 Node.js 18+，实际验证版本为 22.22.2；运行包无需 npm install、网络或 API Key。
@@ -94,3 +109,5 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 2026-11-03新增可选图解评审，同样仅修改指令与文档；skill格式、本地引用及安装包完整性检查通过，并完成五种开关/视觉限制场景的只读使用评估。这不等同于实际课件生成或平台实测，也未重跑全部求解测试。
 
 `solver-lab/docs/` 中的验证记录描述开发时的检查；其中源码构建、npm 测试和临时证据路径属于开发仓库环境，本运行包不包含相应开发工具。安装和使用以本页及 Agent 工作流为准。
+
+2026-11-03资料学习增强版：开发仓库244项技能测试、10项查看器DOM测试通过；本仓库新增29项可独立运行的检索/方法卡测试。另有15个具体算例复核，覆盖首项例外、分段跨界、停车筛根、静摩擦、离板先后和参数退化；这些结果不代表对所有未见题目的整题认证。便携包内容、哈希与原有运动/截面入口已重新检查。详见[本次验证记录](docs/validation/2026-11-03-study.md)。

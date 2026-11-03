@@ -16,7 +16,7 @@
 |---|---|
 | 新增 CLI 测试先于实现运行 | 5 项失败，捕获缺少入口与产物能力 |
 | 新增独立打包测试先于实现运行 | 捕获缺少打包脚本 |
-| `npm.cmd run test:solver` | 209 项全部通过；日志 `tmp/solver-agent-tests.log` |
+| `npm.cmd run test:solver` | 209 项全部通过；日志 `tmp/archive/2026-11-03/logs/solver-agent-tests.log` |
 | Agent CLI/打包聚焦复验 | 6 项通过，包括任意 cwd、空格路径、stdin、错误 claim、无覆盖、损坏包检查 |
 | Skill Creator `quick_validate.py skills/solver-lab` | 通过 |
 | 共享内核 `--check`、三份既有网页模板 `--examples --check` | 均通过；本轮未重生成或改写网页模板 |
@@ -37,7 +37,7 @@
 3. 订正执行退出0，计算末速度16m/s、位移39m，生成 Markdown、JSON 与 HTML；3项passed、0项failed、3项pending。
 4. 静态产物检查退出0，内嵌规格一致、脚本可解析、无外部脚本、交互控件存在；没有宣称执行了浏览器预览。
 
-实际证据位于 `tmp/agent-skill-forward-output-v3/`，上一轮暴露 claim 归属措辞问题的输出保留在 `tmp/agent-skill-forward-output/`。修订后重测确认不再将 Agent 自算答案称为用户给定结论。
+实际证据位于 `tmp/archive/2026-11-03/validation/agent-skill-forward-output-v3/`，上一轮暴露 claim 归属措辞问题的输出保留在 `tmp/archive/2026-11-03/validation/agent-skill-forward-output/`。修订后重测确认不再将 Agent 自算答案称为用户给定结论。
 
 独立代码审查检查了 CLI 输入、失败门控、目录与覆盖保护、依赖闭包、清单验证、报告和订正流程，未发现重要缺陷。
 

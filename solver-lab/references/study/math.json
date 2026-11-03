@@ -1,0 +1,2144 @@
+[
+  {
+    "id": "math-01",
+    "subject": "math",
+    "title": "集合结论",
+    "keywords": [
+      "集合",
+      "元素",
+      "互异",
+      "空集",
+      "子集",
+      "交集",
+      "并集",
+      "补集",
+      "容斥"
+    ],
+    "method": [
+      "先化为元素或区间关系，再用交并补运算",
+      "含参先区分空集、重根与边界，枚举后去重"
+    ],
+    "conditions": [
+      "补集必须给全集",
+      "2^n的n是不同元素数"
+    ],
+    "pitfalls": [
+      "方程根的重数不等于集合元素数",
+      "集合描述不能自动保证参数取值互异"
+    ],
+    "transferChecks": [
+      "用空集、单元素和临界重根分别检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        16,
+        21
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-02",
+    "subject": "math",
+    "title": "复数的概念和性质",
+    "keywords": [
+      "复数",
+      "共轭",
+      "虚部",
+      "模",
+      "i的幂",
+      "纯虚数"
+    ],
+    "method": [
+      "把式子化成a+bi后比较实虚部",
+      "除法乘分母共轭，i的整数幂按模4化简"
+    ],
+    "conditions": [
+      "分母非零",
+      "a,b为实数",
+      "纯虚数要求a=0且b≠0"
+    ],
+    "pitfalls": [
+      "虚部是b而非bi",
+      "模是sqrt(a²+b²)，不能照抄缺根号的抽取式"
+    ],
+    "transferChecks": [
+      "检查z乘共轭等于模平方，并代回原等式"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        22,
+        27
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-03",
+    "subject": "math",
+    "title": "函数三要素",
+    "keywords": [
+      "定义域",
+      "值域",
+      "三要素",
+      "换元",
+      "同一函数"
+    ],
+    "method": [
+      "先求各表达式共同允许的自变量集合",
+      "求值域可换元、配方或用单调性，并保留新变量范围"
+    ],
+    "conditions": [
+      "分母不为0、偶次根号内非负、对数真数正",
+      "换元的取值必须可实现"
+    ],
+    "pitfalls": [
+      "约分不能补回原来被排除的点",
+      "对应式相同但定义域不同不是同一函数"
+    ],
+    "transferChecks": [
+      "给出值域的可实现性与端点能否取到"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        28,
+        32
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-04",
+    "subject": "math",
+    "title": "函数的单调性",
+    "keywords": [
+      "单调性",
+      "递增",
+      "递减",
+      "增函数",
+      "减函数",
+      "最值"
+    ],
+    "method": [
+      "在指定区间取x1<x2比较函数差",
+      "也可求导并列符号表，再回到区间定义核验"
+    ],
+    "conditions": [
+      "比较的两点都在定义域内",
+      "用导数需相应可导条件"
+    ],
+    "pitfalls": [
+      "局部单调不能直接并成整体单调",
+      "递增函数不要求每点导数严格大于0"
+    ],
+    "transferChecks": [
+      "用跨区间两点和区间端点检查声称的整体单调"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        33,
+        37
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-05",
+    "subject": "math",
+    "title": "函数的奇偶性",
+    "keywords": [
+      "奇偶性",
+      "奇函数",
+      "偶函数",
+      "对称定义域"
+    ],
+    "method": [
+      "先检验定义域关于0对称，再比较f(-x)与±f(x)",
+      "可将函数拆成奇部与偶部"
+    ],
+    "conditions": [
+      "f(0)=0仅在奇函数且0属于定义域时成立"
+    ],
+    "pitfalls": [
+      "几个特殊点相等只能排错不能证明奇偶",
+      "不含0的奇函数不能强添f(0)"
+    ],
+    "transferChecks": [
+      "选负自变量与0点分别检查，再给恒等推导"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        38,
+        42
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-06",
+    "subject": "math",
+    "title": "函数的对称性",
+    "keywords": [
+      "函数对称性",
+      "对称轴",
+      "对称中心",
+      "平移"
+    ],
+    "method": [
+      "把两自变量写成和为常数的配对",
+      "f(h+t)=f(h-t)给轴x=h，和为2k给中心(h,k)"
+    ],
+    "conditions": [
+      "恒等关系在相应对称的定义域内成立"
+    ],
+    "pitfalls": [
+      "f(x+a)的图像位移与原函数对称轴不要混淆",
+      "采样对称不能证明恒等"
+    ],
+    "transferChecks": [
+      "改写成关于h±t的关系并核对坐标平移"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        43,
+        51
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-07",
+    "subject": "math",
+    "title": "函数的周期性",
+    "keywords": [
+      "周期性",
+      "周期",
+      "反周期",
+      "最小正周期"
+    ],
+    "method": [
+      "对函数关系连续平移两次求一个非零周期",
+      "两个对称变换可复合得到平移"
+    ],
+    "conditions": [
+      "定义域在平移下保持对应",
+      "倒数关系要求函数值非零"
+    ],
+    "pitfalls": [
+      "推得一个周期不代表最小正周期",
+      "f(x)f(x+a)=0不能除以f(x)推出2a周期"
+    ],
+    "transferChecks": [
+      "先给可证周期，再单独排除更小周期及退化常函数"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        52,
+        60
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-08",
+    "subject": "math",
+    "title": "二次函数",
+    "keywords": [
+      "二次函数",
+      "抛物线",
+      "顶点",
+      "判别式",
+      "根的分布"
+    ],
+    "method": [
+      "配方确定顶点与开口",
+      "区间最值比较端点和落在区间内的顶点，根的分布结合判别式与区间筛选"
+    ],
+    "conditions": [
+      "二次项系数a≠0",
+      "参数使a=0时单列一次或常数情形"
+    ],
+    "pitfalls": [
+      "判别式只判实根数，不能单独说明根在指定区间",
+      "开区间最值可能不取到"
+    ],
+    "transferChecks": [
+      "用顶点在区间左、内、右三种位置测试"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        61,
+        68
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-09",
+    "subject": "math",
+    "title": "指数运算及指数函数",
+    "keywords": [
+      "指数",
+      "根式",
+      "底数",
+      "指数函数",
+      "比大小"
+    ],
+    "method": [
+      "先检查底数，再按a>1或0<a<1选增减",
+      "比大小可统一底数或指数，必要时引入0、1为中间量"
+    ],
+    "conditions": [
+      "实指数幂通常要求底数正",
+      "指数函数a>0且a≠1"
+    ],
+    "pitfalls": [
+      "0<a<1时a^x递减，源书p73同页有误写",
+      "偶次根sqrt(x²)=abs(x)"
+    ],
+    "transferChecks": [
+      "以a=1/2和a=2代入两个有序自变量检查方向"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        69,
+        73
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-10",
+    "subject": "math",
+    "title": "对数运算及对数函数",
+    "keywords": [
+      "对数",
+      "换底",
+      "真数",
+      "对数函数"
+    ],
+    "method": [
+      "先列真数和底数限制，再用换底或同底比较",
+      "含参底数分0<a<1与a>1"
+    ],
+    "conditions": [
+      "a>0且a≠1，所有真数>0",
+      "换底的新底也合法"
+    ],
+    "pitfalls": [
+      "底数小于1时不等号反向",
+      "log(M+N)不能拆成对数之和"
+    ],
+    "transferChecks": [
+      "解集回代检查每个真数并复核边界"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        74,
+        79
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-11",
+    "subject": "math",
+    "title": "幂的运算及幂函数",
+    "keywords": [
+      "幂函数",
+      "幂运算",
+      "指数",
+      "奇根",
+      "偶根"
+    ],
+    "method": [
+      "根据指数的具体形式先判实数定义域",
+      "在正半轴根据指数正负判单调，再分析负半轴"
+    ],
+    "conditions": [
+      "分数幂约定、分母奇偶与负指数的零点限制必须明确"
+    ],
+    "pitfalls": [
+      "把正半轴规律直接推广到全部实数会漏定义域",
+      "一般幂函数不含任意系数和平移"
+    ],
+    "transferChecks": [
+      "用负数、0、正数检查表达式是否有定义"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        80,
+        83
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-12",
+    "subject": "math",
+    "title": "分段函数",
+    "keywords": [
+      "分段函数",
+      "每段递增",
+      "每一段都递增",
+      "整个函数",
+      "分界点",
+      "分支"
+    ],
+    "method": [
+      "求值由内到外，每次按当前自变量选分支",
+      "求根每段解后与该段区间取交，整体单调还需跨段比较"
+    ],
+    "conditions": [
+      "分段定义的开闭端点和分界点取值已确定"
+    ],
+    "pitfalls": [
+      "每一段都递增不保证整体递增",
+      "边界处跳降可否定整体增性"
+    ],
+    "transferChecks": [
+      "反例：x<0取x+1，x≥0取x，两段都增但跨0跳降"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        84,
+        87
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-13",
+    "subject": "math",
+    "title": "复合函数",
+    "keywords": [
+      "复合函数",
+      "同增异减",
+      "内外层",
+      "零点"
+    ],
+    "method": [
+      "先把内层值域限制在外层定义域",
+      "单调性逐层合成，复合零点先求外层的零值再解内层"
+    ],
+    "conditions": [
+      "每一层在对应区间上的定义及单调性成立"
+    ],
+    "pitfalls": [
+      "外层零点不在内层值域时不给原函数零点",
+      "换元不能默认新变量遍历R"
+    ],
+    "transferChecks": [
+      "逐个外层候选值检查内层是否可达到"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        88,
+        92
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-14",
+    "subject": "math",
+    "title": "抽象函数",
+    "keywords": [
+      "抽象函数",
+      "函数方程",
+      "赋值",
+      "柯西",
+      "加性"
+    ],
+    "method": [
+      "用0、1、相反数等合法赋值找恒等关系",
+      "证明单调可把f(x2)-f(x1)转成已知符号的函数值"
+    ],
+    "conditions": [
+      "赋值须在定义域内",
+      "从加性直接得到线性需要连续、单调等额外正则条件"
+    ],
+    "pitfalls": [
+      "模型表是启发，不能仅凭f(x+y)=f(x)+f(y)断言f(x)=kx"
+    ],
+    "transferChecks": [
+      "把原方程与所得性质逐步对应，标明所用额外条件"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        93,
+        95
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-15",
+    "subject": "math",
+    "title": "导数的定义和运算",
+    "keywords": [
+      "导数",
+      "求导",
+      "链式法则",
+      "平均变化率",
+      "瞬时变化率"
+    ],
+    "method": [
+      "按和积商及链式法则求导",
+      "导数定义中先形成差商再令增量趋于0"
+    ],
+    "conditions": [
+      "求导处表达式有定义且满足可导条件",
+      "商的分母非零"
+    ],
+    "pitfalls": [
+      "f(a)作为已定常数与f'(a)不同",
+      "抽取文本可能丢撇号，不能自动恢复"
+    ],
+    "transferChecks": [
+      "用简单多项式核对导数定义与链式内层系数"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        96,
+        102
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-16",
+    "subject": "math",
+    "title": "导数的几何意义",
+    "keywords": [
+      "切线",
+      "过点切线",
+      "在点切线",
+      "导数几何意义"
+    ],
+    "method": [
+      "曲线上给定切点用点斜式",
+      "过曲线外一点先设切点t，用斜率f'(t)和过点条件求t"
+    ],
+    "conditions": [
+      "切点属于曲线定义域",
+      "常规导数法只覆盖有限斜率切线"
+    ],
+    "pitfalls": [
+      "过点不代表该点是切点",
+      "数值相切示意不能替代重根或局部切线依据"
+    ],
+    "transferChecks": [
+      "把候选切点和直线同时回代曲线与过点条件"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        103,
+        105
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-17",
+    "subject": "math",
+    "title": "导数的应用",
+    "keywords": [
+      "导数应用",
+      "极值",
+      "最值",
+      "恒成立",
+      "参数",
+      "单调区间"
+    ],
+    "method": [
+      "先确定定义域，再按导数零点和不可导点分区间列符号表",
+      "闭区间比较端点、驻点及不可导候选"
+    ],
+    "conditions": [
+      "闭区间最值存在可用连续性",
+      "参数导致次数变化时单列"
+    ],
+    "pitfalls": [
+      "f'=0不是极值的充分条件",
+      "f'≥0且不恒为0仍需排除整段平台才保证严格增"
+    ],
+    "transferChecks": [
+      "用x³在0的驻点、含abs的不可导点及开端点检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        106,
+        111
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-18",
+    "subject": "math",
+    "title": "角的定义与分类",
+    "keywords": [
+      "角",
+      "象限角",
+      "弧度",
+      "扇形",
+      "终边"
+    ],
+    "method": [
+      "把角化为基本区间内的代表再判象限或轴线",
+      "弧长rθ和扇形面积r²θ/2使用弧度"
+    ],
+    "conditions": [
+      "角度单位明确",
+      "通常扇形面积用非负几何角"
+    ],
+    "pitfalls": [
+      "终边相同不表示角相等",
+      "象限角不含轴线角"
+    ],
+    "transferChecks": [
+      "用负角、超过一周的角和坐标轴角检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        112,
+        116
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-19",
+    "subject": "math",
+    "title": "同角三角函数关系",
+    "keywords": [
+      "同角三角",
+      "正弦",
+      "余弦",
+      "正切",
+      "象限符号"
+    ],
+    "method": [
+      "用sin²+cos²=1和tan=sin/cos转化",
+      "开平方后依象限及角范围选符号"
+    ],
+    "conditions": [
+      "tan需要cos≠0",
+      "给定的三角值符合可取范围"
+    ],
+    "pitfalls": [
+      "平方会丢符号",
+      "已知sin值不唯一确定cos正负"
+    ],
+    "transferChecks": [
+      "把角移至不同象限检验是否应保留双分支"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        117,
+        122
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-20",
+    "subject": "math",
+    "title": "诱导公式",
+    "keywords": [
+      "诱导公式",
+      "奇变偶不变",
+      "符号"
+    ],
+    "method": [
+      "先化角到kπ/2±α，再用单位圆或相应诱导关系确定函数名与符号",
+      "最后合并同角量"
+    ],
+    "conditions": [
+      "单位统一，正切及涉及除法的式子有定义"
+    ],
+    "pitfalls": [
+      "口诀不能替代象限符号判断",
+      "化简后定义域仍受原式限制"
+    ],
+    "transferChecks": [
+      "以α为锐角和非锐角各代入一次检查符号"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        123,
+        127
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-21",
+    "subject": "math",
+    "title": "两角和与差公式",
+    "keywords": [
+      "两角和",
+      "两角差",
+      "正切和角",
+      "给值求角"
+    ],
+    "method": [
+      "展开和差角公式并结合目标选择角的拆分",
+      "求角先求三角值，再由角范围定唯一角"
+    ],
+    "conditions": [
+      "正切和差公式的每个分母与两侧函数均有定义"
+    ],
+    "pitfalls": [
+      "仅知tan不能在全实数中唯一确定角",
+      "sin(α+β)不等于sinα+sinβ"
+    ],
+    "transferChecks": [
+      "检查分母为零的角和允许的最终角范围"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        128,
+        133
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-22",
+    "subject": "math",
+    "title": "倍角与半角公式",
+    "keywords": [
+      "倍角",
+      "半角",
+      "万能公式",
+      "辅助角"
+    ],
+    "method": [
+      "按目标降幂或升角，半角平方根依半角范围选符号",
+      "辅助角用R=sqrt(a²+b²)及sin/cos配对定象限"
+    ],
+    "conditions": [
+      "R=0时为常函数",
+      "万能代换tan(x/2)要补原本遗漏的角"
+    ],
+    "pitfalls": [
+      "辅助角只写tanφ=b/a会丢象限",
+      "半角不能一律取正根"
+    ],
+    "transferChecks": [
+      "用负系数和半角跨象限测试符号"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        134,
+        137
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-23",
+    "subject": "math",
+    "title": "三角函数性质",
+    "keywords": [
+      "三角函数性质",
+      "周期",
+      "对称轴",
+      "单调区间"
+    ],
+    "method": [
+      "对Asin(ωx+φ)先分析内层角u，再把u的区间映回x",
+      "基本周期在Aω≠0时为2π/abs(ω)"
+    ],
+    "conditions": [
+      "分清正弦余弦与正切",
+      "负ω映回区间时反转端点"
+    ],
+    "pitfalls": [
+      "两个同周期函数的和未必有该最小正周期",
+      "A=0时不能套周期公式"
+    ],
+    "transferChecks": [
+      "用负ω和抵消成常数的函数检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        138,
+        145
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-24",
+    "subject": "math",
+    "title": "三角函数图像变换及最值",
+    "keywords": [
+      "三角图像",
+      "平移",
+      "振幅",
+      "相位",
+      "最值",
+      "辅助角"
+    ],
+    "method": [
+      "把图像变换写成明确的自变量替换",
+      "求限定区间最值时检查内层角范围是否覆盖峰谷"
+    ],
+    "conditions": [
+      "振幅与频率参数限制明确",
+      "分式三角式分母不为零"
+    ],
+    "pitfalls": [
+      "sin(ωx+φ)的横向平移量是-φ/ω",
+      "限定区间未必取到±振幅"
+    ],
+    "transferChecks": [
+      "先求内层角区间再比较端点和临界角"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        146,
+        150
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-25",
+    "subject": "math",
+    "title": "解三角形",
+    "keywords": [
+      "解三角形",
+      "正弦定理",
+      "余弦定理",
+      "SSA",
+      "面积"
+    ],
+    "method": [
+      "边角对应后按已知组合选择正余弦定理",
+      "SSA用补角与内角和筛选，面积可用两边夹角或海伦公式"
+    ],
+    "conditions": [
+      "三边正且满足三角不等式",
+      "内角在(0,π)"
+    ],
+    "pitfalls": [
+      "反正弦仅给主值会漏另一三角形",
+      "算出代数边长仍需筛非退化"
+    ],
+    "transferChecks": [
+      "同时检验A和π-A两支的内角和与边长"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        151,
+        157
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-26",
+    "subject": "math",
+    "title": "向量的概念和性质",
+    "keywords": [
+      "向量",
+      "基底",
+      "共线",
+      "系数",
+      "中点",
+      "定比分点"
+    ],
+    "method": [
+      "选两个不共线基底，把目标向量线性表示",
+      "几何共线可转成比例或系数和条件"
+    ],
+    "conditions": [
+      "基底线性无关",
+      "讨论方向或单位向量时向量非零"
+    ],
+    "pitfalls": [
+      "零向量无确定方向",
+      "平行不等于同向，比例参数可负"
+    ],
+    "transferChecks": [
+      "用延长线上的点与负比例检查点序"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        158,
+        165
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-27",
+    "subject": "math",
+    "title": "向量的数量积运算",
+    "keywords": [
+      "数量积",
+      "点积",
+      "投影",
+      "向量夹角",
+      "模"
+    ],
+    "method": [
+      "先将长度与角度转成点积",
+      "用a·b=abs(a)abs(b)cosθ求夹角，用平方展开求模"
+    ],
+    "conditions": [
+      "夹角公式中的两个向量均非零"
+    ],
+    "pitfalls": [
+      "点积无消去律",
+      "a·b=abs(a)abs(b)只对应同向而非任意共线"
+    ],
+    "transferChecks": [
+      "用反向共线向量和零向量检查等号及定义"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        166,
+        170
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-28",
+    "subject": "math",
+    "title": "向量的坐标运算",
+    "keywords": [
+      "向量坐标",
+      "终点减起点",
+      "行列式",
+      "共线",
+      "垂直"
+    ],
+    "method": [
+      "把有向线段写成终点减起点",
+      "共线用二维行列式为0，垂直用点积为0"
+    ],
+    "conditions": [
+      "求夹角及规范化需要非零向量",
+      "坐标轴尺度与正交性明确"
+    ],
+    "pitfalls": [
+      "用斜率判平行会漏竖直线",
+      "终起点颠倒会改变有向比例"
+    ],
+    "transferChecks": [
+      "用竖直向量和坐标平移检验结果"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        171,
+        174
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-29",
+    "subject": "math",
+    "title": "三角形四心与向量",
+    "keywords": [
+      "三角形四心",
+      "重心",
+      "垂心",
+      "外心",
+      "内心"
+    ],
+    "method": [
+      "按几何定义选等距、垂直或加权向量关系",
+      "重心是顶点坐标平均，内心按对边长加权"
+    ],
+    "conditions": [
+      "三角形非退化，内心权重为正边长"
+    ],
+    "pitfalls": [
+      "内心不能用等权平均替代",
+      "外心与垂心可能在三角形外"
+    ],
+    "transferChecks": [
+      "用钝角三角形检验位置与所称的心"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        175,
+        179
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-30",
+    "subject": "math",
+    "title": "数列的概念和性质",
+    "keywords": [
+      "数列",
+      "概念",
+      "前n项和",
+      "前n项总和",
+      "总和",
+      "通项",
+      "首项",
+      "第一项",
+      "第一个数",
+      "Sn",
+      "an"
+    ],
+    "method": [
+      "由Sn求通项时a1=S1，n≥2用an=Sn-S(n-1)",
+      "递推求式后回检首项及指标范围"
+    ],
+    "conditions": [
+      "n是正整数",
+      "使用S0=0需明确扩展定义"
+    ],
+    "pitfalls": [
+      "只对n≥2成立的差分不能直接推首项",
+      "有限项不能唯一确定通项"
+    ],
+    "transferChecks": [
+      "反例Sn=n²+1：a1=2，n≥2时an=2n-1"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        180,
+        186
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-31",
+    "subject": "math",
+    "title": "等差数列通项公式及性质",
+    "keywords": [
+      "等差数列",
+      "公差",
+      "通项",
+      "下标和"
+    ],
+    "method": [
+      "先用an=a1+(n-1)d统一未知量",
+      "下标和相同可转项和相等，求参后回到定义核验"
+    ],
+    "conditions": [
+      "公差与n无关",
+      "下标均为允许正整数"
+    ],
+    "pitfalls": [
+      "含参式可能退化常数列",
+      "间隔不同的项差不能直接当公差"
+    ],
+    "transferChecks": [
+      "用d=0、d<0及非连续下标检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        187,
+        193
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-32",
+    "subject": "math",
+    "title": "等差数列的前n项和",
+    "keywords": [
+      "等差数列求和",
+      "前n项和最大",
+      "整数顶点"
+    ],
+    "method": [
+      "用Sn=n(a1+an)/2或na1+n(n-1)d/2",
+      "求最值将n视正整数，比较顶点附近可行整数与边界"
+    ],
+    "conditions": [
+      "项数为正整数，若有穷数列还受上界限制"
+    ],
+    "pitfalls": [
+      "实数顶点不一定是可取项数",
+      "Sn可为一次而非严格二次"
+    ],
+    "transferChecks": [
+      "检查相邻两个整数及出现零项的并列最值"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        194,
+        200
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-33",
+    "subject": "math",
+    "title": "等比数列通项公式及性质",
+    "keywords": [
+      "等比数列",
+      "公比",
+      "等比中项",
+      "通项"
+    ],
+    "method": [
+      "用an=a1*q^(n-1)统一",
+      "下标和相同转项积相等，必要时分奇偶下标"
+    ],
+    "conditions": [
+      "等比定义要求各项非零且q≠0"
+    ],
+    "pitfalls": [
+      "偶次开方求q会漏负公比",
+      "负公比不能套全程同向单调"
+    ],
+    "transferChecks": [
+      "用q=-1和q=1检查奇偶及常数情形"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        201,
+        207
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-34",
+    "subject": "math",
+    "title": "等比数列的前n项和",
+    "keywords": [
+      "等比求和",
+      "等比数列",
+      "前n项和",
+      "q=1",
+      "公比为1"
+    ],
+    "method": [
+      "q=1时Sn=n*a1",
+      "q≠1时用Sn=a1*(1-q^n)/(1-q)，可由错位相减验证"
+    ],
+    "conditions": [
+      "必须单列q=1",
+      "等比定义要求a1≠0、q≠0"
+    ],
+    "pitfalls": [
+      "除以1-q会漏公比为1",
+      "q<0时大小与奇偶相关"
+    ],
+    "transferChecks": [
+      "用q=1、q=-1和n=1分别回代"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        208,
+        211
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-35",
+    "subject": "math",
+    "title": "数列通项公式题型全归纳",
+    "keywords": [
+      "递推数列",
+      "叠加",
+      "叠乘",
+      "倒数法",
+      "待定系数"
+    ],
+    "method": [
+      "差为可求和式用叠加，比为可求积式用叠乘",
+      "an=p*a(n-1)+q可平移到等比，p=1改等差"
+    ],
+    "conditions": [
+      "取倒数或相除之前验证各项不为0",
+      "系数退化分支独立处理"
+    ],
+    "pitfalls": [
+      "待定变换中分母p-1为0时不能延用",
+      "n≥2推式须回检n=1"
+    ],
+    "transferChecks": [
+      "把所得通项代回原递推并核对初值"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        212,
+        219
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-36",
+    "subject": "math",
+    "title": "数列求和",
+    "keywords": [
+      "数列求和",
+      "错位相减",
+      "裂项相消",
+      "分组",
+      "倒序"
+    ],
+    "method": [
+      "等差乘等比优先错位相减",
+      "可写成b(n)-b(n+1)时裂项，其他按结构分组"
+    ],
+    "conditions": [
+      "求和上下限和公比合法",
+      "错位相减需另看q=1"
+    ],
+    "pitfalls": [
+      "裂项系数和首尾残项易漏",
+      "先写三项可发现错位方向错误"
+    ],
+    "transferChecks": [
+      "用n=1和n=2直接求和对照公式"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        220,
+        227
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-37",
+    "subject": "math",
+    "title": "不等式的性质与解法",
+    "keywords": [
+      "不等式",
+      "性质",
+      "解法",
+      "分式",
+      "绝对值"
+    ],
+    "method": [
+      "把一侧移为0并用零点和无定义点作符号表",
+      "乘除含参因子前先分符号及零值"
+    ],
+    "conditions": [
+      "分母为0的点始终排除",
+      "取倒数要确认同号且非零"
+    ],
+    "pitfalls": [
+      "不能随意同向相乘或平方",
+      "分母乘过去可能需反向"
+    ],
+    "transferChecks": [
+      "逐区间抽样并检查等号和无定义端点"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        228,
+        232
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-38",
+    "subject": "math",
+    "title": "含参不等式解法",
+    "keywords": [
+      "含参不等式",
+      "恒成立",
+      "有解",
+      "任意",
+      "存在",
+      "参数分离"
+    ],
+    "method": [
+      "先翻译∀与∃，再分离参数转成值域约束",
+      "二次项退化、参数在分母及区间端点分别讨论"
+    ],
+    "conditions": [
+      "需知道上下界是否取到，不能只记录数值上下界"
+    ],
+    "pitfalls": [
+      "开区间的下确界不一定是最小值",
+      "恒成立与有解取相反极值方向"
+    ],
+    "transferChecks": [
+      "对f(x)=x、x∈(0,1)比较∀f(x)>a与∃f(x)>a"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        233,
+        237
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-39",
+    "subject": "math",
+    "title": "基本不等式",
+    "keywords": [
+      "基本不等式",
+      "均值",
+      "AMGM",
+      "一正二定三相等"
+    ],
+    "method": [
+      "先确认正项与定和或定积，再选择配凑求界",
+      "最后解等号条件并检查是否可实现"
+    ],
+    "conditions": [
+      "a+b≥2sqrt(ab)要求a,b非负",
+      "用倒数形式需严格正"
+    ],
+    "pitfalls": [
+      "求得下界不代表取得最小值",
+      "等号条件与题设可能冲突"
+    ],
+    "transferChecks": [
+      "在约束区间代回等号点，不可达则另求端点或极限"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        238,
+        242
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-40",
+    "subject": "math",
+    "title": "表面积与体积",
+    "keywords": [
+      "表面积",
+      "体积",
+      "球",
+      "内切",
+      "外接",
+      "等体积",
+      "割补"
+    ],
+    "method": [
+      "先定形和各尺寸含义，再选公式、等体积或割补",
+      "组合体先求球心或接触约束"
+    ],
+    "conditions": [
+      "垂直高与斜高区分",
+      "正棱锥、正四面体等须有相应条件"
+    ],
+    "pitfalls": [
+      "图像看似对称不能补正或垂直",
+      "挖去接触面时表面积不能简单相加"
+    ],
+    "transferChecks": [
+      "核对量纲并用缩放λ检查面积λ²、体积λ³"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        243,
+        252
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-41",
+    "subject": "math",
+    "title": "共线、 共面与截面",
+    "keywords": [
+      "截面",
+      "共面",
+      "共线",
+      "共点",
+      "辅助面",
+      "交线"
+    ],
+    "method": [
+      "先找截平面与同一面的两个公共点连交线",
+      "借辅助平面寻找下一公共点，再逐面闭合截面"
+    ],
+    "conditions": [
+      "三点定面需不共线",
+      "区分棱段与延长线上的交点"
+    ],
+    "pitfalls": [
+      "不能凭空间示意跨面任连",
+      "平面与实体的交集才是截面"
+    ],
+    "transferChecks": [
+      "回检所有顶点在截平面且在实体内，检查闭合与点序"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        253,
+        258
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-42",
+    "subject": "math",
+    "title": "空间平行关系",
+    "keywords": [
+      "空间平行",
+      "线面平行",
+      "面面平行",
+      "判定",
+      "性质"
+    ],
+    "method": [
+      "证明线面平行先找面内平行线并证原线在面外",
+      "面面平行用一个面内两条相交线分别平行另面"
+    ],
+    "conditions": [
+      "定理中的面内、面外与相交条件必须写全"
+    ],
+    "pitfalls": [
+      "两条直线都平行某平面不保证互相平行",
+      "面内直线不称线面平行"
+    ],
+    "transferChecks": [
+      "给出缺少面外或相交条件的反例再补完整证明"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        259,
+        265
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-43",
+    "subject": "math",
+    "title": "空间垂直关系",
+    "keywords": [
+      "空间垂直",
+      "线面垂直",
+      "面面垂直",
+      "两条平行线",
+      "相交线"
+    ],
+    "method": [
+      "线面垂直用与面内两条相交直线垂直",
+      "面面垂直可证明一面含另一面的垂线"
+    ],
+    "conditions": [
+      "两条被垂直的线在同一平面内且相交"
+    ],
+    "pitfalls": [
+      "只垂直面内两条平行线不能证明线面垂直",
+      "面面垂直不表示任意两线互垂"
+    ],
+    "transferChecks": [
+      "在水平面中取两条平行线，构造面内垂线作反例"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        266,
+        272
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-44",
+    "subject": "math",
+    "title": "空间角度关系",
+    "keywords": [
+      "空间角",
+      "异面直线",
+      "线面角",
+      "二面角",
+      "平面角"
+    ],
+    "method": [
+      "线线角先平移方向向量",
+      "线面角用投影，二面角取垂直公共棱且位于指定半平面的射线"
+    ],
+    "conditions": [
+      "区分无向锐角与指定二面角",
+      "射影或法向量非零"
+    ],
+    "pitfalls": [
+      "法向量夹角可能是二面角的补角",
+      "取绝对值会抹去钝二面角"
+    ],
+    "transferChecks": [
+      "给出所求角范围并用指定半平面核对补角"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        273,
+        278
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-45",
+    "subject": "math",
+    "title": "空间向量与立体几何",
+    "keywords": [
+      "空间向量",
+      "法向量",
+      "点面距离",
+      "线面角",
+      "叉积"
+    ],
+    "method": [
+      "由面内两个不共线向量求非零法向量",
+      "距离用abs(n·(P-A))/abs(n)，线面角由方向与法向夹角转化"
+    ],
+    "conditions": [
+      "方向向量、法向量非零",
+      "建系须保留真实长度与夹角"
+    ],
+    "pitfalls": [
+      "任意给法向某分量赋1可能无解",
+      "数值采样不认证全称几何证明"
+    ],
+    "transferChecks": [
+      "换法向量倍数和坐标系后核对距离与角不变"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        279,
+        295
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-46",
+    "subject": "math",
+    "title": "直线的方程",
+    "keywords": [
+      "直线方程",
+      "斜率不存在",
+      "竖直线",
+      "倾斜角",
+      "定点"
+    ],
+    "method": [
+      "优先使用Ax+By+C=0或点加方向向量",
+      "斜截式之外单列x=c，过定点用参数式或一般式"
+    ],
+    "conditions": [
+      "A,B不同时为0",
+      "tan倾斜角仅在非竖直时有定义"
+    ],
+    "pitfalls": [
+      "y-y0=k(x-x0)漏竖直线",
+      "截距式漏过原点的线"
+    ],
+    "transferChecks": [
+      "用垂直x轴和经过原点的直线检查表示是否完备"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        296,
+        299
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-47",
+    "subject": "math",
+    "title": "直线的位置关系",
+    "keywords": [
+      "直线位置",
+      "平行",
+      "垂直",
+      "距离",
+      "对称"
+    ],
+    "method": [
+      "平行用法向量比例再排除重合，垂直用法向量点积0",
+      "点到线距离用一般式"
+    ],
+    "conditions": [
+      "每条直线的法向量非零",
+      "平行线距离先统一A,B系数"
+    ],
+    "pitfalls": [
+      "一个二阶行列式为0不足以区分平行与重合",
+      "不可任意除以可能为0的系数"
+    ],
+    "transferChecks": [
+      "用两条竖直线及成比例的重合方程测试"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        300,
+        306
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-48",
+    "subject": "math",
+    "title": "圆的方程",
+    "keywords": [
+      "圆方程",
+      "配方",
+      "圆心",
+      "半径",
+      "轨迹"
+    ],
+    "method": [
+      "配方把一般式化成圆心半径形式",
+      "条件求圆可用几何定位圆心或待定系数"
+    ],
+    "conditions": [
+      "半径平方r²>0才为非退化圆，r²=0为点"
+    ],
+    "pitfalls": [
+      "只看x²+y²就认圆会漏系数及半径条件",
+      "轨迹还要考虑原始条件限制"
+    ],
+    "transferChecks": [
+      "求方程后检查圆是否实在、是否有被排除点"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        307,
+        312
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-49",
+    "subject": "math",
+    "title": "直线与圆的位置关系",
+    "keywords": [
+      "直线圆",
+      "切线",
+      "弦长",
+      "圆圆",
+      "公共弦"
+    ],
+    "method": [
+      "先求圆心到线距离d与r比较",
+      "弦长2sqrt(r²-d²)，圆圆关系比较圆心距与半径和差"
+    ],
+    "conditions": [
+      "切线、切点、外点要区分",
+      "公共弦需两圆确实相交"
+    ],
+    "pitfalls": [
+      "两圆相减得根轴但不保证有实际公共弦",
+      "d=r时弦退化"
+    ],
+    "transferChecks": [
+      "对外离、相切、相交、内含、同心分别检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        313,
+        319
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-50",
+    "subject": "math",
+    "title": "椭圆的定义和性质",
+    "keywords": [
+      "椭圆",
+      "焦点",
+      "焦半径",
+      "离心率",
+      "参数方程"
+    ],
+    "method": [
+      "先判长轴方向与a>b>0，用c²=a²-b²",
+      "将焦距和转成2a，必要时用参数点表达"
+    ],
+    "conditions": [
+      "非退化椭圆0<c<a",
+      "圆的c=0情形另标，焦点三角形不得共线"
+    ],
+    "pitfalls": [
+      "a永远是长半轴而非x分母的固定符号",
+      "题目若排除圆需a>b"
+    ],
+    "transferChecks": [
+      "交换坐标轴后验证焦点及离心率不变"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        320,
+        339
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-51",
+    "subject": "math",
+    "title": "双曲线的定义和性质",
+    "keywords": [
+      "双曲线",
+      "分支",
+      "渐近线",
+      "焦半径",
+      "距离差"
+    ],
+    "method": [
+      "由正平方项判实轴方向，用c²=a²+b²",
+      "距离差用绝对值，再按所在分支选择符号"
+    ],
+    "conditions": [
+      "a,b>0且距离差常量在0与焦距之间"
+    ],
+    "pitfalls": [
+      "不能把右支距离差的符号套在左支",
+      "渐近线交点不属于曲线"
+    ],
+    "transferChecks": [
+      "用左右顶点分别回检距离差与所选分支"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        340,
+        358
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-52",
+    "subject": "math",
+    "title": "抛物线的定义和性质",
+    "keywords": [
+      "抛物线",
+      "焦点",
+      "准线",
+      "焦点弦",
+      "通径"
+    ],
+    "method": [
+      "先对照标准式确定开口和p，再以到焦点等于到准线距离转化",
+      "焦点弦利用过焦点条件联立"
+    ],
+    "conditions": [
+      "y²=2px时p>0且焦点(p/2,0)",
+      "换轴与负向需同步变换"
+    ],
+    "pitfalls": [
+      "把p当成焦点到顶点距离会差2倍",
+      "焦点弦公式不能用于任意弦"
+    ],
+    "transferChecks": [
+      "用顶点、通径端点和坐标交换检查"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        359,
+        372
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-53",
+    "subject": "math",
+    "title": "直线与圆锥曲线",
+    "keywords": [
+      "直线圆锥曲线",
+      "联立",
+      "韦达",
+      "点差法",
+      "中点弦",
+      "切点弦",
+      "二次项为零"
+    ],
+    "method": [
+      "先用一般直线或参数直线防漏竖直",
+      "消元后先检查二次项系数，确为二次才用判别式与韦达"
+    ],
+    "conditions": [
+      "两交点相异时Δ>0",
+      "点差法分母非零，参数解还要回到曲线上"
+    ],
+    "pitfalls": [
+      "二次项为0可能只剩一次，不能套两根公式",
+      "外点的极线不是该点处切线"
+    ],
+    "transferChecks": [
+      "用竖直弦、过中心弦及平行渐近线的直线作变式"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        373,
+        379
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-54",
+    "subject": "math",
+    "title": "排列组合",
+    "keywords": [
+      "排列组合",
+      "捆绑",
+      "插空",
+      "分组",
+      "分配",
+      "计数"
+    ],
+    "method": [
+      "先定义完成事件和是否计顺序",
+      "分类相加须互斥，分步相乘",
+      "相邻捆绑、不相邻插空、无标签等组去重"
+    ],
+    "conditions": [
+      "对象是否不同、盒子是否有标签以及空组许可明确"
+    ],
+    "pitfalls": [
+      "相同大小的无标签组需去重复但不能机械除阶乘",
+      "间接法补集须完备"
+    ],
+    "transferChecks": [
+      "小规模枚举对照计数，检查一结果被计几次"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        380,
+        386
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-55",
+    "subject": "math",
+    "title": "二项式定理",
+    "keywords": [
+      "二项式",
+      "系数",
+      "常数项",
+      "通项",
+      "赋值"
+    ],
+    "method": [
+      "写T(r+1)=C(n,r)*a^(n-r)*b^r，按目标幂次解整数r",
+      "系数和可代x=1，奇偶和可配x=-1"
+    ],
+    "conditions": [
+      "n为非负整数，r在0到n",
+      "幂次与符号完整保留"
+    ],
+    "pitfalls": [
+      "二项式系数不等于展开项系数",
+      "第r+1项与r混淆会错位"
+    ],
+    "transferChecks": [
+      "以低次展开直接检查常数项与符号"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        387,
+        390
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-56",
+    "subject": "math",
+    "title": "统计",
+    "keywords": [
+      "统计",
+      "频率直方图",
+      "茎叶图",
+      "回归",
+      "方差",
+      "抽样"
+    ],
+    "method": [
+      "直方图面积给频率而非柱高",
+      "区分样本特征与总体估计，回归残差在明确模型中计算"
+    ],
+    "conditions": [
+      "组距、样本量及方差分母约定已知",
+      "统计结论保留抽样范围"
+    ],
+    "pitfalls": [
+      "相关不能推出因果",
+      "显著性检验不是结论为真的后验概率"
+    ],
+    "transferChecks": [
+      "不同组距用面积复算总频率1，线性变换检验方差按平方缩放"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        391,
+        400
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-57",
+    "subject": "math",
+    "title": "事件的概率与概型",
+    "keywords": [
+      "概率",
+      "条件概率",
+      "独立",
+      "互斥",
+      "古典概型",
+      "几何概型"
+    ],
+    "method": [
+      "先建立样本空间和等可能依据",
+      "条件概率P(B given A)=P(A∩B)/P(A)，独立再用概率相乘"
+    ],
+    "conditions": [
+      "P(A)>0才能以A为条件",
+      "几何概率需相应均匀分布"
+    ],
+    "pitfalls": [
+      "互斥不等于独立",
+      "不是等可能时不能仅数个数"
+    ],
+    "transferChecks": [
+      "检查全概率归一与不放回抽取时条件改变"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        401,
+        407
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "math-58",
+    "subject": "math",
+    "title": "随机变量分布列、 期望与方差",
+    "keywords": [
+      "随机变量",
+      "分布列",
+      "期望",
+      "方差",
+      "二项分布",
+      "超几何",
+      "不放回",
+      "抽球"
+    ],
+    "method": [
+      "先列互斥完备取值与概率并归一",
+      "独立同概率重复试验用二项，不放回固定成功总数用超几何"
+    ],
+    "conditions": [
+      "二项需固定n、各次独立且同p",
+      "超几何的k范围由总体限制"
+    ],
+    "pitfalls": [
+      "不放回不能默认独立",
+      "E(X+Y)无需独立但方差相加通常需协方差为0"
+    ],
+    "transferChecks": [
+      "用两次不放回抽样直接枚举并对比二项预测"
+    ],
+    "source": {
+      "title": "2027高考一轮复习通关讲义(解析版).pdf",
+      "pages": [
+        408,
+        416
+      ],
+      "sha256": "77de2108103d75d7fad507cb0a0e4704d11a0059a36b5cc4b8ca9c2686c3dfaa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  }
+]

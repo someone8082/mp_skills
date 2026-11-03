@@ -1,0 +1,596 @@
+[
+  {
+    "id": "physics-01",
+    "subject": "physics",
+    "title": "运动学图像问题",
+    "keywords": [
+      "运动学图像",
+      "位移时间",
+      "速度时间",
+      "加速度时间",
+      "斜率",
+      "面积"
+    ],
+    "method": [
+      "先核坐标量、单位、原点和比例，再解释斜率/有向面积",
+      "v-t面积给位移，abs(v)面积给路程，a-t面积给速度变化"
+    ],
+    "conditions": [
+      "图中交点只表示对应纵坐标相同",
+      "位置比较需同一参考系和时间原点"
+    ],
+    "pitfalls": [
+      "v-t正斜率不保证速率增大，需看v*a",
+      "折点不等于光滑曲线的拐点"
+    ],
+    "transferChecks": [
+      "让v跨0，检查位移与路程是否分开，x-t转向应由速度变号判定"
+    ],
+    "source": {
+      "title": "微突破1 运动学图像问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        6,
+        8
+      ],
+      "sha256": "2b16766ef0850e8576a098982de08a1c4d72290d509febf08b5fa278be7610e0",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-02",
+    "subject": "physics",
+    "title": "追及、相遇问题",
+    "keywords": [
+      "追及",
+      "相遇",
+      "刹停",
+      "刹车",
+      "制动",
+      "停车",
+      "碰面",
+      "快车",
+      "追上",
+      "延迟启动",
+      "最近距离",
+      "最大间距"
+    ],
+    "method": [
+      "设带正负号的间距D(t)，相遇解D=0，距离abs(D)的极值比较各段端点、D'=0和D=0的有效根",
+      "把延迟启动和刹停分为不同时间段，各段求根后筛有效区间并去重事件"
+    ],
+    "conditions": [
+      "只有在该段有效时间内的非负根可用",
+      "制动到0若停车，之后不能继续恒负加速度算倒车"
+    ],
+    "pitfalls": [
+      "速度相等只是极值候选，不必为最大值或始终相距不变",
+      "判别式正不保证有两次物理相遇"
+    ],
+    "transferChecks": [
+      "比较相遇、停车和终止事件谁先",
+      "切换全局与局部时钟需保留起始位置"
+    ],
+    "source": {
+      "title": "微突破2 追及、相遇问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        8
+      ],
+      "sha256": "76aa8ef030f4ff841d07770b3210933ca1aa54747f2697f70786e01564e0789f",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-03",
+    "subject": "physics",
+    "title": "动态平衡和临界、极值问题",
+    "keywords": [
+      "动态平衡",
+      "缓慢",
+      "临界",
+      "极值",
+      "三力",
+      "平衡",
+      "矢量三角形"
+    ],
+    "method": [
+      "先隔离受力并检验准静态，再用分量方程、矢量三角形或相似关系",
+      "求极值同时检查力和几何可行范围"
+    ],
+    "conditions": [
+      "绳只能拉、接触支持力非负",
+      "静摩擦满足abs(f)≤最大静摩擦力"
+    ],
+    "pitfalls": [
+      "缓慢是准静态近似的线索，不能掩盖明显加速度",
+      "动摩擦因数不能一般决定最大静摩擦力"
+    ],
+    "transferChecks": [
+      "用绳松弛、接触力0、摩擦达界三种事件筛代数极值"
+    ],
+    "source": {
+      "title": "微突破3 动态平衡和临界、极值问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "35a3330337864675adfcf8f89440483afc6126d57ff908c5207afbc05d28ab7a",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-04",
+    "subject": "physics",
+    "title": "动力学图像问题",
+    "keywords": [
+      "动力学图像",
+      "F-a",
+      "a-F",
+      "受力",
+      "斜率截距",
+      "向上弯曲"
+    ],
+    "method": [
+      "把纵横量代入受力方程得到函数再解释截距斜率",
+      "恒阻力且正向运动时F_applied=m*a+f"
+    ],
+    "conditions": [
+      "先说明图中的F是合力还是某个施力",
+      "摩擦方向变化后旧直线未必有效"
+    ],
+    "pitfalls": [
+      "F-a截距不是普遍的合外力",
+      "v-t向上弯曲也可能负速度下先减速"
+    ],
+    "transferChecks": [
+      "用F_net=m*a与F_applied=m*a+f两张图比较，不能仅记图形口诀"
+    ],
+    "source": {
+      "title": "微突破4 动力学图像问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "39b7c0ed9bec2ca5d78996a78a7a89360ad946963adbc65c4ce030a3b5e3bada",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-05",
+    "subject": "physics",
+    "title": "“传送带”模型中的动力学问题",
+    "keywords": [
+      "传送带",
+      "皮带",
+      "货物",
+      "共速",
+      "斜传送带",
+      "划痕",
+      "摩擦生热"
+    ],
+    "method": [
+      "按物体相对带速确定滑动摩擦",
+      "比较达到带速、离开带端和反向事件谁先",
+      "共速后按沿带平衡所需静摩擦决定能否保持"
+    ],
+    "conditions": [
+      "若要在恒速斜带上共速匀速，需mu_s*N≥m*g*sinθ",
+      "仅有mu_k时不能无条件确认"
+    ],
+    "pitfalls": [
+      "共速不必转匀速，也不必摩擦突变",
+      "生热用累计相对路程而非总相对位移或划痕长度"
+    ],
+    "transferChecks": [
+      "改变带速方向、初速高低和mu_s，重新建立阶段表，不死套水平模型"
+    ],
+    "source": {
+      "title": "微突破5 “传送带”模型中的动力学问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "6d7293dda40709c49485e26c718d0ec9b22f6d3d0e65ed28580e1ddf19ca38f3",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-06",
+    "subject": "physics",
+    "title": "“滑块—木板”模型中的动力学问题",
+    "keywords": [
+      "滑块木板",
+      "板子",
+      "物块",
+      "掉下来",
+      "离板",
+      "板长",
+      "相对位移",
+      "先共速"
+    ],
+    "method": [
+      "隔离块板分别列对地运动，再以q=x_block-x_board跟踪位置",
+      "比较共速与到边缘的有效事件，较早者终止当前滑动段"
+    ],
+    "conditions": [
+      "明确块的初始板上位置、木板边界及地面受力",
+      "共速后再查静摩擦可行性"
+    ],
+    "pitfalls": [
+      "位移差只有在同一坐标约定下才对应板上坐标",
+      "所有最短板长都不能预设为共速到边缘"
+    ],
+    "transferChecks": [
+      "在共速距离两侧取板长L±ε，检查是否先离板及端点计数"
+    ],
+    "source": {
+      "title": "微突破6 “滑块—木板”模型中的动力学问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "838a366fe0e95d89cbd4e8282edb9dda6e0d7d7e918734040c4d08b092164a46",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-07",
+    "subject": "physics",
+    "title": "约束条件下的抛体运动",
+    "keywords": [
+      "抛体",
+      "斜面",
+      "平抛",
+      "约束",
+      "最远距离",
+      "速度夹角"
+    ],
+    "method": [
+      "用x=v0*t、y=g*t²/2并与边界方程联立",
+      "位移方向给落点，速度方向给切入或垂直条件",
+      "最远垂距用法向速度0"
+    ],
+    "conditions": [
+      "初速度水平、重力均匀且空气阻力忽略",
+      "斜面是规定的有效线段或半直线"
+    ],
+    "pitfalls": [
+      "速度夹角与位移角不同，tan速度角=2*tan位移角只对从平抛起点计位移成立",
+      "原书p5判断题3的否定不应照搬"
+    ],
+    "transferChecks": [
+      "同一向下斜面从顶端平抛，落面t=2*v0*tanθ/g，故vy/vx=2tanθ与初速无关"
+    ],
+    "source": {
+      "title": "微突破7 约束条件下的抛体运动（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "b9e231f7a05a7c28813fb869dbd0ea3d37382b2b852bdfc2dae1a0663d4e2de3",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-08",
+    "subject": "physics",
+    "title": "圆周运动的临界问题",
+    "keywords": [
+      "圆周",
+      "临界",
+      "绳",
+      "轻杆",
+      "最高点",
+      "零速",
+      "最低点",
+      "支持力"
+    ],
+    "method": [
+      "先区分绳、杆、内轨和外轨，再写径向合力=m*v²/R",
+      "用能量连接状态，并检查全过程约束力符号"
+    ],
+    "conditions": [
+      "绳T≥0、单侧接触N≥0，杆可拉可推",
+      "杆顶点零速是阈值状态，不等于有限时间必然穿越"
+    ],
+    "pitfalls": [
+      "向心力是径向合力不是单个张力",
+      "顶点速度标准不能替代中途不脱离检查"
+    ],
+    "transferChecks": [
+      "将绳换杆重做条件",
+      "对内轨顶部v²≥gR，杆的能量阈值可趋近v_top=0"
+    ],
+    "source": {
+      "title": "微突破8 圆周运动的临界问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "7ee8c3957e921772846ff0e3bc84e141e96ac2ff9ca3c8b83b5f29b43673e9fd",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-09",
+    "subject": "physics",
+    "title": "平抛运动与圆周运动的综合问题",
+    "keywords": [
+      "平抛圆周",
+      "圆弧",
+      "切入",
+      "切线",
+      "脱离",
+      "圆面"
+    ],
+    "method": [
+      "将抛物轨迹与圆方程联立求接触事件",
+      "切入满足速度与半径垂直，再核验接触侧和后续径向力"
+    ],
+    "conditions": [
+      "接触前确实自由飞行",
+      "半径、圆心坐标及有效弧段明确"
+    ],
+    "pitfalls": [
+      "在光滑凸圆顶并非任意水平初速都会立刻自由飞行",
+      "需N=mg-mv²/R非负与接触条件判断"
+    ],
+    "transferChecks": [
+      "用v²小于、等于、大于gR检验圆顶接触分支，图上相交不等于合法切入"
+    ],
+    "source": {
+      "title": "微突破9 平抛运动与圆周运动的综合问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "fd7e8a8a19d6b92993209effbced69b3a007a9646a48f37a1604f6ba04d8cc9c",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-10",
+    "subject": "physics",
+    "title": "天体与卫星中的八大问题",
+    "keywords": [
+      "天体",
+      "卫星",
+      "变轨",
+      "双星",
+      "同步",
+      "相遇",
+      "失重",
+      "拉格朗日"
+    ],
+    "method": [
+      "圆轨道联立引力和向心力",
+      "变轨区分点火瞬间与滑行轨道，同位置无推力时重力加速度相同",
+      "双星各绕质心且角速度相同"
+    ],
+    "conditions": [
+      "r为到中心距离而非高度",
+      "圆轨公式v=sqrt(GM/r)不直接用于椭圆任意点"
+    ],
+    "pitfalls": [
+      "点火加速升轨与更高圆轨最终速率较低不矛盾",
+      "失重不等于无引力，角向对齐不是不同轨卫星碰撞"
+    ],
+    "transferChecks": [
+      "核对r=R+h、两星半径和为间距",
+      "黑洞等仅保留题设给出的经典近似，不作真实天体认证"
+    ],
+    "source": {
+      "title": "微突破10 天体与卫星中的八大问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        10
+      ],
+      "sha256": "6fa498cf19ded362ca400602fee0c3e6b74809301cadadefb6f0278c6fb5fd88",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-11",
+    "subject": "physics",
+    "title": "机械能中的图像问题",
+    "keywords": [
+      "机械能图像",
+      "Ek-x",
+      "Ep-x",
+      "F-x",
+      "P-t",
+      "斜率",
+      "功"
+    ],
+    "method": [
+      "按坐标先写dEk/dx=F_net、F_conservative=-dEp/dx，再解释图像",
+      "F-x有向面积给该力的功，P-t面积给功"
+    ],
+    "conditions": [
+      "一维坐标与力分量匹配",
+      "Ep-x斜率对应哪种力取决于选取的势能"
+    ],
+    "pitfalls": [
+      "任意Ep-x斜率绝对值都叫重力是错误推广",
+      "曲线斜率是局部值，面积有符号"
+    ],
+    "transferChecks": [
+      "将重力势能换成弹簧势能，检查能否仍把斜率视为恒定重力"
+    ],
+    "source": {
+      "title": "微突破11 机械能中的图像问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "34b215ec925b4a3915ad0985a1c6091c20e6782e0eb03f4ba16a2d55923bb79f",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-12",
+    "subject": "physics",
+    "title": "动力学和能量观点的综合应用",
+    "keywords": [
+      "动力学能量",
+      "综合应用",
+      "电机",
+      "功",
+      "摩擦热",
+      "相对路程"
+    ],
+    "method": [
+      "把每物体对地做功与系统内摩擦耗散分开",
+      "Q=积分f*abs(v_rel)dt，恒滑动摩擦时为f乘累计相对路程"
+    ],
+    "conditions": [
+      "电机恒带速的补偿功需定义系统并计重力势能及耗散",
+      "相对滑动反向后重新累计"
+    ],
+    "pitfalls": [
+      "相对位移代数和不能代替累计相对路程",
+      "单物体摩擦功不等于系统热量"
+    ],
+    "transferChecks": [
+      "用两次反向滑动检查净相对位移为0时热量仍可正"
+    ],
+    "source": {
+      "title": "微突破12 动力学和能量观点的综合应用（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "250e6ce5afe914d957c4cb3c61b01e9c3558ca707fe03b96b33c40de28193d71",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-13",
+    "subject": "physics",
+    "title": "“子弹打木块”模型和“滑块—木板”模型",
+    "keywords": [
+      "子弹木块",
+      "穿透",
+      "嵌入",
+      "碰撞",
+      "机械能损失",
+      "冲量"
+    ],
+    "method": [
+      "先定系统与碰撞阶段，用外冲量决定是否动量守恒",
+      "嵌入给共速，穿透保留两末速度",
+      "再用能量差或阻力乘穿入相对距离"
+    ],
+    "conditions": [
+      "碰撞时间短不自动意味着外冲量可忽略，固定木块的约束冲量不可漏"
+    ],
+    "pitfalls": [
+      "穿透不保证最终共速",
+      "源书p6答案3J与详解1.75J矛盾，需按原题重新复算"
+    ],
+    "transferChecks": [
+      "区分固定和可动木块",
+      "保留双方答案、建模条件及复算，不能取任一数字作真值"
+    ],
+    "source": {
+      "title": "微突破13 “子弹打木块”模型和“滑块—木板”模型（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "4c407ce86ce006d61fa45219fb8ac6aed02d8a2392694a17ef8362f2cd9870aa",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-14",
+    "subject": "physics",
+    "title": "“滑块—曲面”模型和“滑块—弹簧”模型",
+    "keywords": [
+      "滑块弹簧",
+      "滑块曲面",
+      "最大压缩",
+      "相对速度",
+      "弹性势能",
+      "墙"
+    ],
+    "method": [
+      "选含弹簧或曲面的系统，分别审查动量分量与机械能",
+      "弹簧形变极值通常由两端相对速度0判定"
+    ],
+    "conditions": [
+      "一端靠墙阶段有外冲量",
+      "移动曲面常只守恒水平方向动量，接触与摩擦条件另核"
+    ],
+    "pitfalls": [
+      "光滑不自动保证某一物体机械能守恒",
+      "到曲面几何最高点不必等于最大可达高度或必共速"
+    ],
+    "transferChecks": [
+      "比较固定曲面与可动曲面、靠墙与离墙阶段，核对能量流入各物体"
+    ],
+    "source": {
+      "title": "微突破14 “滑块—曲面”模型和“滑块—弹簧”模型（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "38362f9f0b2a833b42e991cb19697343598643a18f9bd717a25c1702ceb020ea",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  },
+  {
+    "id": "physics-15",
+    "subject": "physics",
+    "title": "用三大观点解决动力学问题",
+    "keywords": [
+      "三大观点",
+      "冲量",
+      "功",
+      "守恒",
+      "力学综合",
+      "动量",
+      "能量",
+      "选观点"
+    ],
+    "method": [
+      "目标含瞬时受力加速度用动力学，时间积累用冲量，空间积累用功",
+      "多阶段按事件切分，在系统与时间段上注明每条守恒律"
+    ],
+    "conditions": [
+      "动量需对应方向外冲量为0或可忽略",
+      "机械能需非保守功及外部做功审查"
+    ],
+    "pitfalls": [
+      "力学规律不是互斥模板",
+      "短碰撞、光滑或共速等关键词不能单独认证守恒"
+    ],
+    "transferChecks": [
+      "对相同题先列阶段和系统，再用另一观点交叉核对中间量与总账"
+    ],
+    "source": {
+      "title": "微突破15 用三大观点解决动力学问题（复习讲义）（全国通用）（解析版）.pdf",
+      "pages": [
+        4,
+        6
+      ],
+      "sha256": "1774346af786d4267e6b4545a373e0a5f7df66aa785639f44ab1b09ee8ee302d",
+      "pageConvention": "PDF 1-based; inclusive",
+      "provenance": "Method synthesis with independently added applicability checks; not a transcription or certification of all exercises."
+    }
+  }
+]

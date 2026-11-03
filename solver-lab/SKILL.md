@@ -32,6 +32,8 @@ node "<SKILL_ROOT>/scripts/agent.mjs" "<task-directory>/problem.json" --out "<ta
 
 复杂题超出固定接口时，按 [综合题与证明核验](references/advanced-problems.md) 分阶段建模、独立推导，受支持的局部计算仍可调用内核；不得把整题硬塞进一个 motion 或 physics.formula。图解交付读 [图解与查看交互](references/graphical-explanations.md)：点名、辅助关系和解题步骤对应；自定义报告可复用包内的SVG缩放查看器。
 
+需要选解题方法、检查适用前提或处理变式时，读 [按题调用方法](references/study-guide.md)。可用 `node "<SKILL_ROOT>/scripts/study.mjs" --query "题目关键词"` 找到数学58讲/力学15专题，再用返回的 `--id` 读取方法、条件、反例和源书页码。检索只提供参考，未命中可换关系词或列目录；这些专题不等于新增原生求解接口，卡片前提也不能冒充题设。简单的已支持计算可直接走原入口。
+
 展示方式按教学需要选择：静态关系用清晰图，几何构造用步进，运动过程用时间播放。粒子跨场、转向等需要暂停、时间轴和同步读数时，读 [模型驱动的交互演示](references/model-driven-animation.md)，可生成独立HTML；这不是新增CLI题型，也不修改固定模板。离线公式的根号、分数和上下标显示要求见图解参考。
 
 额外的**图解评审默认关闭**。仅用户明确开启时读取 [可选图解评审标准](references/visual-review.md)，评估是否需要画、怎样画及成图是否直观。`图解评审：开启/关闭`默认仅作用于本题，明确说“本会话开启”才沿用；本题设置优先。它不是CLI/JSON字段；未开启时不逐题询问、不额外评分，原绘图请求与正确性检查仍照常执行。
