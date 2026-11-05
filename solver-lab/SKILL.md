@@ -48,4 +48,4 @@ node "<SKILL_ROOT>/scripts/agent.mjs" "<task-directory>/problem.json" --out "<ta
 
 ## 其他环境
 
-用户明确要求聊天网页版时，保留现有 [网页提示词工作流](prompts/README.md)；其 [账号兼容状态](docs/browser-compatibility.md) 需实际测试。没有本地执行工具的 Agent 只能提供待验证规格或手工解释，不得声称已运行脚本。
+用户明确要求聊天网页版时，按 [网页提示词工作流](prompts/README.md) 选择一个主入口，可按需附一份题型补充词与一个平台补充词；不要默认全量粘贴。布局修复、参数变式和普通新题有各自的续接规则，附件和本地路径不假定网页可读。其 [账号兼容状态](docs/browser-compatibility.md) 需实际测试。没有本地执行工具的 Agent 只能提供待验证规格或手工解释，不得声称已运行脚本。

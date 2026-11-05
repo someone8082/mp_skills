@@ -13,9 +13,11 @@
 | [solver-lab/lesson/](../solver-lab/lesson/) | 课件运行模块与输入示例 |
 | [solver-lab/examples/](../solver-lab/examples/) | 单文件课件与图形示例 |
 | [solver-lab/prompts/](../solver-lab/prompts/) | 聊天网页版提示词 |
+| [solver-lab/prompts/subjects/](../solver-lab/prompts/subjects/) | 七类按需题型补充词；与一个主入口组合 |
 | [solver-lab/assets/](../solver-lab/assets/) | 可选图解查看器资源 |
 | [solver-lab/agent-manifest.json](../solver-lab/agent-manifest.json) | 运行包文件哈希，供doctor检查 |
 | [tests/study.test.mjs](../tests/study.test.mjs) | 无第三方依赖的检索、条件卡与参数测试 |
+| [tests/prompt-contracts.mjs](../tests/prompt-contracts.mjs) | 11项编译器边界与错误映射反例检查 |
 | [docs/demos/](demos/) / [docs/images/](images/) | README引用的演示和截图 |
 | [docs/validation/](validation/) | 发布时的实际验证范围与限制 |
 
@@ -25,6 +27,7 @@
 node solver-lab/scripts/agent.mjs --doctor
 node solver-lab/scripts/study.mjs --list
 node --test tests/study.test.mjs
+node tests/prompt-contracts.mjs
 ```
 
 运行时需要Node.js 18+。本次实际验证使用Node.js 24.22.1。测试只使用Node内置模块，会启动本地CLI子进程；不连接API或网络。

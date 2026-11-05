@@ -90,6 +90,8 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 ### 在聊天网页版中使用
 
+先看[提示词导航](solver-lab/prompts/README.md)，选择**一个主入口＋按需题型补充＋当前平台补充＋本题材料**。新增七类[题型补充词](solver-lab/prompts/subjects/)：函数/数列、几何、概率统计、力学、电路/场、光学、热学；只复制相关文件中的text代码块，不把全部规则一次粘贴。
+
 **复杂题或没有适用模板：**直接复制[复杂题图解提示词](solver-lab/prompts/web-advanced.md)，附题目和下列对应平台补充词即可。生成的图解以SVG、步骤对应和可操作的缩放/拖动为重点，明确标注独立探索与实际核验范围。无需为了使用提示词先上传三个不适用模板。
 
 **完整适用三个固定模型的题：**
@@ -99,6 +101,8 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 3. 优先复用模板，只让模型生成题目 JSON，粘贴到课件输入框并“载入并核验”。播放、暂停和拖动均在本地计算，不消耗模型调用。
 
 可先用[预览探针](solver-lab/examples/preview-probe.html)检查当前聊天页面能否执行脚本。各平台账号内预览尚待实测，文件生成或探针通过不能替代正式课件验收；详见[兼容状态与人工验收](solver-lab/docs/browser-compatibility.md)。GitHub 文件页本身不执行 HTML。
+
+已生成页面有文字堆叠/裁切时，附现有HTML与截图，使用[布局修复续接词](solver-lab/prompts/web-layout-repair.md)。新题、仅改参数和修布局各有独立规则；普通新题不继承旧条件。修复词不再写死传送带或匀减速；明确修固定模板布局时保留原版，另存标注衍生版并重新核验。
 
 ### 发布内容与验证范围
 
@@ -111,3 +115,5 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 `solver-lab/docs/` 中的验证记录描述开发时的检查；其中源码构建、npm 测试和临时证据路径属于开发仓库环境，本运行包不包含相应开发工具。安装和使用以本页及 Agent 工作流为准。
 
 2026-11-03资料学习增强版：开发仓库244项技能测试、10项查看器DOM测试通过；本仓库新增29项可独立运行的检索/方法卡测试。另有15个具体算例复核，覆盖首项例外、分段跨界、停车筛根、静摩擦、离板先后和参数退化；这些结果不代表对所有未见题目的整题认证。便携包内容、哈希与原有运动/截面入口已重新检查。详见[本次验证记录](docs/validation/2026-11-03-study.md)。
+
+2026-11-05提示词整理版：16份提示词文件，补全截面边数/半径/作图契约，明确反求、停车分段与并联模型边界。开发阶段17个独立正向试答的路线与关键结论复核一致；11项编译器检查及244项既有技能回归通过。这不是各网页平台的账号实测或跨模型成功率，详见[提示词发布验证](docs/validation/2026-11-05-prompts.md)。
