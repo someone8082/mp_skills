@@ -1,0 +1,177 @@
+{
+  "editor": [
+    {
+      "availableWidth": 305,
+      "height": 568,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 558,
+        "height": 50,
+        "width": 272.8000183105469,
+        "x": 16,
+        "y": 508
+      },
+      "scrollWidth": 305,
+      "visibleHeight": "568px",
+      "width": 320
+    },
+    {
+      "availableWidth": 345,
+      "height": 740,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 730,
+        "height": 50,
+        "width": 312.8000183105469,
+        "x": 16,
+        "y": 680
+      },
+      "scrollWidth": 345,
+      "visibleHeight": "740px",
+      "width": 360
+    },
+    {
+      "availableWidth": 375,
+      "height": 844,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 834,
+        "height": 50,
+        "width": 343.20001220703125,
+        "x": 16,
+        "y": 784
+      },
+      "scrollWidth": 375,
+      "visibleHeight": "844px",
+      "width": 390
+    },
+    {
+      "availableWidth": 415,
+      "height": 932,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 922,
+        "height": 50,
+        "width": 383.2000122070313,
+        "x": 16,
+        "y": 872
+      },
+      "scrollWidth": 415,
+      "visibleHeight": "932px",
+      "width": 430
+    },
+    {
+      "availableWidth": 829,
+      "height": 390,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 380.3999938964844,
+        "height": 50,
+        "width": 608,
+        "x": 110.4000015258789,
+        "y": 330.3999938964844
+      },
+      "scrollWidth": 829,
+      "visibleHeight": "390.3999938964844px",
+      "width": 844
+    },
+    {
+      "availableWidth": 1085,
+      "height": 800,
+      "inputFont": "16px",
+      "run": {
+        "bottom": 655.9500122070312,
+        "height": 50,
+        "width": 542.4000244140625,
+        "x": 271.20001220703125,
+        "y": 605.9500122070312
+      },
+      "scrollWidth": 1085,
+      "visibleHeight": "800px",
+      "width": 1100
+    }
+  ],
+  "preview": [
+    {
+      "barBottom": 58.79999923706055,
+      "footerBottom": 568.0000114440918,
+      "footerTop": 517.2000122070312,
+      "frame": {
+        "bottom": 517.1999931335449,
+        "height": 458.3999938964844,
+        "left": 0,
+        "right": 320,
+        "top": 58.79999923706055,
+        "width": 320,
+        "x": 0,
+        "y": 58.79999923706055
+      },
+      "height": 568,
+      "pageWidth": 320,
+      "width": 320
+    },
+    {
+      "barBottom": 58.79999923706055,
+      "footerBottom": 844.0000114440918,
+      "footerTop": 793.2000122070312,
+      "frame": {
+        "bottom": 793.200023651123,
+        "height": 734.4000244140625,
+        "left": 0,
+        "right": 390.3999938964844,
+        "top": 58.79999923706055,
+        "width": 390.3999938964844,
+        "x": 0,
+        "y": 58.79999923706055
+      },
+      "height": 844,
+      "pageWidth": 390,
+      "width": 390
+    },
+    {
+      "bar": {
+        "bottom": 48.79999923706055,
+        "height": 48.79999923706055,
+        "left": 0,
+        "right": 844,
+        "top": 0,
+        "width": 844,
+        "x": 0,
+        "y": 0
+      },
+      "bottom": {
+        "bottom": 390.4000053405762,
+        "height": 44.79999923706055,
+        "left": 0,
+        "right": 844,
+        "top": 345.6000061035156,
+        "width": 844,
+        "x": 0,
+        "y": 345.6000061035156
+      },
+      "frame": {
+        "bottom": 345.6000175476074,
+        "height": 296.8000183105469,
+        "left": 0,
+        "right": 844,
+        "top": 48.79999923706055,
+        "width": 844,
+        "x": 0,
+        "y": 48.79999923706055
+      },
+      "height": 390,
+      "visibleHeight": "390.3999938964844px",
+      "width": 844
+    }
+  ],
+  "returnFocus": {
+    "active": "run",
+    "view": "edit"
+  },
+  "htmlButton": "已响应",
+  "motionEnd": {
+    "s": "9 m",
+    "v": "6 m/s"
+  },
+  "realPhoneTested": false
+}

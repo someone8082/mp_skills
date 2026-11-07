@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#146557">
+  <meta name="description" content="在手机上粘贴AI生成的HTML或模板JSON，直接打开数学物理交互图解。无需创建文件。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self' blob: about:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>数理图解 · 手机预览器</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="entry.mjs"></script>
+</head>
+<body data-view="edit">
+  <main class="editor" id="editor">
+    <header class="masthead"><a class="brand" href="./" aria-label="数理图解首页"><span class="brand-icon" aria-hidden="true">∠</span><span>数理图解<small>随身预览器</small></span></a><span class="local-label">在这台设备运行</span></header>
+    <section class="intro"><p class="eyebrow">从代码，到理解</p><h1>把图解，<br class="mobile-break">放进你的手心。</h1><p class="intro-copy">复制 AI 生成的代码，在这里粘贴。<br>不用创建文件，直接看图、播放与探索。</p></section>
+    <section class="input-card" aria-labelledby="input-heading">
+      <div class="input-head"><h2 id="input-heading">粘贴你的图解</h2><button id="paste" class="subtle" type="button">从剪贴板粘贴</button></div>
+      <label class="sr-only" for="source">图解代码</label>
+      <textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="在这里长按，选择“粘贴”&#10;&#10;<!doctype html>…&#10;或 { &quot;version&quot;: 1, … }"></textarea>
+      <div class="input-foot"><span id="count">支持完整 HTML 或模板 JSON</span><button id="clear" class="text-button" type="button">清空输入</button></div>
+      <p id="error" class="error" role="alert" tabindex="-1" hidden></p>
+      <div class="run-dock"><button id="run" class="run-button" type="button"><span>运行图解</span><span aria-hidden="true">↗</span></button></div>
+      <p class="input-note">只需复制代码，代码块外的解题说明不用粘贴。</p>
+    </section>
+    <section class="examples" aria-labelledby="examples-heading"><div class="section-head"><h2 id="examples-heading">先试一个示例</h2><span>点选后运行</span></div><div class="example-row"><button type="button" data-example="motion"><span aria-hidden="true">↗</span> 运动</button><button type="button" data-example="circuit"><span aria-hidden="true">Ω</span> 电路</button><button type="button" data-example="section"><span aria-hidden="true">◇</span> 截面</button></div></section>
+    <section class="recent" aria-labelledby="recent-heading"><div class="section-head"><h2 id="recent-heading">最近打开</h2><button id="forget" class="text-button" type="button">清除记录</button></div><div id="recent-list"></div><p id="recent-empty" class="empty">运行过的图解会留在这里，最多保留三条。</p></section>
+    <footer class="editor-footer"><p>无需账号 · 无需密钥 · 课件代码不主动上传</p><details><summary>使用说明与支持范围</summary><p>完整 HTML 用于独立图解；JSON 支持一维恒加速度运动、理想串联电路和标准实体截面。其他题型请让模型输出完整单文件 HTML。</p><p>使用手机系统浏览器打开本网站。外部脚本和联网资源受限制，图解应将样式与脚本放在文件内。页面排版和数学结论仍需结合原题核对。</p><p>草稿和最近记录仅保存在当前浏览器，清除浏览器数据后会丢失。首次打开和载入模板需要网络。</p></details></footer>
+  </main>
+  <section class="preview" aria-label="图解预览">
+    <header class="preview-bar"><button id="back" type="button" aria-label="返回编辑">‹ <span>编辑</span></button><div class="preview-meta"><h1 id="preview-title">图解预览</h1><p id="preview-kind"></p></div><button id="stop" type="button">停止</button></header>
+    <iframe id="lesson" title="交互图解" sandbox="allow-scripts" allow="fullscreen" referrerpolicy="no-referrer"></iframe>
+    <div class="preview-bottom"><span>修改代码后，重新运行即可更新。</span><button id="rerun" type="button">重新运行 ↻</button></div>
+  </section>
+  <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  <noscript><p>请使用允许JavaScript的浏览器打开，才能运行交互图解。</p></noscript>
+</body>
+</html>

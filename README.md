@@ -104,6 +104,16 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 已生成页面有文字堆叠/裁切时，附现有HTML与截图，使用[布局修复续接词](solver-lab/prompts/web-layout-repair.md)。新题、仅改参数和修布局各有独立规则；普通新题不继承旧条件。修复词不再写死传送带或匀减速；明确修固定模板布局时保留原版，另存标注衍生版并重新核验。
 
+### 手机端直接打开交互图解
+
+[公开预览器](https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site)支持学生复制完整HTML或受支持的LessonSpec JSON，粘贴后点击运行，无需新建文件、登录或提供模型API密钥。[手机交付提示词与步骤](solver-lab/prompts/mobile-preview.md)说明怎样让模型输出可直接运行的内容。
+
+手机端提供底部运行按钮、16px代码输入、可视高度与安全区适配、横屏紧凑工具栏。课件在隔离iframe内运行，代码不主动上传；草稿与最近三条记录仅保存在当前浏览器。外部CDN、联网脚本等不支持，原课件的数学与排版仍需核对。
+
+[网站源码及开发方法](mobile-preview/README.md)位于独立目录，学生使用网站无需安装它；Agent仍只安装完整的`solver-lab/`。本地18项自动测试与窄视口浏览器检查通过，安卓/iPhone实机及学生网络可达性仍未验证。详见[本次发布验证](docs/validation/2026-11-07-mobile-preview.md)。
+
+![本地390px手机编辑布局](docs/images/mobile-preview/editor-390.png)
+
 ### 发布内容与验证范围
 
 此仓库存放可直接使用的运行包与提示词，包含 `agent-manifest.json` 文件清单。`--doctor` 检查列出文件的完整性和内核加载，不是数字签名，也不认证题意或平台预览。

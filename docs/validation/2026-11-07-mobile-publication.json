@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "project_id": "appgprj_6aedd7bfca148191b803db097a05f1a5",
+  "version_number": 2,
+  "version_id": "appgprj_6aedd7bfca148191b803db097a05f1a5~appgver_a821c4c85f9881918d0756557b69347d",
+  "commit_sha": "1766fe1b9f1f86ee88df5e7235d9aebafcf0df99",
+  "deployment_id": "appgdep_6aee7a0bb10c8191871879a66b25a879",
+  "status": "succeeded",
+  "url": "https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site",
+  "access_mode": "public",
+  "tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "browser_editor_sizes": [
+    [
+      320,
+      568
+    ],
+    [
+      360,
+      740
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      430,
+      932
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      1100,
+      800
+    ]
+  ],
+  "browser_preview_sizes": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "limits": [
+    "No Android or iPhone hardware tested",
+    "Keyboard, toolbar and zoom viewport events simulated in automated tests",
+    "Local browser screenshots; no claim of anonymous phone network verification"
+  ]
+}

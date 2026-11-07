@@ -13,6 +13,7 @@
 | [solver-lab/lesson/](../solver-lab/lesson/) | 课件运行模块与输入示例 |
 | [solver-lab/examples/](../solver-lab/examples/) | 单文件课件与图形示例 |
 | [solver-lab/prompts/](../solver-lab/prompts/) | 聊天网页版提示词 |
+| [手机使用流程](../solver-lab/prompts/mobile-preview.md) / [预览器源码](../mobile-preview/README.md) | 手机复制粘贴运行HTML或模板JSON；网站与Agent技能分开使用 |
 | [solver-lab/prompts/subjects/](../solver-lab/prompts/subjects/) | 七类按需题型补充词；与一个主入口组合 |
 | [solver-lab/assets/](../solver-lab/assets/) | 可选图解查看器资源 |
 | [solver-lab/agent-manifest.json](../solver-lab/agent-manifest.json) | 运行包文件哈希，供doctor检查 |

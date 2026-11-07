@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>竖直上抛：位置、受力与 v-t 图解</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:#f5f7fb;color:#1f2937;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans SC",Arial,sans-serif;
+    line-height:1.55;
+  }
+  main{max-width:1180px;margin:0 auto;padding:18px}
+  h1{font-size:clamp(1.25rem,2.4vw,1.8rem);margin:0 0 8px}
+  h2{font-size:1rem;margin:0}
+  p{margin:.4em 0}
+  .card{
+    background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:14px;
+    margin:12px 0;box-shadow:0 1px 2px rgba(0,0,0,.04);
+  }
+  .formula{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;
+    padding:6px 8px;display:inline-block;margin:2px 0;
+  }
+  .grid-readout{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:8px;margin-top:8px;
+  }
+  .readout-item{
+    background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:8px 10px;
+  }
+  .readout-item b{display:block;font-size:.78rem;color:#64748b;font-weight:600}
+  .readout-item span{font-size:1rem;font-variant-numeric:tabular-nums}
+  .note{color:#475569;font-size:.92rem}
+  .warn{
+    color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;
+    border-radius:10px;padding:8px 10px;
+  }
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+  button{
+    font:inherit;border:1px solid #cbd5e1;background:#fff;border-radius:9px;
+    padding:7px 11px;cursor:pointer;color:#0f172a;
+  }
+  button:hover{background:#f1f5f9}
+  button.primary{background:#0f766e;border-color:#0f766e;color:#fff}
+  button.primary:hover{background:#0d5f59}
+  input[type=range]{width:100%;accent-color:#0f766e}
+  .time-line{display:flex;flex-direction:column;gap:4px;flex:1 1 260px;min-width:220px}
+  .time-label{font-variant-numeric:tabular-nums;color:#334155;font-size:.92rem}
+  .plots{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:12px;margin-top:12px;
+  }
+  .plot-card{
+    background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px;
+    display:flex;flex-direction:column;min-width:0;box-shadow:0 1px 2px rgba(0,0,0,.04);
+  }
+  .plot-head{
+    display:flex;justify-content:space-between;gap:8px;align-items:center;
+    margin-bottom:6px;flex-wrap:wrap;
+  }
+  .tools{display:flex;gap:4px;flex-wrap:wrap}
+  .tools button{padding:3px 8px;font-size:.82rem;border-radius:7px}
+  .plot-wrap{
+    position:relative;overflow:hidden;border:1px solid #e2e8f0;border-radius:10px;
+    background:#fbfdff;touch-action:none;cursor:grab;min-height:180px;
+  }
+  .plot-wrap svg{
+    display:block;width:100%;height:auto;transform-origin:50% 50%;
+    will-change:transform;
+  }
+  .plot-wrap:active{cursor:grabbing}
+  .caption{font-size:.82rem;color:#64748b;margin:6px 2px 0}
+  svg text{font-family:inherit}
+  .axis{stroke:#64748b;stroke-width:1.2}
+  .dashed{stroke:#94a3b8;stroke-width:1;stroke-dasharray:5 4}
+  .ground{stroke:#334155;stroke-width:2}
+  .curve{stroke:#2563eb;stroke-width:2.6;fill:none}
+  .point{fill:#dc2626;stroke:#fff;stroke-width:1.5}
+  .force{stroke:#dc2626;stroke-width:3;marker-end:url(#arrowForce)}
+  .vel{stroke:#2563eb;stroke-width:2.5;marker-end:url(#arrowVel);stroke-dasharray:6 4}
+  .small{font-size:11px;fill:#475569}
+  .tiny{font-size:10px;fill:#64748b}
+  .plot-card:fullscreen{background:#fff;padding:12px;border-radius:0}
+  .plot-card:fullscreen .plot-wrap{
+    flex:1;display:flex;align-items:center;justify-content:center;min-height:0;
+  }
+  .plot-card:fullscreen .plot-wrap svg{width:min(100%,1100px);height:auto;max-height:100%}
+  @media (max-width:640px){
+    main{padding:10px}
+    .card,.plot-card{border-radius:12px}
+    .plots{grid-template-columns:1fr}
+    .readout-item span{font-size:.95rem}
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="card">
+    <h1>竖直上抛：位置、局部受力与 v-t 图</h1>
+    <p><strong>题设：</strong>质量 m=1 kg，离地高度 y0=20 m，初速度 v0=10 m/s 竖直向上；不计空气阻力，g=10 m/s²；地面为零势能面，向上为正。</p>
+    <p class="note">图中“位置”按球心/质点高度计；演示区间为 0 ≤ t ≤ 到地前瞬间，到地前停止，不进入碰撞过程。</p>
+  </header>
+
+  <section class="card">
+    <h2>核心关系与结果</h2>
+    <p>全过程只受重力，取向上为正：</p>
+    <p>
+      <span class="formula">a = -g = -10 m/s²</span>，
+      <span class="formula">v(t)=10-10t</span>，
+      <span class="formula">y(t)=20+10t-5t²</span>。
+    </p>
+    <p>最高点：令 v=0，得 t<sub>最高</sub>=1 s，<span class="formula">y<sub>最高</sub>=20+10×1-5×1²=25 m</span>。</p>
+    <p>首次到地：令 y=0，得 <span class="formula">5t²-10t-20=0</span>，取正根 <span class="formula">t<sub>地前</sub>=1+sqrt(5)≈3.236 s</span>。</p>
+    <p>到地前瞬间：<span class="formula">v=10-10(1+sqrt(5))=-10sqrt(5)≈-22.36 m/s</span>，即速度大小约 22.36 m/s，方向向下。</p>
+    <p>机械能：只有重力做功，机械能守恒。初始 <span class="formula">E=K+U=½×1×10²+1×10×20=250 J</span>。最高点 E=0+250=250 J；到地前瞬间 E=½×1×(10sqrt(5))²+0=250 J。故全过程机械能不变；若发生碰撞，碰撞阶段不在本演示内，碰撞后机械能才会改变。</p>
+    <p class="note"><strong>最高点要点：</strong>最高点 v=0，但合力仍为重力 F=mg=10 N，方向向下，所以加速度仍为 -10 m/s²；速度为零不等于合力为零，下一刻速度将向下。</p>
+  </section>
+
+  <section class="card">
+    <h2>同步读数</h2>
+    <div id="stageText" class="warn">阶段：等待播放或拖动时间轴。</div>
+    <div class="grid-readout">
+      <div class="readout-item"><b>时间 t</b><span id="rTime">0.000 s</span></div>
+      <div class="readout-item"><b>高度 y</b><span id="rY">20.00 m</span></div>
+      <div class="readout-item"><b>速度 v（向上为正）</b><span id="rV">10.00 m/s</span></div>
+      <div class="readout-item"><b>速度方向/大小</b><span id="rDir">向上，10.00 m/s</span></div>
+      <div class="readout-item"><b>加速度 a</b><span id="rA">-10.00 m/s²</span></div>
+      <div class="readout-item"><b>合力 F</b><span id="rF">-10.00 N（向下）</span></div>
+      <div class="readout-item"><b>动能 K</b><span id="rK">50.0 J</span></div>
+      <div class="readout-item"><b>重力势能 U</b><span id="rU">200.0 J</span></div>
+      <div class="readout-item"><b>机械能 E</b><span id="rE">250.0 J</span></div>
+      <div class="readout-item"><b>机械能变化 ΔE</b><span id="rDE">0.0 J</span></div>
+    </div>
+
+    <div class="controls">
+      <button id="playBtn" class="primary">播放</button>
+      <button id="resetBtn">复位</button>
+      <button id="apexBtn">最高点</button>
+      <button id="groundBtn">到地前</button>
+      <div class="time-line">
+        <input id="timeSlider" type="range" min="0" max="3.2360679" step="0.001" value="0" aria-label="时间轴">
+        <div class="time-label" id="timeLabel">t = 0.000 s / 3.236 s</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plots">
+    <div class="plot-card" id="posCard">
+      <div class="plot-head">
+        <h2>竖直位置</h2>
+        <div class="tools">
+          <button data-zoom="in">＋</button>
+          <button data-zoom="out">−</button>
+          <button data-zoom="reset">复位</button>
+          <button class="fullBtn">全屏</button>
+        </div>
+      </div>
+      <div class="plot-wrap" data-plot="pos">
+        <svg id="posSvg" viewBox="0 0 360 300" role="img" aria-label="竖直位置示意图">
+          <rect x="0" y="0" width="360" height="300" fill="#fbfdff"/>
+          <line x1="38" y1="270" x2="330" y2="270" class="ground"/>
+          <text x="292" y="288" class="small">地面 y=0</text>
+          <line x1="80" y1="35" x2="80" y2="270" class="axis"/>
+          <text x="50" y="28" class="small">y/m</text>
+          <g class="tiny">
+            <line x1="80" y1="270" x2="92" y2="270" class="axis"/><text x="52" y="274">0</text>
+            <line x1="80" y1="224" x2="92" y2="224" class="axis"/><text x="52" y="228">5</text>
+            <line x1="80" y1="178" x2="92" y2="178" class="axis"/><text x="45" y="182">10</text>
+            <line x1="80" y1="132" x2="92" y2="132" class="axis"/><text x="45" y="136">15</text>
+            <line x1="80" y1="86" x2="92" y2="86" class="axis"/><text x="45" y="90">20</text>
+            <line x1="80" y1="40" x2="92" y2="40" class="axis"/><text x="45" y="44">25</text>
+          </g>
+          <line x1="80" y1="40" x2="300" y2="40" class="dashed"/>
+          <text x="245" y="34" class="tiny">最高点 25 m</text>
+          <line id="posGuide" x1="80" y1="86" x2="220" y2="86" class="dashed"/>
+          <circle id="posBall" cx="220" cy="86" r="5.5" class="point"/>
+          <text x="230" y="90" class="small">球心</text>
+        </svg>
+      </div>
+      <p class="caption">纵轴为高度 y；虚线水平线对应当前球心高度。到地前瞬间 y→0，球心在地面高度处。</p>
+    </div>
+
+    <div class="plot-card" id="forceCard">
+      <div class="plot-head">
+        <h2>局部受力</h2>
+        <div class="tools">
+          <button data-zoom="in">＋</button>
+          <button data-zoom="out">−</button>
+          <button data-zoom="reset">复位</button>
+          <button class="fullBtn">全屏</button>
+        </div>
+      </div>
+      <div class="plot-wrap" data-plot="force">
+        <svg id="forceSvg" viewBox="0 0 260 220" role="img" aria-label="局部受力图">
+          <defs>
+            <marker id="arrowForce" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+            </marker>
+            <marker id="arrowVel" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="260" height="220" fill="#fbfdff"/>
+          <circle cx="130" cy="110" r="14" fill="#0f766e" stroke="#134e4a" stroke-width="1.5"/>
+          <text x="146" y="108" class="small">球</text>
+          <line id="forceArrow" x1="130" y1="124" x2="130" y2="184" class="force"/>
+          <text x="138" y="166" class="small">F=mg</text>
+          <line id="velArrow" x1="95" y1="110" x2="95" y2="78" class="vel"/>
+          <text id="velLabel" x="82" y="76" class="small">v</text>
+          <text id="zeroVelText" x="72" y="98" class="small" visibility="hidden">v=0</text>
+        </svg>
+      </div>
+      <p class="caption">局部受力始终只有重力；速度箭头按当前 v 的方向绘制，v=0 时不画非零速度箭头。v 箭头仅示方向、长度示意；F 箭头长度固定示意，大小见上方读数。</p>
+    </div>
+
+    <div class="plot-card" id="vtCard">
+      <div class="plot-head">
+        <h2>v-t 图</h2>
+        <div class="tools">
+          <button data-zoom="in">＋</button>
+          <button data-zoom="out">−</button>
+          <button data-zoom="reset">复位</button>
+          <button class="fullBtn">全屏</button>
+        </div>
+      </div>
+      <div class="plot-wrap" data-plot="vt">
+        <svg id="vtSvg" viewBox="0 0 420 280" role="img" aria-label="速度时间图">
+          <rect x="0" y="0" width="420" height="280" fill="#fbfdff"/>
+          <line x1="55" y1="30" x2="55" y2="235" class="axis"/>
+          <line x1="55" y1="96.5" x2="390" y2="96.5" class="axis"/>
+          <text x="20" y="34" class="small">v/(m/s)</text>
+          <text x="382" y="90" class="small">t/s</text>
+          <g class="tiny">
+            <line x1="55" y1="41.1" x2="47" y2="41.1" class="axis"/><text x="24" y="45">10</text>
+            <line x1="55" y1="96.5" x2="47" y2="96.5" class="axis"/><text x="34" y="100">0</text>
+            <line x1="55" y1="152" x2="47" y2="152" class="axis"/><text x="24" y="156">-10</text>
+            <line x1="55" y1="207.4" x2="47" y2="207.4" class="axis"/><text x="24" y="211">-20</text>
+            <line x1="55" y1="235" x2="55" y2="243" class="axis"/><text x="52" y="255">0</text>
+            <line x1="156.5" y1="235" x2="156.5" y2="243" class="axis"/><text x="149" y="255">1</text>
+            <line x1="258" y1="235" x2="258" y2="243" class="axis"/><text x="251" y="255">2</text>
+            <line x1="383.5" y1="235" x2="383.5" y2="243" class="axis"/><text x="371" y="255">3.236</text>
+          </g>
+          <line x1="156.5" y1="30" x2="156.5" y2="235" class="dashed"/>
+          <text x="120" y="26" class="tiny">最高点 t=1</text>
+          <line x1="383.5" y1="30" x2="383.5" y2="235" class="dashed"/>
+          <text x="326" y="26" class="tiny">到地前</text>
+          <line id="vtCurve" x1="55" y1="41.1" x2="383.5" y2="220.4" class="curve"/>
+          <line id="vtGuide" x1="55" y1="41.1" x2="55" y2="96.5" class="dashed"/>
+          <circle id="vtPoint" cx="55" cy="41.1" r="5" class="point"/>
+          <text x="70" y="116" class="tiny">v=0 横轴</text>
+        </svg>
+      </div>
+      <p class="caption">v-t 图为一条直线：斜率 a=-10 m/s²；与 t 轴交点 t=1 s；终点为到地前瞬间，不画碰撞。</p>
+    </div>
+  </section>
+
+  <footer class="card note">
+    <p><strong>核验状态：</strong>物理结果与阶段区间由人工式推导复查；本页脚本未在当前会话的浏览器中实际运行，桌面与约 390 px 窄屏布局尚未视觉核验。播放、拖动、跳转、缩放/拖动/复位和全屏按钮需在浏览器中实际检查。</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  const g=10, m=1, y0=20, v0=10;
+  const tApex=v0/g;                 // 1 s
+  const tGround=1+Math.sqrt(5);     // 3.2360679 s
+  const yMax=y0+v0*v0/(2*g);        // 25 m
+  const vImpact=-Math.sqrt(v0*v0+2*g*y0); // -10 sqrt(5)
+  const E0=0.5*m*v0*v0 + m*g*y0;    // 250 J
+
+  const els={
+    time:document.getElementById('rTime'),
+    y:document.getElementById('rY'),
+    v:document.getElementById('rV'),
+    dir:document.getElementById('rDir'),
+    a:document.getElementById('rA'),
+    F:document.getElementById('rF'),
+    K:document.getElementById('rK'),
+    U:document.getElementById('rU'),
+    E:document.getElementById('rE'),
+    dE:document.getElementById('rDE'),
+    stage:document.getElementById('stageText'),
+    timeLabel:document.getElementById('timeLabel'),
+    slider:document.getElementById('timeSlider'),
+    playBtn:document.getElementById('playBtn'),
+    resetBtn:document.getElementById('resetBtn'),
+    apexBtn:document.getElementById('apexBtn'),
+    groundBtn:document.getElementById('groundBtn'),
+    posBall:document.getElementById('posBall'),
+    posGuide:document.getElementById('posGuide'),
+    velArrow:document.getElementById('velArrow'),
+    velLabel:document.getElementById('velLabel'),
+    zeroVelText:document.getElementById('zeroVelText'),
+    vtPoint:document.getElementById('vtPoint'),
+    vtGuide:document.getElementById('vtGuide')
+  };
+
+  // v-t 坐标映射，与 SVG 中坐标轴一致
+  const vt={left:55,right:390,top:30,bottom:235,tMax:3.3,vMin:-25,vMax:12};
+  const xVt=t=>vt.left+(t/vt.tMax)*(vt.right-vt.left);
+  const yVt=v=>vt.bottom-((v-vt.vMin)/(vt.vMax-vt.vMin))*(vt.bottom-vt.top);
+  const yZero=yVt(0);
+
+  // 位置图映射
+  const pos={groundY:270, scale:(270-40)/25, ballX:220};
+
+  let t=0;
+  let playing=false;
+  let lastTs=null;
+
+  function clampT(x){
+    if(!Number.isFinite(x)) return 0;
+    return Math.min(tGround, Math.max(0, x));
+  }
+
+  // 同一状态函数：位置、速度、受力、能量、说明全部由它给出
+  function stateAt(tt){
+    const ttClamped=clampT(tt);
+    let y=y0+v0*ttClamped-0.5*g*ttClamped*ttClamped;
+    if(ttClamped>=tGround-1e-9) y=0; // 到地前瞬间极限，避免浮点负值
+    if(y<0) y=0;
+    const v=v0-g*ttClamped;
+    const a=-g;
+    const F=m*a; // 向上为正，故 F=-10 N
+    const U=m*g*y;
+    const K=0.5*m*v*v;
+    const E=K+U;
+
+    let stage;
+    if(ttClamped < tApex-0.02){
+      stage='上升阶段：v>0，合力向下，速度减小。';
+    }else if(ttClamped <= tApex+0.02){
+      stage='最高点附近：v≈0，但合力仍为重力 10 N 向下，加速度仍为 -10 m/s²；速度为零不等于合力为零。';
+    }else if(ttClamped < tGround-1e-6){
+      stage='下落阶段：v<0，合力向下，速度向下增大。';
+    }else{
+      stage='到地前瞬间（接触前极限，尚未进入碰撞）：速度向下，合力仍为重力；碰撞过程未建模。';
+    }
+    return {t:ttClamped,y,v,a,F,U,K,E,stage};
+  }
+
+  function update(){
+    t=clampT(t);
+    const s=stateAt(t);
+
+    // 完整读数放在图外
+    els.time.textContent=s.t.toFixed(3)+' s';
+    els.y.textContent=s.y.toFixed(2)+' m';
+    els.v.textContent=s.v.toFixed(2)+' m/s';
+
+    const speed=Math.abs(s.v);
+    let dirText;
+    if(speed<0.005) dirText='速度为 0';
+    else dirText=(s.v>0?'向上':'向下')+'，'+speed.toFixed(2)+' m/s';
+    els.dir.textContent=dirText;
+
+    els.a.textContent=s.a.toFixed(2)+' m/s²';
+    els.F.textContent=s.F.toFixed(2)+' N（向下）';
+    els.K.textContent=s.K.toFixed(1)+' J';
+    els.U.textContent=s.U.toFixed(1)+' J';
+    els.E.textContent=s.E.toFixed(1)+' J';
+    els.dE.textContent=(s.E-E0).toFixed(2)+' J';
+
+    els.stage.textContent='阶段：'+s.stage;
+    els.timeLabel.textContent='t = '+s.t.toFixed(3)+' s / '+tGround.toFixed(3)+' s';
+    els.slider.value=String(s.t);
+
+    // 位置图
+    const ypix=pos.groundY-s.y*pos.scale;
+    els.posBall.setAttribute('cy', ypix.toFixed(2));
+    els.posGuide.setAttribute('y1', ypix.toFixed(2));
+    els.posGuide.setAttribute('y2', ypix.toFixed(2));
+
+    // 局部受力图：v 箭头只在非零时绘制
+    const vpixStart=110;
+    const len=Math.min(70, Math.abs(s.v)*3.2);
+    if(speed<0.05){
+      els.velArrow.setAttribute('visibility','hidden');
+      els.velLabel.setAttribute('visibility','hidden');
+      els.zeroVelText.setAttribute('visibility','visible');
+    }else{
+      els.velArrow.setAttribute('visibility','visible');
+      els.velLabel.setAttribute('visibility','visible');
+      els.zeroVelText.setAttribute('visibility','hidden');
+
+      const end=vpixStart-(s.v>0?len:-len);
+      els.velArrow.setAttribute('x1','95');
+      els.velArrow.setAttribute('x2','95');
+      els.velArrow.setAttribute('y1',String(vpixStart));
+      els.velArrow.setAttribute('y2',end.toFixed(2));
+      els.velLabel.setAttribute('x','78');
+      els.velLabel.setAttribute('y',(s.v>0? end-6 : end+14).toFixed(2));
+    }
+
+    // v-t 图当前点与辅助线
+    const x=xVt(s.t), y=yVt(s.v);
+    els.vtPoint.setAttribute('cx',x.toFixed(2));
+    els.vtPoint.setAttribute('cy',y.toFixed(2));
+    els.vtGuide.setAttribute('x1',x.toFixed(2));
+    els.vtGuide.setAttribute('x2',x.toFixed(2));
+    els.vtGuide.setAttribute('y1',y.toFixed(2));
+    els.vtGuide.setAttribute('y2',yZero.toFixed(2));
+  }
+
+  function setT(newT, pause=true){
+    t=clampT(newT);
+    if(pause){
+      playing=false;
+      els.playBtn.textContent='播放';
+      lastTs=null;
+    }
+    update();
+  }
+
+  function tick(ts){
+    if(!playing) return;
+    if(lastTs==null) lastTs=ts;
+    const dt=(ts-lastTs)/1000;
+    lastTs=ts;
+    t+=dt;
+    if(t>=tGround){
+      t=tGround;
+      playing=false;
+      els.playBtn.textContent='播放';
+      update();
+      return;
+    }
+    update();
+    requestAnimationFrame(tick);
+  }
+
+  els.playBtn.addEventListener('click',()=>{
+    if(playing){
+      playing=false;
+      els.playBtn.textContent='播放';
+      lastTs=null;
+      return;
+    }
+    if(t>=tGround-1e-9){
+      t=0;
+      update();
+    }
+    playing=true;
+    lastTs=null;
+    els.playBtn.textContent='暂停';
+    requestAnimationFrame(tick);
+  });
+
+  els.resetBtn.addEventListener('click',()=>setT(0,true));
+  els.apexBtn.addEventListener('click',()=>setT(tApex,true));
+  els.groundBtn.addEventListener('click',()=>setT(tGround,true));
+
+  els.slider.addEventListener('input',e=>{
+    playing=false;
+    els.playBtn.textContent='播放';
+    lastTs=null;
+    setT(parseFloat(e.target.value),true);
+  });
+
+  // 缩放、拖动、复位、全屏
+  function setupCard(card){
+    const wrap=card.querySelector('.plot-wrap');
+    const svg=card.querySelector('svg');
+    let scale=1, tx=0, ty=0;
+    const pointers=new Map();
+    let last=null, pinchStart=null;
+
+    function apply(){
+      svg.style.transform=`translate(${tx}px, ${ty}px) scale(${scale})`;
+    }
+    function resetView(){
+      scale=1; tx=0; ty=0; apply();
+    }
+    function zoomBy(f){
+      scale=Math.min(3, Math.max(0.6, scale*f));
+      apply();
+    }
+
+    card.querySelectorAll('[data-zoom]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const act=btn.getAttribute('data-zoom');
+        if(act==='in') zoomBy(1.18);
+        else if(act==='out') zoomBy(1/1.18);
+        else resetView();
+      });
+    });
+
+    wrap.addEventListener('wheel',e=>{
+      e.preventDefault();
+      zoomBy(e.deltaY<0?1.1:1/1.1);
+    },{passive:false});
+
+    function dist(p1,p2){return Math.hypot(p1.x-p2.x,p1.y-p2.y);}
+
+    wrap.addEventListener('pointerdown',e=>{
+      if(e.button!==undefined && e.button!==0 && e.pointerType==='mouse') return;
+      wrap.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      if(pointers.size===1){
+        last={x:e.clientX,y:e.clientY};
+      }else if(pointers.size===2){
+        const pts=[...pointers.values()];
+        pinchStart={dist:dist(pts[0],pts[1]),scale};
+        last=null;
+      }
+    });
+
+    wrap.addEventListener('pointermove',e=>{
+      if(!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+
+      if(pointers.size===1 && last){
+        tx+=e.clientX-last.x;
+        ty+=e.clientY-last.y;
+        last={x:e.clientX,y:e.clientY};
+        apply();
+      }else if(pointers.size===2 && pinchStart){
+        const pts=[...pointers.values()];
+        const factor=dist(pts[0],pts[1])/pinchStart.dist;
+        scale=Math.min(3,Math.max(0.6,pinchStart.scale*factor));
+        apply();
+      }
+    });
+
+    function endPointer(e){
+      pointers.delete(e.pointerId);
+      if(pointers.size===1){
+        const p=[...pointers.values()][0];
+        last={x:p.x,y:p.y};
+        pinchStart=null;
+      }else if(pointers.size===0){
+        last=null; pinchStart=null;
+      }else{
+        pinchStart=null;
+      }
+    }
+
+    wrap.addEventListener('pointerup',endPointer);
+    wrap.addEventListener('pointercancel',endPointer);
+    wrap.addEventListener('pointerleave',e=>{
+      if(e.pointerType==='mouse' && e.buttons===0) endPointer(e);
+    });
+
+    const fullBtn=card.querySelector('.fullBtn');
+    fullBtn.addEventListener('click',async()=>{
+      try{
+        if(document.fullscreenElement===card){
+          await document.exitFullscreen();
+        }else if(card.requestFullscreen){
+          await card.requestFullscreen();
+        }else{
+          fullBtn.textContent='不支持';
+        }
+      }catch(err){
+        fullBtn.textContent='全屏失败';
+      }
+    });
+
+    document.addEventListener('fullscreenchange',()=>{
+      if(document.fullscreenElement===card) fullBtn.textContent='退出全屏';
+      else fullBtn.textContent='全屏';
+    });
+
+    resetView();
+  }
+
+  document.querySelectorAll('.plot-card').forEach(setupCard);
+
+  els.slider.max=String(tGround);
+  setT(0,true);
+})();
+</script>
+</body>
+</html>

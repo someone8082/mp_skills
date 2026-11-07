@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "topic": "motion",
+  "title": "从静止开始，三秒后在哪里？",
+  "problemText": "自编示例：物体从静止开始，沿直线以 2 m/s² 的恒定加速度运动 3 s。求位移和末速度。",
+  "givens": {
+    "v0": { "value": 0, "unit": "m/s", "source": "从静止开始" },
+    "a": { "value": 2, "unit": "m/s²", "source": "2 m/s² 的恒定加速度" },
+    "t": { "value": 3, "unit": "s", "source": "运动 3 s" }
+  },
+  "claims": [
+    { "quantity": "s", "value": 9, "unit": "m", "source": "待核验的示例结论：位移为9m" }
+  ]
+}
