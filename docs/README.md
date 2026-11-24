@@ -13,6 +13,8 @@
 | [solver-lab/lesson/](../solver-lab/lesson/) | 课件运行模块与输入示例 |
 | [solver-lab/examples/](../solver-lab/examples/) | 单文件课件与图形示例 |
 | [solver-lab/prompts/](../solver-lab/prompts/) | 聊天网页版提示词 |
+| [教学图解布局](../solver-lab/references/web-layout.md) | 图框、图注、实时读数、动态标签和窄屏排版 |
+| [文字题解](../solver-lab/prompts/web-study.md) / [物理课件方法](../solver-lab/prompts/physics-courseware.md) | 可直接复制的文字题解与教材方法提示词 |
 | [手机使用流程](../solver-lab/prompts/mobile-preview.md) / [预览器源码](../mobile-preview/README.md) | 手机复制粘贴运行HTML或模板JSON；网站与Agent技能分开使用 |
 | [solver-lab/prompts/subjects/](../solver-lab/prompts/subjects/) | 七类按需题型补充词；与一个主入口组合 |
 | [solver-lab/assets/](../solver-lab/assets/) | 可选图解查看器资源 |

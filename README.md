@@ -100,6 +100,8 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 2. 使用[通用提示词](solver-lab/prompts/web-common.md)，再附上 [ChatGPT](solver-lab/prompts/chatgpt.md)、[DeepSeek](solver-lab/prompts/deepseek.md)、[豆包](solver-lab/prompts/doubao.md) 或 [Qwen/千问](solver-lab/prompts/qwen.md) 对应提示词及原题。
 3. 优先复用模板，只让模型生成题目 JSON，粘贴到课件输入框并“载入并核验”。播放、暂停和拖动均在本地计算，不消耗模型调用。
 
+离线课件采用浅色图框，图注、实时读数和控件紧邻主图。桌面上图解与推导并排，窄屏按题目、图解、推导的顺序阅读。独立 HTML 的生成与修复也可使用同一套[网页图解布局指引](solver-lab/references/web-layout.md)。
+
 可先用[预览探针](solver-lab/examples/preview-probe.html)检查当前聊天页面能否执行脚本。各平台账号内预览尚待实测，文件生成或探针通过不能替代正式课件验收；详见[兼容状态与人工验收](solver-lab/docs/browser-compatibility.md)。GitHub 文件页本身不执行 HTML。
 
 已生成页面有文字堆叠/裁切时，附现有HTML与截图，使用[布局修复续接词](solver-lab/prompts/web-layout-repair.md)。新题、仅改参数和修布局各有独立规则；普通新题不继承旧条件。修复词不再写死传送带或匀减速；明确修固定模板布局时保留原版，另存标注衍生版并重新核验。
@@ -108,9 +110,11 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 [公开预览器](https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site)支持学生复制完整HTML或受支持的LessonSpec JSON，粘贴后点击运行，无需新建文件、登录或提供模型API密钥。[手机交付提示词与步骤](solver-lab/prompts/mobile-preview.md)说明怎样让模型输出可直接运行的内容。
 
+本仓库的预览器源码可按题型和常用 AI 应用生成提示词。文字题解可选用数学 58 讲、力学 15 专题和其他物理 18 份配套课件的方法卡。需要绘图时选择解题与交互图解，遇到排版或播放问题时可生成修复提示。也可直接复制[网页版文字题解提示词](solver-lab/prompts/web-study.md)或[物理课件提示词](solver-lab/prompts/physics-courseware.md)。
+
 手机端提供底部运行按钮、16px代码输入、可视高度与安全区适配、横屏紧凑工具栏。课件在隔离iframe内运行，代码不主动上传；草稿与最近三条记录仅保存在当前浏览器。外部CDN、联网脚本等不支持，原课件的数学与排版仍需核对。
 
-[网站源码及开发方法](mobile-preview/README.md)位于独立目录，学生使用网站无需安装它；Agent仍只安装完整的`solver-lab/`。本地18项自动测试与窄视口浏览器检查通过，安卓/iPhone实机及学生网络可达性仍未验证。详见[本次发布验证](docs/validation/2026-11-07-mobile-preview.md)。
+[网站源码及开发方法](mobile-preview/README.md)位于独立目录。Agent 继续安装完整的 `solver-lab/`。2026-11-07 发布的历史验证记录见[手机预览器验证](docs/validation/2026-11-07-mobile-preview.md)。
 
 ![本地390px手机编辑布局](docs/images/mobile-preview/editor-390.png)
 
@@ -127,3 +131,5 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 2026-11-03资料学习增强版：开发仓库244项技能测试、10项查看器DOM测试通过；本仓库新增29项可独立运行的检索/方法卡测试。另有15个具体算例复核，覆盖首项例外、分段跨界、停车筛根、静摩擦、离板先后和参数退化；这些结果不代表对所有未见题目的整题认证。便携包内容、哈希与原有运动/截面入口已重新检查。详见[本次验证记录](docs/validation/2026-11-03-study.md)。
 
 2026-11-05提示词整理版：16份提示词文件，补全截面边数/半径/作图契约，明确反求、停车分段与并联模型边界。开发阶段17个独立正向试答的路线与关键结论复核一致；11项编译器检查及244项既有技能回归通过。这不是各网页平台的账号实测或跨模型成功率，详见[提示词发布验证](docs/validation/2026-11-05-prompts.md)。
+
+2026-11-24 更新离线课件版式、独立图解提示词和手机预览器源码。开发仓库通过 244 项技能回归和 39 项手机预览器测试。Chromium 离线检查覆盖 1366、390 和 320 px 视口，以及时间轴、播放、暂停、复位和截面作图跳步。

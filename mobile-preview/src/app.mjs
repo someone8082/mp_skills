@@ -1,5 +1,8 @@
 import { prepareContent, SANDBOX, MAX_LENGTH, DRAFT_KEY, RECENT_KEY, readRecent, remember, readDraft, saveDraft } from './core.mjs'
 import {trackViewport} from './viewport.mjs'
+import {diagnosticMessage} from './diagnostics.mjs'
+import {repairPrompt} from './prompts.mjs'
+import {copyText} from './prompt-panel.mjs'
 
 export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
   const $=id=>doc.getElementById(id)
@@ -7,12 +10,34 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
   trackViewport(doc.defaultView)
   let frame=$('lesson')
   let generation=0,draftTimer,recent=readRecent(storage)
+  let inputError, currentKind
+  const reports = new Set()
   frame.setAttribute('sandbox',SANDBOX)
   source.value=readDraft(storage)
   source.maxLength=MAX_LENGTH
 
   function announce(text) {status.textContent=text}
+  function showFeedback(visible) {
+    $('preview-feedback').hidden = !visible
+    $('toggle-feedback').setAttribute('aria-expanded', String(visible))
+  }
+  function resetFeedback() {
+    reports.clear()
+    currentKind = null
+    $('preview-diagnostic').textContent = '没有收到明确报错。若出现白屏、控件无反应或布局异常，可把实际现象发回 AI。'
+    $('preview-repair-text').hidden = true
+    $('preview-repair-message').textContent = ''
+    showFeedback(false)
+  }
+  function clearError() {
+    inputError = null
+    error.hidden = true
+    $('error-panel').hidden = true
+    $('input-repair-text').hidden = true
+    $('input-repair-message').textContent = ''
+  }
   function unload() {
+    resetFeedback()
     const clean=frame.cloneNode(false)
     clean.removeAttribute('src');clean.removeAttribute('srcdoc')
     frame.replaceWith(clean);frame=clean
@@ -30,20 +55,21 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
       const title=doc.createElement('span');title.textContent=item.title
       const type=doc.createElement('small');type.textContent=item.kind==='json'?'模板':'HTML'
       button.append(title,type)
-      button.addEventListener('click',()=>{edit('已载入最近的图解，点击运行即可。');source.value=item.code;saveDraft(storage,source.value);count();source.focus()})
+      button.addEventListener('click',()=>{edit('已载入最近的图解，点击运行即可。');source.value=item.code;saveDraft(storage,source.value);count();clearError();source.focus()})
       list.append(button)
     }
   }
   async function run() {
     source.blur()
     const ticket=++generation
-    unload();error.hidden=true;error.textContent='';setBusy(true);announce('正在准备图解…')
+    unload();clearError();setBusy(true);announce('正在准备图解…')
     saveDraft(storage,source.value)
     try {
       const lesson=await prepareContent(source.value,{compile,loadTemplate})
       if(ticket!==generation)return
       $('preview-title').textContent=lesson.title
       $('preview-kind').textContent=lesson.kind==='json'?'模板计算已执行 · 题意仍需核对':'独立 HTML · 结果请结合原题核对'
+      currentKind = lesson.kind
       doc.body.dataset.view='preview'
       // Mount after the preview has a layout; hidden frames may start with a zero-size viewport.
       frame.getBoundingClientRect()
@@ -53,16 +79,40 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
       $('back').focus()
     } catch(e) {
       if(ticket!==generation)return
-      unload();doc.body.dataset.view='edit';error.textContent=e.message||'加载失败，请检查代码是否完整。';error.hidden=false;announce('没有运行成功，请检查上方提示。');error.focus()
+      unload()
+      doc.body.dataset.view = 'edit'
+      inputError = e
+      error.textContent = e.message || '加载失败，请检查代码是否完整。'
+      error.hidden = false
+      $('error-panel').hidden = false
+      $('copy-input-repair').hidden = e.code === 'template-unavailable'
+      announce('没有运行成功，请检查上方提示。')
+      error.focus()
     } finally {if(ticket===generation)setBusy(false)}
   }
   $('run').addEventListener('click',run)
   $('back').addEventListener('click',()=>edit())
   $('stop').addEventListener('click',()=>edit('图解已停止，代码仍保留。'))
   $('rerun').addEventListener('click',run)
-  source.addEventListener('input',()=>{if($('run').disabled)edit('内容已更新，请重新运行。');else generation++;count();error.hidden=true;clearTimeout(draftTimer);draftTimer=setTimeout(()=>saveDraft(storage,source.value),350)})
+  $('copy-input-repair').addEventListener('click', () => {
+    if (inputError) copyText(doc, $('input-repair-text'), $('input-repair-message'), repairPrompt(inputError.kind, error.textContent))
+  })
+  $('toggle-feedback').addEventListener('click', () => showFeedback($('preview-feedback').hidden))
+  $('copy-preview-repair').addEventListener('click', () => {
+    const detail = reports.size ? [...reports].join('\n') : '目前没有明确报错。我看到的情况：【请填写白屏、按钮无反应或布局异常等实际现象】。'
+    copyText(doc, $('preview-repair-text'), $('preview-repair-message'), repairPrompt(currentKind, detail))
+  })
+  doc.defaultView.addEventListener('message', event => {
+    if (currentKind !== 'html') return
+    const message = diagnosticMessage(event, frame)
+    if (!message || reports.has(message) || reports.size >= 3) return
+    reports.add(message)
+    $('preview-diagnostic').textContent = [...reports].join('\n')
+    showFeedback(true)
+  })
+  source.addEventListener('input',()=>{if($('run').disabled)edit('内容已更新，请重新运行。');else generation++;count();clearError();clearTimeout(draftTimer);draftTimer=setTimeout(()=>saveDraft(storage,source.value),350)})
   doc.defaultView.addEventListener('pagehide',()=>saveDraft(storage,source.value))
-  $('clear').addEventListener('click',()=>{edit('输入已清空；最近记录仍可重新载入。');source.value='';saveDraft(storage,'');count();error.hidden=true;source.focus()})
+  $('clear').addEventListener('click',()=>{edit('输入已清空；最近记录仍可重新载入。');source.value='';saveDraft(storage,'');count();clearError();source.focus()})
   $('forget').addEventListener('click',()=>{
     if(!doc.defaultView.confirm('清除这台设备上保存的最近图解？当前编辑内容会保留。'))return
     try {storage.removeItem(RECENT_KEY);recent=[];history();announce('最近记录已清除。')}catch {announce('浏览器未允许清除记录。')}
@@ -71,12 +121,12 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
     try {
       const text=await doc.defaultView.navigator.clipboard.readText()
       if(text.length>MAX_LENGTH)throw Error('代码太长，请只复制这一题。')
-      edit('已粘贴，点击运行图解。');source.value=text;saveDraft(storage,text);count();error.hidden=true
+      edit('已粘贴，点击运行图解。');source.value=text;saveDraft(storage,text);count();clearError()
     } catch {source.focus();announce('请长按输入框，选择“粘贴”。浏览器可能未开放剪贴板读取。')}
   })
   for(const button of doc.querySelectorAll('[data-example]')) {
     button.addEventListener('click',async()=>{
-      const ticket=++generation;unload();setBusy(false);doc.body.dataset.view='edit';error.hidden=true;announce('正在载入示例…')
+      const ticket=++generation;unload();setBusy(false);doc.body.dataset.view='edit';clearError();announce('正在载入示例…')
       try {
         const text=await loadExample(button.dataset.example)
         if(ticket!==generation)return
@@ -84,7 +134,7 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
       } catch {if(ticket===generation)announce('示例暂时无法载入，仍可直接粘贴代码。')}
     })
   }
-  doc.addEventListener('keydown',e=>{if(e.key==='Escape'&&doc.body.dataset.view==='preview')edit();if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}})
+  doc.addEventListener('keydown',e=>{if(e.key==='Escape'&&doc.body.dataset.view==='preview')edit();if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&!$('preview-input').hidden){e.preventDefault();run()}})
   count();history()
   return {run,edit}
 }

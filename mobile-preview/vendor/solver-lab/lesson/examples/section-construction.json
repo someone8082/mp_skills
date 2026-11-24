@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "topic": "section",
+  "title": "正方体截面：从三个已知点找到五边形",
+  "problemText": "在棱长为1的正方体ABCD-A₁B₁C₁D₁中，E、F分别为AB、CC₁的中点。作经过D₁、E、F的截面。",
+  "givens": {
+    "solid": { "kind": "cube", "a": 1 },
+    "plane": { "points": [[0, 1, 1], [0.5, 0, 0], [1, 1, 0.5]] },
+    "unit": "m"
+  },
+  "assumptions": ["原题没有物理单位；本图以1m代表一个题目长度单位，仅为显示约定。"],
+  "construction": {
+    "points": [
+      { "name": "E", "edge": ["A", "B"], "ratio": 0.5 },
+      { "name": "F", "edge": ["C", "C1"], "ratio": 0.5 }
+    ],
+    "through": ["D1", "E", "F"],
+    "operations": [
+      { "type": "join", "points": ["D1", "F"] },
+      { "type": "intersect", "name": "G", "lines": [["D1", "F"], ["D", "C"]] },
+      { "type": "join", "points": ["G", "E"] },
+      { "type": "intersect", "name": "M", "lines": [["G", "E"], ["B", "C"]] },
+      { "type": "intersect", "name": "H", "lines": [["G", "E"], ["D", "A"]] },
+      { "type": "join", "points": ["D1", "H"] },
+      { "type": "intersect", "name": "N", "lines": [["D1", "H"], ["A", "A1"]] },
+      { "type": "finish", "points": ["D1", "N", "E", "M", "F"] }
+    ]
+  }
+}

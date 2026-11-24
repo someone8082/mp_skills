@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#146557">
-  <meta name="description" content="在手机上粘贴AI生成的HTML或模板JSON，直接打开数学物理交互图解。无需创建文件。">
+  <meta name="description" content="为高中数理题生成提示词，在手机上运行 AI 返回的交互图解。">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self' blob: about:; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>数理图解 · 手机预览器</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -14,24 +14,78 @@
 <body data-view="edit">
   <main class="editor" id="editor">
     <header class="masthead"><a class="brand" href="./" aria-label="数理图解首页"><span class="brand-icon" aria-hidden="true">∠</span><span>数理图解<small>随身预览器</small></span></a><span class="local-label">在这台设备运行</span></header>
-    <section class="intro"><p class="eyebrow">从代码，到理解</p><h1>把图解，<br class="mobile-break">放进你的手心。</h1><p class="intro-copy">复制 AI 生成的代码，在这里粘贴。<br>不用创建文件，直接看图、播放与探索。</p></section>
+    <section class="intro"><h1>数理解题与图解</h1><p class="intro-copy">把教材方法和原题合成一份提示词，复制到网页版 AI。需要动画时，再把代码粘贴回来运行。</p></section>
+    <nav class="flow-switch" aria-label="图解操作">
+      <button id="show-preview-input" type="button" aria-pressed="true" aria-controls="preview-input">运行代码</button>
+      <button id="show-compose" type="button" aria-pressed="false" aria-controls="prompt-panel">生成提示词</button>
+    </nav>
+    <section id="prompt-panel" class="input-card prompt-panel" aria-labelledby="prompt-heading" hidden>
+      <h2 id="prompt-heading">为这道题生成提示词</h2>
+      <form id="prompt-form">
+        <div class="prompt-selects">
+          <label for="prompt-subject">题型<select id="prompt-subject"></select></label>
+          <label for="prompt-model">使用的 AI<select id="prompt-model"></select></label>
+        </div>
+        <label class="prompt-mode" for="prompt-mode">想要的回答
+          <select id="prompt-mode">
+            <option value="study">分步解题</option>
+            <option value="diagram">解题与交互图解</option>
+          </select>
+        </label>
+        <label for="prompt-problem">题目</label>
+        <textarea id="prompt-problem" maxlength="8000" placeholder="粘贴完整题目。若有题图，可在 AI 对话里一并发送。"></textarea>
+        <div class="prompt-trial-row" id="prompt-trials" aria-label="试用题"></div>
+        <details id="method-picker" class="method-picker">
+          <summary>手选教材专题（可选）</summary>
+          <label for="prompt-method">数学 58 讲 · 力学 15 专题 · 其他物理 18 讲</label>
+          <select id="prompt-method" disabled><option value="">按题目自动推荐</option></select>
+          <p id="method-load-status" class="flow-message" role="status"></p>
+        </details>
+        <button type="submit" class="run-button" id="generate-prompt">生成提示词</button>
+      </form>
+      <p id="prompt-message" class="flow-message" role="status"></p>
+      <div id="prompt-result" hidden>
+        <p id="prompt-methods-used" class="flow-message"></p>
+        <label for="prompt-output">可复制的提示词</label>
+        <textarea id="prompt-output" readonly></textarea>
+        <div class="flow-actions">
+          <button type="button" class="subtle" id="copy-prompt">复制提示词</button>
+          <button type="button" class="subtle" id="go-to-paste">去粘贴 AI 回复</button>
+        </div>
+      </div>
+    </section>
+    <div id="preview-input">
     <section class="input-card" aria-labelledby="input-heading">
       <div class="input-head"><h2 id="input-heading">粘贴你的图解</h2><button id="paste" class="subtle" type="button">从剪贴板粘贴</button></div>
       <label class="sr-only" for="source">图解代码</label>
       <textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="在这里长按，选择“粘贴”&#10;&#10;<!doctype html>…&#10;或 { &quot;version&quot;: 1, … }"></textarea>
       <div class="input-foot"><span id="count">支持完整 HTML 或模板 JSON</span><button id="clear" class="text-button" type="button">清空输入</button></div>
-      <p id="error" class="error" role="alert" tabindex="-1" hidden></p>
+      <div id="error-panel" class="error" hidden>
+        <p id="error" role="alert" tabindex="-1" hidden></p>
+        <button id="copy-input-repair" class="subtle" type="button">复制修复提示</button>
+        <textarea id="input-repair-text" class="repair-text" aria-label="输入修复提示" readonly hidden></textarea>
+        <p id="input-repair-message" class="flow-message" role="status"></p>
+      </div>
       <div class="run-dock"><button id="run" class="run-button" type="button"><span>运行图解</span><span aria-hidden="true">↗</span></button></div>
-      <p class="input-note">只需复制代码，代码块外的解题说明不用粘贴。</p>
+      <p class="input-note">可粘贴完整代码，也可粘贴只含一个 HTML 或 JSON 代码块的 AI 回复。</p>
     </section>
     <section class="examples" aria-labelledby="examples-heading"><div class="section-head"><h2 id="examples-heading">先试一个示例</h2><span>点选后运行</span></div><div class="example-row"><button type="button" data-example="motion"><span aria-hidden="true">↗</span> 运动</button><button type="button" data-example="circuit"><span aria-hidden="true">Ω</span> 电路</button><button type="button" data-example="section"><span aria-hidden="true">◇</span> 截面</button></div></section>
     <section class="recent" aria-labelledby="recent-heading"><div class="section-head"><h2 id="recent-heading">最近打开</h2><button id="forget" class="text-button" type="button">清除记录</button></div><div id="recent-list"></div><p id="recent-empty" class="empty">运行过的图解会留在这里，最多保留三条。</p></section>
     <footer class="editor-footer"><p>无需账号 · 无需密钥 · 课件代码不主动上传</p><details><summary>使用说明与支持范围</summary><p>完整 HTML 用于独立图解；JSON 支持一维恒加速度运动、理想串联电路和标准实体截面。其他题型请让模型输出完整单文件 HTML。</p><p>使用手机系统浏览器打开本网站。外部脚本和联网资源受限制，图解应将样式与脚本放在文件内。页面排版和数学结论仍需结合原题核对。</p><p>草稿和最近记录仅保存在当前浏览器，清除浏览器数据后会丢失。首次打开和载入模板需要网络。</p></details></footer>
+    </div>
   </main>
   <section class="preview" aria-label="图解预览">
     <header class="preview-bar"><button id="back" type="button" aria-label="返回编辑">‹ <span>编辑</span></button><div class="preview-meta"><h1 id="preview-title">图解预览</h1><p id="preview-kind"></p></div><button id="stop" type="button">停止</button></header>
     <iframe id="lesson" title="交互图解" sandbox="allow-scripts" allow="fullscreen" referrerpolicy="no-referrer"></iframe>
-    <div class="preview-bottom"><span>修改代码后，重新运行即可更新。</span><button id="rerun" type="button">重新运行 ↻</button></div>
+    <footer class="preview-footer">
+      <div id="preview-feedback" class="preview-feedback" hidden>
+        <p id="preview-diagnostic" role="status"></p>
+        <button type="button" class="subtle" id="copy-preview-repair">复制修复提示</button>
+        <textarea id="preview-repair-text" class="repair-text" aria-label="运行修复提示" readonly hidden></textarea>
+        <p id="preview-repair-message" class="flow-message" role="status"></p>
+      </div>
+      <div class="preview-bottom"><button id="toggle-feedback" type="button" aria-expanded="false" aria-controls="preview-feedback">图解有问题</button><button id="rerun" type="button">重新运行 ↻</button></div>
+    </footer>
   </section>
   <p id="status" class="sr-only" role="status" aria-live="polite"></p>
   <noscript><p>请使用允许JavaScript的浏览器打开，才能运行交互图解。</p></noscript>

@@ -34,4 +34,30 @@ for(const topic of ['motion','circuit','section']) {
     await cp(resolve(skill,`lesson/examples/${topic}.json`),resolve(vendor,`lesson/examples/${topic}.json`))
   }
 }
+let construction = resolve(skill, 'lesson/examples/section-construction.json')
+const constructionSnapshot = resolve(vendor, 'lesson/examples/section-construction.json')
+try { await access(construction) } catch { construction = constructionSnapshot }
+await cp(construction, resolve(dist, 'examples/construction.json'))
+if (construction !== constructionSnapshot) await cp(construction, constructionSnapshot)
+
+// Publish only the synthesized cards and page references, without PDF extracts.
+const studySnapshot = resolve(vendor, 'references/study')
+await mkdir(studySnapshot, {recursive:true})
+const cards = []
+for (const subject of ['math', 'physics']) {
+  const snapshot = resolve(studySnapshot, `${subject}.json`)
+  const original = resolve(skill, `references/study/${subject}.json`)
+  let file = original
+  try { await access(file) } catch { file = snapshot }
+  const data = await readFile(file, 'utf8')
+  if (file !== snapshot) await writeFile(snapshot, data)
+  for (const {id, subject, title, keywords, conditions, method, pitfalls, transferChecks, source} of JSON.parse(data)) {
+    cards.push({id, subject, title, keywords, conditions, method, pitfalls, transferChecks,
+      source:{title:source.title, pages:source.pages}})
+  }
+}
+await mkdir(resolve(dist, 'study'), {recursive:true})
+const courseware = JSON.parse(await readFile(resolve(root, 'study/physics-courseware.json'), 'utf8'))
+cards.push(...courseware)
+await writeFile(resolve(dist, 'study/cards.json'), JSON.stringify(cards))
 console.log(JSON.stringify({ok:true,output:dist,runtimeModules:seen.size}))

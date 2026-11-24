@@ -1,4 +1,5 @@
 import { mountPlayer } from './app.mjs'
+import { mountPromptPanel } from './prompt-panel.mjs'
 import { compileLesson } from './runtime/lesson/compile.mjs'
 
 let storage
@@ -8,4 +9,6 @@ async function load(path) {
   if(!response.ok)throw Error('模板暂时没有加载成功，请检查网络后重试。')
   return response.text()
 }
-mountPlayer({doc:document,storage,compile:compileLesson,loadTemplate:topic=>load(`templates/lesson-${topic}.html`),loadExample:topic=>load(`examples/${topic}.json`)})
+const loadExample = name => load(`examples/${name}.json`)
+mountPlayer({doc:document,storage,compile:compileLesson,loadTemplate:topic=>load(`templates/lesson-${topic}.html`),loadExample})
+mountPromptPanel({doc:document,loadExample,loadMethodCards:async () => JSON.parse(await load('study/cards.json'))})

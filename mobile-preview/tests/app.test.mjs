@@ -69,3 +69,22 @@ test('an error announces the problem without forcing the phone keyboard open',as
   assert.notEqual(doc.activeElement,doc.querySelector('#source'))
   assert.equal(doc.activeElement,doc.querySelector('#error'))
 })
+
+test('only the active isolated preview can report diagnostics, and changing content clears old reports',async()=>{
+  const {doc,app,dom}=await setup()
+  doc.querySelector('#source').value='<html><p>图解</p></html>'
+  await app.run()
+  const frame=doc.querySelector('#lesson').contentWindow
+  const send=(source,origin,message)=>dom.window.dispatchEvent(new dom.window.MessageEvent('message',{
+    source,origin,data:{channel:'solver-lab-preview',message},
+  }))
+  send(dom.window,'null','来自其他页面的消息')
+  send(frame,'https://example.test','错误来源的消息')
+  assert.equal(doc.querySelector('#preview-feedback').hidden,true)
+  send(frame,'null','课件脚本缺少函数')
+  assert.equal(doc.querySelector('#preview-feedback').hidden,false)
+  assert.equal(doc.querySelector('#preview-diagnostic').textContent,'课件脚本缺少函数')
+  await app.run()
+  send(frame,'null','旧内容的消息')
+  assert.equal(doc.querySelector('#preview-feedback').hidden,true)
+})
