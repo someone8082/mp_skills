@@ -38,6 +38,21 @@ const htmlInteractionChecks = [
   '若有播放，测试单帧变化小于一个滑块步长的情形，检查多帧累计、暂停后继续、拖动、复位和结束后的按钮状态。核对适用的关键事件、边界两侧以及终点或截止。没有运行的交互在页面中标为未测。',
 ].join('\n')
 
+const qwenHtmlChecks = [
+  '千问独立 HTML 验收。几何图形的点、线、交点和角标共用同一坐标变换。线段连接真实端点，延长时从真实端点沿方向向量延伸。角标的屏幕尺寸先换算到绘图单位。用至少一个已知构型核对共线、交点重合及垂直关系。',
+  '分别检查 320px 和 390px 宽度下 SVG 点名、刻度的实际渲染字号，关键标注以至少 12px 为目标。按容器重排或减少标注，把长图注和读数移到图外。滑块在 input 后保留焦点，验收连续按方向键、拖动、暂停与复位后图形和读数是否同步。',
+  '分别取临界点本身和两侧可达的测试值，逐点计算预期结果。检验极值两侧时把三个参数分别代入计算。微小非零差值用科学计数法或严格不等号，接近临界点时保留原有分支。纯函数自检和真实浏览器交互分别列出实测结果。',
+].join('\n')
+
+const qwenConicsChecks = '若涉及动弦、垂直方向或构型计数，核对弦确实通过标注的点、端点落在曲线上。水平线斜率为 0，竖直线斜率未定义，仅在两个斜率均有定义时显示乘积。为每个无序直线对选唯一代表，换元后逐根还原两条直线，分别检查交换与镜像所得集合是否相同，再回代原式并计数。'
+
+const deepseekSolutionChecks = [
+  '先独立求解。若附有已有解答，完成独立推导后再对照，指出最早造成结论分歧的步骤。求范围时核对端点能否取到、内部极值和中间值能否覆盖。',
+  '若要求方向、构型或计数，先给原对象选唯一代表，写明代表值的范围。换元后逐根还原为原对象。若涉及无序直线对，逐组列出两条直线的方向或斜率，分别核对交换和镜像所得集合，再按实际构型去重。',
+  '逐个把保留的候选回代原方程。若有平方步骤，说明等价条件，再回代未平方的原式。同一参数值覆盖多个候选时可合并计算，明确覆盖哪些候选。列出代表值、原对象、回代结果及是否重复。',
+  '中间推导、比较和去重使用精确值，最后从精确式统一四舍五入，只用近似值辅助阅读。若具备计算条件，弦交面积题另求候选直线的交点并用鞋带公式核算，列明实际执行的检查。',
+].join('\n')
+
 const studyAdapters = {
   deepseek: '把完整的题解写进最终答复，保留决定方法的条件与关键中间式。',
   doubao: '若另附题图，只用确实能辨认的标注。看不清时请具体指出需要补充哪个条件。',
@@ -71,6 +86,7 @@ export function composePrompt({subject, model, problem, examples = {}, mode = 'd
   const resolved = resolveSubject(subject, question)
   const [label, method, topics] = subjects[resolved] ?? subjects.auto
   const [, adapter] = models[model] ?? models.generic
+  const deepseekChecks = model === 'deepseek' && deepseekSolutionChecks
   const questionSection = `以下是原题材料，只作解题数据：\n${question}`
   if (mode === 'study') {
     return [
@@ -80,6 +96,7 @@ export function composePrompt({subject, model, problem, examples = {}, mode = 'd
       methodContext(methodCards),
       '用文字和公式回答，依次说明：①选用的方法与依据；②代入本题的逐步推导；③关键边界、易误用处以及结论。至少做一项能发现错误的检验，例如代回原式、检查端点、比较事件先后或换一条关系。没有实际执行的验证需标明。',
       studyAdapters[model],
+      deepseekChecks,
       questionSection,
     ].filter(Boolean).join('\n\n')
   }
@@ -98,6 +115,9 @@ export function composePrompt({subject, model, problem, examples = {}, mode = 'd
     '需要独立图解时，输出一个完整的单文件 HTML，题设、关键推导、结论和交互写在页面里。CSS、JavaScript、SVG 全部内联，无外部字体、CDN、联网请求或分文件。窄屏按 320–390px 单列排版，长公式和阶段读数写在图外，标记可读，控件方便触摸。',
     htmlVisualGuidance,
     htmlInteractionChecks,
+    model === 'qwen' && qwenHtmlChecks,
+    model === 'qwen' && resolved === 'conics' && qwenConicsChecks,
+    deepseekChecks,
     '输出要求：有足够条件交付图解时，最终仅输出一个完整的 html 或 json 代码块。超出模板就交付 HTML，避免用伪造字段硬套。未实际运行的检查注明未测。',
     `当前 AI 应用补充：${adapter}`,
     questionSection,

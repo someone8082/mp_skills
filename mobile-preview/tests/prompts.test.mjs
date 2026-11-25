@@ -28,6 +28,36 @@ test('an optics question gets HTML instructions and no unrelated template exampl
   assert.match(prompt, /仅输出.*代码块/)
 })
 
+test('Qwen diagram prompts request geometry, mobile and numeric checks from the HTML review', () => {
+  const options = {subject:'conics', model:'qwen', problem:'椭圆内过 P 作一对垂直弦，数出指定面积的不同四边形。'}
+  const prompt = composePrompt(options)
+  assert.match(prompt, /延长.*真实端点.*方向向量/)
+  assert.match(prompt, /实际渲染字号.*12px/)
+  assert.match(prompt, /滑块.*保留焦点/)
+  assert.match(prompt, /水平线斜率.*竖直线斜率未定义/)
+  assert.match(prompt, /无序直线对.*镜像/)
+  assert.match(prompt, /临界点本身.*可达的测试值/)
+  assert.match(prompt, /极值两侧.*分别代入/)
+  assert.doesNotMatch(composePrompt({...options, mode:'study'}), /实际渲染字号|无序直线对/)
+  assert.doesNotMatch(composePrompt({...options, model:'deepseek'}), /实际渲染字号|竖直线斜率未定义/)
+  assert.doesNotMatch(composePrompt({...options, subject:'optics'}), /无序直线对/)
+})
+
+test('DeepSeek answer modes recover original candidates and request exact verification before rounding', () => {
+  const options = {subject:'conics', model:'deepseek', problem:'过 P 作两条垂直弦，求指定面积的四边形个数。'}
+  for (const mode of ['study','diagram']) {
+    const prompt = composePrompt({...options, mode})
+    assert.match(prompt, /逐根还原.*原对象/)
+    assert.match(prompt, /无序直线对.*交换.*镜像/)
+    assert.match(prompt, /未平方的原式.*覆盖哪些候选/)
+    assert.match(prompt, /最后.*统一四舍五入/)
+    assert.match(prompt, /鞋带公式.*实际执行/)
+    assert.doesNotMatch(prompt, /实际渲染字号/)
+    assert.ok(prompt.endsWith(options.problem))
+  }
+  assert.doesNotMatch(composePrompt({...options, model:'chatgpt', mode:'study'}), /统一四舍五入/)
+})
+
 test('standalone diagram prompts include visual guidance without adding it to text answers or JSON repairs', () => {
   const options = {subject:'optics', model:'qwen', problem:'求水到空气的临界角。'}
   for (const prompt of [composePrompt(options), repairPrompt('html', '排版拥挤')]) {
@@ -71,7 +101,7 @@ test('a single fenced lesson can be copied together with the explanation', async
   const response = `思路如下。\n\n\`\`\`json\n${motion.trim()}\n\`\`\`\n\n位移为9 m。`
   const lesson = await prepareContent(response, options)
   assert.equal(lesson.answer.s, 9)
-  assert.equal(lesson.code, motion.trim())
+  assert.equal(lesson.code, motion.trim().replaceAll('\r\n', '\n'))
 })
 
 test('multiple lesson blocks and a truncated code fence give actionable errors', async () => {
