@@ -32,12 +32,15 @@ export function mountPromptPanel({doc, loadExample, loadMethodCards}) {
   function getCards() {
     cardsRequest ??= loadMethodCards().then(cards => {
       const groups = [
-        ['数学讲义', cards.filter(card => card.subject === 'math')],
+        ...Array.from({length:12}, (_, index) => [`高考必刷题 · 第 ${index + 1} 章`,
+          cards.filter(card => card.collection === 'bishua-2027' && card.chapter === index + 1)]),
+        ['数学讲义', cards.filter(card => card.subject === 'math' && !card.collection)],
         ['力学专题', cards.filter(card => card.subject === 'physics' && !card.category)],
         ...['磁场', '电磁感应', '交变电流与传感器', '光学', '热学'].map((label, index) =>
           [label, cards.filter(card => card.id.startsWith(`physics-${10 + index}.`))]),
       ]
       for (const [label, entries] of groups) {
+        if (!entries.length) continue
         const group = doc.createElement('optgroup')
         group.label = label
         for (const card of entries) {

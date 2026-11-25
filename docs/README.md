@@ -7,7 +7,8 @@
 | [solver-lab/SKILL.md](../solver-lab/SKILL.md) | 技能入口与按需参考路由 |
 | [solver-lab/scripts/](../solver-lab/scripts/) | `agent.mjs`解题、`study.mjs`查方法、课件与公式入口 |
 | [solver-lab/references/](../solver-lab/references/) | 输入格式、综合题方法、图解、动画及使用边界 |
-| [solver-lab/references/study/](../solver-lab/references/study/) | 数学58讲、力学15专题的目录和方法卡 |
+| [solver-lab/references/study/](../solver-lab/references/study/) | 必刷题、数学讲义和力学专题的方法卡 |
+| [2027 高考必刷题数学方法卡索引](study/bishua-2027-index.md) | 12 章 132 张卡的知识点和册别页码 |
 | [solver-lab/kit/](../solver-lab/kit/) | 确定性的数理与图形工具 |
 | [solver-lab/shared/](../solver-lab/shared/) | 开发仓库生成的共享数学内核 |
 | [solver-lab/lesson/](../solver-lab/lesson/) | 课件运行模块与输入示例 |

@@ -7,6 +7,7 @@ import {composePrompt} from '../src/prompts.mjs'
 const groups = await Promise.all(['math', 'physics'].map(async subject =>
   JSON.parse(await readFile(new URL(`../vendor/solver-lab/references/study/${subject}.json`, import.meta.url), 'utf8'))))
 const cards = groups.flat()
+const bishua = JSON.parse(await readFile(new URL('../vendor/solver-lab/references/study/math-bishua-2027.json', import.meta.url), 'utf8'))
 
 test('the web card source covers both supplied books, with complete methods and page ranges', () => {
   assert.deepEqual(groups.map(group => group.length), [58, 15])
@@ -65,4 +66,18 @@ test('a graph prompt carries the same actual method, while an unmatched prompt c
   const unmatched = composePrompt({subject:'thermal', model:'generic', problem:'等温过程压强如何变化？', mode:'study'})
   assert.match(unmatched, /没有附教材方法卡/)
   assert.doesNotMatch(unmatched, /PDF 第/)
+})
+
+test('new-book non-graph methods can be selected, cited, and sent as text-only prompts', () => {
+  const library = [...cards, ...bishua]
+  const problem = '根据这个列联表做独立性检验，用卡方统计量描述结论。'
+  const selected = selectMethodCards(library, {subject:'probability', problem})
+  assert.equal(selected[0]?.id, 'bishua-2027-m12-s06')
+  const prompt = composePrompt({subject:'probability', model:'generic', problem, mode:'study', methodCards:selected})
+  assert.match(prompt, /必刷题.*主书.*PDF 第 177–178 页.*书内第 163–164 页/)
+  assert.match(prompt, /对应资料.*答案及详细解析/)
+  assert.doesNotMatch(prompt, /LessonSpec|单文件 HTML/)
+  const conic = selectMethodCards(library, {subject:'conics', problem:'椭圆与直线相交，求弦长及弦中点。'})
+  assert.equal(conic[0]?.id, 'math-53')
+  assert.equal(conic[1]?.collection, 'bishua-2027')
 })

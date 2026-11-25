@@ -47,6 +47,7 @@ export function resolveSubject(subject, problem) {
 function coversSubject(card, subject) {
   if (subject === 'auto') return true
   if (card.subject === 'math') {
+    if (card.collection) return card.category === subject
     const chapter = Number(card.id.slice('math-'.length))
     if (subject === 'geometry') return chapter >= 18 && chapter <= 53
     if (subject === 'conics') return chapter >= 46 && chapter <= 53
@@ -80,7 +81,6 @@ export function selectMethodCards(cards, {subject, problem, manualId}) {
   }
   subject = resolveSubject(subject, problem)
   const preferred = preferredGeometryCards(subject, problem).map(id => cards.find(card => card.id === id)).filter(Boolean)
-  if (preferred.length) return preferred
   const query = normalize(problem)
   const formulaText = problem.normalize('NFKC').toLowerCase().replace(/[–—−]/g, '-').replace(/\s/g, '')
   const ranked = []
@@ -100,8 +100,19 @@ export function selectMethodCards(cards, {subject, problem, manualId}) {
     if (score > 0) ranked.push({card, score})
   }
   ranked.sort((a, b) => b.score - a.score || a.card.id.localeCompare(b.card.id, 'en'))
+  if (preferred.length) {
+    const supplement = ranked.find(({card}) => card.collection === 'bishua-2027')?.card
+    return supplement ? [preferred[0], supplement] : preferred
+  }
   const cutoff = (ranked[0]?.score ?? 0) * 0.6
   return ranked.filter(item => item.score >= cutoff).slice(0, 2).map(item => item.card)
+}
+
+function sourceLocator({title, pages, slides, printed, section}) {
+  const pdfRange = pages && (pages[0] === pages[1] ? pages[0] : `${pages[0]}–${pages[1]}`)
+  const printedRange = printed && (printed[0] === printed[1] ? printed[0] : `${printed[0]}–${printed[1]}`)
+  const locator = slides ? `PPT 第 ${slides.join('、')} 张（按课件顺序从 1 起）` : `PDF 第 ${pdfRange} 页（从 1 起）`
+  return `《${title.replace(/\.(pdf|pptx)$/i, '')}》${locator}${printed ? `，书内第 ${printedRange} 页` : ''}${section ? `，${section}` : ''}。`
 }
 
 export function methodContext(cards) {
@@ -109,16 +120,14 @@ export function methodContext(cards) {
   return [
     '下列教材方法卡是提炼的参考方法。先逐项核对前提，说明哪些条件由题设给出、哪些需推导或仍未知。选真正适用的方法，结合原题写式子与理由；若前提不符，说明原因并换路线。变式检查是复核建议，不是额外题设。只列实际用到的卡片和所附出处，注明依据是方法卡；不要声称已通读或查阅原书或原课件。',
     ...cards.map(card => {
-      const {title, pages, slides} = card.source
-      const locator = slides ? `PPT 第 ${slides.join('、')} 张（按课件顺序从 1 起）` :
-        `PDF 第 ${pages[0] === pages[1] ? pages[0] : `${pages[0]}–${pages[1]}`} 页（从 1 起）`
       return [
         `【${card.id} ${card.title}】`,
         `适用前提：\n- ${card.conditions.join('\n- ')}`,
         `解法步骤：\n${card.method.map((item, index) => `${index + 1}. ${item}`).join('\n')}`,
         `常见反例或误用：\n- ${card.pitfalls.join('\n- ')}`,
         `复核与变式：\n- ${card.transferChecks.join('\n- ')}`,
-        `来源定位：《${title.replace(/\.(pdf|pptx)$/i, '')}》${locator}。`,
+        `来源定位：${sourceLocator(card.source)}`,
+        ...((card.relatedSources ?? []).map(source => `对应资料：${sourceLocator(source)}`)),
       ].join('\n')
     }),
   ].join('\n\n')

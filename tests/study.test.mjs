@@ -12,13 +12,28 @@ function run(args, cwd = tmpdir()) {
   return { status: proc.status, body: JSON.parse(proc.stdout) }
 }
 
-test('portable catalog covers 58 mathematics lectures and 15 mechanics topics', () => {
+test('portable catalog keeps the original mathematics lectures and mechanics topics discoverable', () => {
   const { status, body } = run(['--list'])
   assert.equal(status, 0)
-  assert.equal(body.results.length, 73)
-  assert.equal(body.results.filter(x => x.subject === 'math').length, 58)
+  assert.equal(body.results.filter(x => /^math-\d+$/.test(x.id)).length, 58)
   assert.equal(body.results.filter(x => x.subject === 'physics').length, 15)
-  assert.equal(new Set(body.results.map(x => x.id)).size, 73)
+  assert.equal(new Set(body.results.map(x => x.id)).size, body.results.length)
+})
+
+test('the new book can be selected and non-graph methods resolve to page-anchored cards', () => {
+  const collection = ['--collection', 'bishua-2027']
+  const listing = run(['--list', ...collection])
+  assert.equal(listing.status, 0)
+  assert.equal(listing.body.results.length, 132)
+  const lookup = run(['--query', '列联表独立性检验', ...collection])
+  assert.equal(lookup.status, 0)
+  assert.equal(lookup.body.results[0]?.id, 'bishua-2027-m12-s06')
+  assert.ok(lookup.body.results.every(x => x.collection === 'bishua-2027'))
+  const { body } = run(['--id', 'bishua-2027-m12-s06', ...collection])
+  assert.deepEqual(body.card.source.pages, [177, 178])
+  assert.deepEqual(body.card.source.printed, [163, 164])
+  assert.equal(body.card.relatedSources[0].pages[0], 195)
+  assert.ok(body.card.method.some(step => step.includes('χ²')))
 })
 
 test('exact card lookup carries preconditions, method, limits and verifiable source pages', () => {
@@ -90,7 +105,7 @@ test('catalog and detailed cards have a one-to-one mapping, local paths are abse
   }
 })
 
-for (const args of [[], ['--query', ''], ['--id', '../../README.md'], ['--id', 'math-99'],
+for (const args of [[], ['--query', ''], ['--id', '../../README.md'], ['--id', 'math-99'], ['--list', '--collection', '../physics'],
   ['--query', '力学', '--subject', 'history'], ['--list', '--limit', '0'],
   ['--list', '--query', '圆'], ['--query', '圆', '--limit', 'NaN'], ['--oops'], ['--list', '--list']]) {
   test(`rejects malformed request: ${JSON.stringify(args)}`, () => {

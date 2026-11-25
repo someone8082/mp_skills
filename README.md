@@ -59,16 +59,18 @@ Agent可直接说`图解评审：开启`（默认仅本题），或明确说`本
 
 ### 按题查找数学与力学方法
 
-技能新增数学58讲、力学15专题的方法卡，包含适用前提、解题步骤、反例、变式检查和源书PDF页码。先按关键词查找，再按返回ID读取完整卡：
+离线检索收录原数学讲义 58 讲、力学 15 专题以及 2027 版《高考必刷题·数学合订本》的 132 张新卡。新卡覆盖主书 12 章、狂 K 的 55 个重难点及综合卷补充方法，涵盖计算、条件判断、证明和图解。 [逐章知识点索引](docs/study/bishua-2027-index.md)
 
 ```sh
 node solver-lab/scripts/study.mjs --query "物块和皮带共速后摩擦力" --subject physics
 node solver-lab/scripts/study.mjs --id physics-05
 node solver-lab/scripts/study.mjs --id math-30
 node solver-lab/scripts/study.mjs --list --subject math
+node solver-lab/scripts/study.mjs --query "列联表独立性检验" --collection bishua-2027
+node solver-lab/scripts/study.mjs --list --collection bishua-2027
 ```
 
-这是确定性的离线词面检索，不需要API、网络、Python或原书PDF。匹配结果只提供方法参考；卡片条件必须与原题核对，不等于新增73种原生求解器。未命中可换成模型名、物理量或数学关系词，也可列目录。详见[方法调用指南](solver-lab/references/study-guide.md)。
+离线词面检索可直接返回适用条件、步骤、易错点、变式和页码。新卡同时标记 PDF 页序与印刷页码。使用方法前先与原题核对条件。 [方法调用指南](solver-lab/references/study-guide.md)
 
 [仓库目录导航](docs/README.md)区分可安装技能、演示、开发测试和验证记录。资料原文、逐页全文、临时安装副本、凭证和本地归档不属于发布内容。
 
@@ -110,7 +112,7 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 
 [公开预览器](https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site)支持学生复制完整HTML或受支持的LessonSpec JSON，粘贴后点击运行，无需新建文件、登录或提供模型API密钥。[手机交付提示词与步骤](solver-lab/prompts/mobile-preview.md)说明怎样让模型输出可直接运行的内容。
 
-本仓库的预览器源码可按题型和常用 AI 应用生成提示词。文字题解可选用数学 58 讲、力学 15 专题和其他物理 18 份配套课件的方法卡。需要绘图时选择解题与交互图解，遇到排版或播放问题时可生成修复提示。也可直接复制[网页版文字题解提示词](solver-lab/prompts/web-study.md)或[物理课件提示词](solver-lab/prompts/physics-courseware.md)。
+本仓库的预览器源码可按题型和常用 AI 应用生成提示词。手选教材专题时，可按章选择必刷题的方法卡，也可选原数学讲义、力学和其他物理课件。需要绘图时选择解题与交互图解，遇到排版或播放问题时可生成修复提示。 [网页版文字题解提示词](solver-lab/prompts/web-study.md) · [物理课件提示词](solver-lab/prompts/physics-courseware.md)
 
 手机端提供底部运行按钮、16px代码输入、可视高度与安全区适配、横屏紧凑工具栏。课件在隔离iframe内运行，代码不主动上传；草稿与最近三条记录仅保存在当前浏览器。外部CDN、联网脚本等不支持，原课件的数学与排版仍需核对。
 

@@ -44,16 +44,18 @@ if (construction !== constructionSnapshot) await cp(construction, constructionSn
 const studySnapshot = resolve(vendor, 'references/study')
 await mkdir(studySnapshot, {recursive:true})
 const cards = []
-for (const subject of ['math', 'physics']) {
-  const snapshot = resolve(studySnapshot, `${subject}.json`)
-  const original = resolve(skill, `references/study/${subject}.json`)
+for (const dataset of ['math', 'math-bishua-2027', 'physics']) {
+  const snapshot = resolve(studySnapshot, `${dataset}.json`)
+  const original = resolve(skill, `references/study/${dataset}.json`)
   let file = original
   try { await access(file) } catch { file = snapshot }
   const data = await readFile(file, 'utf8')
   if (file !== snapshot) await writeFile(snapshot, data)
-  for (const {id, subject, title, keywords, conditions, method, pitfalls, transferChecks, source} of JSON.parse(data)) {
+  const locator = ({title,pages,printed,section}) => ({title,pages,printed,section})
+  for (const {id, subject, title, keywords, conditions, method, pitfalls, transferChecks, source,
+    category, chapter, collection, relatedSources} of JSON.parse(data)) {
     cards.push({id, subject, title, keywords, conditions, method, pitfalls, transferChecks,
-      source:{title:source.title, pages:source.pages}})
+      category, chapter, collection, source:locator(source), relatedSources:relatedSources?.map(locator)})
   }
 }
 await mkdir(resolve(dist, 'study'), {recursive:true})
