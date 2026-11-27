@@ -21,7 +21,7 @@ const webAliases = {
   'physics-14.3':['体积与压强', '压强怎样变化'],
 }
 
-const circleContext = /圆的方程|圆上|圆外|圆与直线|直线.{0,35}与圆|两圆|圆\s*[：:]\s*[xy]/
+const circleContext = /圆的(?:方程|切线)|圆上|圆外|圆与直线|直线.{0,35}与圆|两圆|圆\s*[A-Z]?\s*[：:]?\s*[（(]?\s*[xy]/
 
 function conicFamily(problem) {
   if (/椭圆/.test(problem)) return 'math-50'
@@ -43,6 +43,8 @@ export function resolveSubject(subject, problem) {
     if (/磁场|电场|安培力|电磁|感应电流|电阻|变压器|传感器|交流电|交变电流/.test(problem)) return 'circuits'
     if (/气体|压强|热力学|比热容|布朗运动|油膜法|毛细现象/.test(problem)) return 'thermal'
     if (/传送带|皮带|动摩擦|竖直上抛|平抛|抛物运动/.test(problem)) return 'mechanics'
+    // A density or distribution function belongs to probability, despite “函数”.
+    if (/正态分布|概率密度|随机变量|二项分布|超几何分布|分布列|条件概率|全概率|独立性检验|列联表/.test(problem)) return 'probability'
   }
   if (conicFamily(problem) || /圆锥曲线/.test(problem) || circleContext.test(problem)) return 'conics'
   if (subject === 'auto' && /函数|数列|f\s*[（(]|抛物线.*对称轴/i.test(problem)) return 'functions'
@@ -52,7 +54,11 @@ export function resolveSubject(subject, problem) {
 function coversSubject(card, subject) {
   if (subject === 'auto') return true
   if (card.subject === 'math') {
-    if (card.collection) return card.category === subject
+    if (card.collection) {
+      // The book groups lines and circles under geometry, but the UI includes them in conics.
+      if (subject === 'conics' && card.collection === 'bishua-2027' && card.chapter === 9) return true
+      return card.category === subject
+    }
     const chapter = Number(card.id.slice('math-'.length))
     if (subject === 'basics') return chapter === 1 || chapter === 2
     if (subject === 'geometry') return chapter >= 18 && chapter <= 53
@@ -123,7 +129,8 @@ export function selectMethodCards(cards, {subject, problem, manualId}) {
   }
   ranked.sort((a, b) => b.score - a.score || a.card.id.localeCompare(b.card.id, 'en'))
   if (preferred.length) {
-    const supplement = ranked.find(({card}) => card.collection === 'bishua-2027')?.card
+    const supplement = ranked.find(({card}) => card.collection === 'bishua-2027' &&
+      (preferred[0].id !== 'math-49' || card.chapter === 9))?.card
     return supplement ? [preferred[0], supplement] : preferred
   }
   const cutoff = (ranked[0]?.score ?? 0) * 0.6
