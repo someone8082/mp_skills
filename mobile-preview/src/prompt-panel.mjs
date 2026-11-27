@@ -1,5 +1,5 @@
 import {composePrompt, exampleNames, models, subjects, trials} from './prompts.mjs'
-import {selectMethodCards} from './method-cards.mjs'
+import {selectMethodCards, topicMethodCards} from './method-cards.mjs'
 
 export async function copyText(doc, field, message, text) {
   try {
@@ -14,57 +14,41 @@ export async function copyText(doc, field, message, text) {
   }
 }
 
-export function mountPromptPanel({doc, loadExample, loadMethodCards}) {
+export function mountPromptPanel({doc, loadExample, methodCards = [], authorizeUse}) {
   const $ = id => doc.getElementById(id)
   const subject = $('prompt-subject')
   const model = $('prompt-model')
   const mode = $('prompt-mode')
   const method = $('prompt-method')
-  const methodPicker = $('method-picker')
   const problem = $('prompt-problem')
+  const trialRow = $('prompt-trials')
+  const recommendations = $('method-recommendations')
   const output = $('prompt-output')
   const result = $('prompt-result')
   const message = $('prompt-message')
   const generate = $('generate-prompt')
   let revision = 0
-  let cardsRequest
 
-  function getCards() {
-    cardsRequest ??= loadMethodCards().then(cards => {
-      const groups = [
-        ...Array.from({length:12}, (_, index) => [`高考必刷题 · 第 ${index + 1} 章`,
-          cards.filter(card => card.collection === 'bishua-2027' && card.chapter === index + 1)]),
-        ['数学讲义', cards.filter(card => card.subject === 'math' && !card.collection)],
-        ['力学专题', cards.filter(card => card.subject === 'physics' && !card.category)],
-        ...['磁场', '电磁感应', '交变电流与传感器', '光学', '热学'].map((label, index) =>
-          [label, cards.filter(card => card.id.startsWith(`physics-${10 + index}.`))]),
-      ]
-      for (const [label, entries] of groups) {
-        if (!entries.length) continue
-        const group = doc.createElement('optgroup')
-        group.label = label
-        for (const card of entries) {
-          const option = doc.createElement('option')
-          option.value = card.id
-          option.textContent = `${card.id} ${card.title}`
-          group.append(option)
-        }
-        method.append(group)
-      }
-      method.disabled = false
-      $('method-load-status').textContent = ''
-      return cards
-    }).catch(error => {
-      cardsRequest = null
-      $('method-load-status').textContent = '教材方法暂未加载。可关闭后再展开重试。'
-      throw error
-    })
-    return cardsRequest
+  const groups = [
+    ...Array.from({length:12}, (_, index) => [`高考必刷题 · 第 ${index + 1} 章`,
+      methodCards.filter(card => card.collection === 'bishua-2027' && card.chapter === index + 1)]),
+    ['数学讲义', methodCards.filter(card => card.subject === 'math' && !card.collection)],
+    ['力学专题', methodCards.filter(card => card.subject === 'physics' && !card.category)],
+    ...['磁场', '电磁感应', '交变电流与传感器', '光学', '热学'].map((label, index) =>
+      [label, methodCards.filter(card => card.id.startsWith(`physics-${10 + index}.`))]),
+  ]
+  for (const [label, entries] of groups) {
+    if (!entries.length) continue
+    const group = doc.createElement('optgroup')
+    group.label = label
+    for (const card of entries) {
+      const option = doc.createElement('option')
+      option.value = card.id
+      option.textContent = `${card.id} ${card.title}`
+      group.append(option)
+    }
+    method.append(group)
   }
-
-  methodPicker.addEventListener('toggle', () => {
-    if (methodPicker.open) getCards().catch(() => {})
-  })
 
   for (const [select, choices] of [[subject, subjects], [model, models]]) {
     for (const [value, [label]] of Object.entries(choices)) {
@@ -90,13 +74,51 @@ export function mountPromptPanel({doc, loadExample, loadMethodCards}) {
     message.textContent = ''
   }
 
+  function refreshRecommendations() {
+    const selections = {subject:subject.value, problem:problem.value.trim(), manualId:method.value}
+    if (selections.subject === 'auto' && !selections.problem && !selections.manualId) {
+      recommendations.textContent = ''
+      return
+    }
+    const matched = selectMethodCards(methodCards, selections)
+    if (matched.length) {
+      const label = selections.manualId ? '已手选方法卡' : '按题目推荐'
+      recommendations.textContent = `${label}：${matched.map(card => card.title).join('、')}`
+      return
+    }
+    const topicCards = topicMethodCards(methodCards, selections.subject)
+    const label = selections.problem ? '题型参考（当前题目暂无匹配）' : '题型参考（输入题目后细化）'
+    recommendations.textContent = topicCards.length
+      ? `${label}：${topicCards.map(card => card.title).join('、')}`
+      : '当前题目暂无匹配的方法卡，可手选教材专题。'
+  }
+
   $('show-compose').addEventListener('click', () => selectPanel(true))
   $('show-preview-input').addEventListener('click', () => selectPanel(false))
   $('go-to-paste').addEventListener('click', () => {
     selectPanel(false)
     $('show-preview-input').focus()
   })
-  for (const field of [subject, model, mode, method, problem]) field.addEventListener('input', resetOutput)
+  function updateTrials() {
+    for (const button of trialRow.children) {
+      const [, category] = trials[button.dataset.trial]
+      button.hidden = subject.value !== 'auto' && subject.value !== category
+    }
+  }
+
+  for (const field of [model, mode]) field.addEventListener('input', resetOutput)
+  for (const [field, event] of [[method, 'change'], [problem, 'input']]) {
+    field.addEventListener(event, () => {
+      resetOutput()
+      refreshRecommendations()
+    })
+  }
+  subject.addEventListener('change', () => {
+    method.value = ''
+    updateTrials()
+    resetOutput()
+    refreshRecommendations()
+  })
   for (const [value, [label, category, text]] of Object.entries(trials)) {
     const button = doc.createElement('button')
     button.type = 'button'
@@ -107,11 +129,15 @@ export function mountPromptPanel({doc, loadExample, loadMethodCards}) {
       subject.value = category
       problem.value = text
       method.value = ''
+      updateTrials()
       resetOutput()
+      refreshRecommendations()
       message.textContent = '已填入试用题。选择 AI 后可生成提示词。'
     })
-    $('prompt-trials').append(button)
+    trialRow.append(button)
   }
+  updateTrials()
+  refreshRecommendations()
 
   $('prompt-form').addEventListener('submit', async event => {
     event.preventDefault()
@@ -126,19 +152,23 @@ export function mountPromptPanel({doc, loadExample, loadMethodCards}) {
     problem.blur()
     try {
       const examples = selections.mode === 'diagram' ? exampleNames(selections.subject, selections.problem) : []
-      const [cards, loaded] = await Promise.all([getCards(), Promise.all(examples.map(async name => [name, await loadExample(name)]))])
+      const loaded = await Promise.all(examples.map(async name => [name, await loadExample(name)]))
       if (ticket !== revision) return
-      const methodCards = selectMethodCards(cards, selections)
-      output.value = composePrompt({...selections, methodCards, examples:Object.fromEntries(loaded)})
-      $('prompt-methods-used').textContent = methodCards.length
-        ? `已附方法卡：${methodCards.map(card => card.title).join('、')}。请让 AI 核对适用前提。`
+      const selectedCards = selectMethodCards(methodCards, selections)
+      const prompt = composePrompt({...selections, methodCards:selectedCards, examples:Object.fromEntries(loaded)})
+      if (authorizeUse) await authorizeUse('prompt')
+      if (ticket !== revision) return
+      output.value = prompt
+      $('prompt-methods-used').textContent = selectedCards.length
+        ? `已附方法卡：${selectedCards.map(card => card.title).join('、')}。请让 AI 核对适用前提。`
         : '本题未匹配教材方法卡。可手选专题，或使用此独立解题提示词。'
       result.hidden = false
       $('go-to-paste').hidden = selections.mode === 'study'
       message.textContent = selections.mode === 'study' ? '提示词已生成。复制到网页版 AI 的对话框。' : '提示词已生成。复制到 AI，拿到代码后回本页运行。'
       $('copy-prompt').focus()
-    } catch {
-      if (ticket === revision) message.textContent = '教材方法或课件范例暂时无法加载，请检查网络后重新生成。'
+    } catch (error) {
+      if (ticket === revision) message.textContent = error.code?.startsWith('quota-')
+        ? error.message : '暂时无法生成提示词，请检查网络后重试。'
     } finally {
       if (ticket === revision) generate.disabled = false
     }

@@ -1,4 +1,9 @@
-const normalize = value => value.normalize('NFKC').toLowerCase().replace(/[\s\p{P}\p{S}]+/gu, '')
+const normalize = value => value.normalize('NFKC').toLowerCase()
+  .replace(/∩|\\cap(?![a-z])/g, '交集')
+  .replace(/∪|\\cup(?![a-z])/g, '并集')
+  .replace(/[⊂⊆⊊⊃⊇⊋]|\\(?:subseteq|subsetneq|subset|supseteq|supsetneq|supset)(?![a-z])/g, '子集')
+  .replace(/∅|\\(?:emptyset|varnothing)(?![a-z])/g, '空集')
+  .replace(/[\s\p{P}\p{S}]+/gu, '')
 
 // Common words alone do not identify a textbook method. A match is a suggestion.
 const generalWords = new Set([
@@ -49,6 +54,7 @@ function coversSubject(card, subject) {
   if (card.subject === 'math') {
     if (card.collection) return card.category === subject
     const chapter = Number(card.id.slice('math-'.length))
+    if (subject === 'basics') return chapter === 1 || chapter === 2
     if (subject === 'geometry') return chapter >= 18 && chapter <= 53
     if (subject === 'conics') return chapter >= 46 && chapter <= 53
     if (subject === 'functions') return chapter <= 39
@@ -56,6 +62,22 @@ function coversSubject(card, subject) {
   }
   if (subject === 'mechanics') return card.subject === 'physics' && !card.category
   return card.category === subject
+}
+
+const topicCardIds = {
+  basics: ['math-01', 'math-02'],
+  mechanics: ['physics-01', 'physics-05'],
+  geometry: ['math-41', 'math-45'],
+  conics: ['math-46', 'math-53'],
+  functions: ['math-12', 'math-31'],
+  probability: ['math-57', 'math-58'],
+  circuits: ['physics-10.1', 'physics-11.3'],
+  optics: ['physics-13.1', 'physics-13.2'],
+  thermal: ['physics-14.2', 'physics-14.3'],
+}
+
+export function topicMethodCards(cards, subject) {
+  return (topicCardIds[subject] ?? []).map(id => cards.find(card => card.id === id)).filter(Boolean)
 }
 
 function preferredGeometryCards(subject, problem) {

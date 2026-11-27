@@ -40,6 +40,13 @@ textarea{font-size:16px;max-width:100%;scroll-margin-block:12px;overscroll-behav
 .prompt-trial-row .subtle,.flow-actions .subtle,#copy-input-repair,#copy-preview-repair{font-size:.875rem}
 .flow-message{font-size:.875rem;margin-block:8px;color:var(--muted);overflow-wrap:anywhere}
 .flow-message:empty{display:none}
+.quota-card{margin:0 0 12px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#f7faf5;font-size:.875rem}
+.quota-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.quota-card details{margin-top:7px}
+.quota-card summary{cursor:pointer;padding:7px 0}
+.quota-form{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px;margin-block:4px 8px}
+.quota-form label{grid-column:1/-1}
+.quota-form input{min-width:0;min-height:44px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:white;color:var(--ink);font:inherit;font-size:1rem}
 .flow-actions{margin-top:8px}.prompt-panel .run-button{justify-content:center}
 #prompt-result{padding-top:12px;border-top:1px solid var(--line);margin-top:12px}
 #copy-input-repair,#copy-preview-repair{margin-top:8px}

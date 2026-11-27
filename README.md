@@ -1,8 +1,12 @@
 # mp_skills · 数理图解
 
-面向高中数学和物理的提示词、教材方法卡和交互课件。学生可以在手机上生成解题提示词、预览 AI 返回的图解。教师和开发者也可以安装 `solver-lab`，在本地调用计算内核生成题解和课件。
+面向高中数学和物理的学习工具：用教材方法卡约束解题过程，为不同 AI 生成提示词，需要时再制作交互图解。覆盖有图和无图的知识点，强调适用条件、关键推导和实际验算。教师和开发者也可以安装 `solver-lab`，在本地调用计算内核生成题解和课件。
 
 [打开数理图解](https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site) · [网页提示词导航](solver-lab/prompts/README.md) · [必刷题方法卡索引](docs/study/bishua-2027-index.md) · [Agent 安装与使用](solver-lab/references/agent-workflow.md)
+
+![数理图解使用流程：输入原题，匹配含前提、步骤、易错点与出处的方法卡，复制提示词到 AI 对话，解题并复核；需要时将 HTML 或 JSON 粘回网页运行图解](docs/images/learning-workflow.png)
+
+*使用流程示意，非网站截图。网页负责组合提示词和预览课件；解题在你选择的 AI 对话中完成。*
 
 ## 选一个入口
 
@@ -16,7 +20,7 @@
 ## 手机快速上手
 
 1. 用手机浏览器打开[数理图解](https://solver-lab-mobile-20261106-8082.wwk58317.chatgpt.site)。想先试效果，在「运行代码」里选「运动」「电路」或「截面」，再点「运行图解」。
-2. 要做自己的题，切到「生成提示词」，选题型和 AI，粘贴原题。只要文字讲解就选「分步解题」。需要图形或动画就选「解题与交互图解」。
+2. 要做自己的题，切到「生成提示词」，选题型和 AI，粘贴原题。题型切换会更新试用题和参考专题，输入题目后显示实际推荐。也可展开「手选教材专题」选择。只要文字讲解就选「分步解题」；需要图形或动画就选「解题与交互图解」。
 3. 把生成的提示词复制到所选 AI 的对话，题图可以一并发送。拿到完整 HTML 或模板 JSON 后，回到「运行代码」粘贴并运行。若回复有多个代码块，只复制要打开的那一份。
 4. 图解白屏、播放异常或排版拥挤时，使用「图解有问题」复制修复提示，再发回原对话。也可以附上现有代码和问题截图。[布局修复提示词](solver-lab/prompts/web-layout-repair.md)
 
@@ -61,18 +65,22 @@ node solver-lab/scripts/agent.mjs solver-lab/lesson/examples/motion.json --out .
 node solver-lab/scripts/study.mjs --query "列联表独立性检验" --collection bishua-2027
 ```
 
-网页的「生成提示词」也可手选教材专题。可按本题条件复核匹配的方法，再把提示词交给所选 AI。[必刷题逐章索引](docs/study/bishua-2027-index.md) · [离线方法检索](solver-lab/references/study-guide.md) · [18 份物理专题课件提示词](solver-lab/prompts/physics-courseware.md)
+网页按题目自动推荐至多两张卡，也可手选教材专题。题型参考与题目匹配分开显示：没有匹配时，参考卡不会自动附入提示词，手选仍可使用。构建时将方法卡嵌入页面，目录和推荐无需另行下载卡片文件。
 
-## 看一个完整图解
+提示词要求 AI 逐项核对卡片前提，在实际使用处注明方法依据，把相关易错点转成检查，并给出回代、边界或另一条关系的验算结果。方法卡和自测帮助发现错误，不能代替对原题和证明的判断。[必刷题逐章索引](docs/study/bishua-2027-index.md) · [离线方法检索](solver-lab/references/study-guide.md) · [18 份物理专题课件提示词](solver-lab/prompts/physics-courseware.md)
 
-正方体截面示例逐步展示怎样用已知点找到辅助点 G，确定相邻面内的交线，再闭合截面。可按步骤查看，也可播放或拖动进度。
+## 需要图解时，试一个完整示例
 
-![正方体截面演示，辅助点和五边形截面与解题步骤对应](docs/images/section-finished.png)
+| 示例 | 用来观察什么 |
+| --- | --- |
+| [一维运动](solver-lab/examples/lesson-motion.html) | 位置、速度与时间的对应关系 |
+| [理想串联电路](solver-lab/examples/lesson-circuit.html) | 电流、电压和电阻之间的关系 |
+| [截面作图](docs/demos/section-construction.html) | 从已知点找到辅助点，再逐步闭合截面 |
 
-在 GitHub 文件页通过下载或 Raw 保存演示 HTML，再用浏览器打开。[截面作图演示](docs/demos/section-construction.html)
+在 GitHub 文件页通过下载或 Raw 保存 HTML，再用浏览器打开。也可以把完整 HTML 粘贴到网站的「运行代码」。
 
 ## 使用边界与开发资料
 
 - 计算内核校验受支持模型中的数值和关系。题意、模型假设与文字证明仍需结合原题核对。[综合题与证明核验](solver-lab/references/advanced-problems.md)
 - 手机预览器在隔离框内执行课件。制作课件时把脚本、样式和资源随 HTML 一起交付。聊天网页能否直接执行 JavaScript 取决于实际环境。[网页预览兼容记录](solver-lab/docs/browser-compatibility.md)
-- 想修改站点，从 `mobile-preview/` 开始，开发运行需要 Node.js 22 或更新版本。运行包在 `solver-lab/`，演示、方法索引和历史验收记录在 `docs/`。[预览器开发指南](mobile-preview/README.md#本地开发) · [仓库目录导航](docs/README.md) · [历史验证记录](docs/validation/)
+- 想修改或自行搭建站点，从 `mobile-preview/` 开始，开发运行需要 Node.js 22 或更新版本。搭建约束涵盖页面联动、方法卡、模型提示词、额度和发布验收。[网站搭建约束](mobile-preview/BUILD_CONSTRAINTS.md) · [预览器开发指南](mobile-preview/README.md#本地开发) · [仓库目录导航](docs/README.md) · [历史验证记录](docs/validation/)

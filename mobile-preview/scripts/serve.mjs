@@ -1,18 +1,28 @@
 import { createServer } from 'node:http'
 import { readFile } from 'node:fs/promises'
-import { resolve, dirname, relative, extname } from 'node:path'
-import { fileURLToPath } from 'node:url'
-const root=resolve(dirname(fileURLToPath(import.meta.url)),'../dist')
-const port=Number(process.argv[2]||8767)
-const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8'}
-createServer(async(req,res)=>{
+import { DatabaseSync } from 'node:sqlite'
+import { Readable } from 'node:stream'
+import worker from '../dist/server/index.js'
+
+const db = new DatabaseSync(':memory:')
+db.exec(await readFile(new URL('../drizzle/0000_quota.sql', import.meta.url), 'utf8'))
+const env = {
+  QUOTA_SIGNING_KEY: 'loopback-development-only',
+  QUOTA_INITIAL_INVITE: 'local-invite',
+  QUOTA_ADMIN_ACTIVATION: 'local-admin',
+  DB: {prepare: sql => ({bind: (...params) => ({first: async () => db.prepare(sql).get(...params) ?? null})})},
+}
+const port = Number(process.argv[2] || 8767)
+const origin = `http://127.0.0.1:${port}`
+
+createServer(async (req, res) => {
   try {
-    if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end();return}
-    const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname)
-    const path=resolve(root,'.'+pathname+(pathname.endsWith('/')?'index.html':''))
-    if(relative(root,path).startsWith('..'))throw Error('outside root')
-    const bytes=await readFile(path)
-    res.writeHead(200,{'Content-Type':types[extname(path)]||'application/octet-stream','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'})
-    res.end(req.method==='HEAD'?undefined:bytes)
-  }catch{res.writeHead(404);res.end('Not found')}
-}).listen(port,'127.0.0.1',()=>console.log(`Local: http://127.0.0.1:${port}/`))
+    const headers = new Headers(req.headers)
+    const body = req.method === 'POST' ? Readable.toWeb(req) : undefined
+    const result = await worker.fetch(new Request(origin + req.url, {method:req.method, headers, body, duplex:'half'}), env)
+    res.writeHead(result.status, Object.fromEntries(result.headers))
+    res.end(Buffer.from(await result.arrayBuffer()))
+  } catch {
+    res.writeHead(500).end('Local preview error')
+  }
+}).listen(port, '127.0.0.1', () => console.log(`Local: ${origin}/`))

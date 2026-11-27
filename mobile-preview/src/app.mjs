@@ -4,7 +4,7 @@ import {diagnosticMessage} from './diagnostics.mjs'
 import {repairPrompt} from './prompts.mjs'
 import {copyText} from './prompt-panel.mjs'
 
-export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
+export function mountPlayer({doc,storage,compile,loadTemplate,loadExample,authorizeUse}) {
   const $=id=>doc.getElementById(id)
   const source=$('source'),error=$('error'),status=$('status')
   trackViewport(doc.defaultView)
@@ -67,6 +67,8 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
     try {
       const lesson=await prepareContent(source.value,{compile,loadTemplate})
       if(ticket!==generation)return
+      if(authorizeUse)await authorizeUse('run')
+      if(ticket!==generation)return
       $('preview-title').textContent=lesson.title
       $('preview-kind').textContent=lesson.kind==='json'?'模板计算已执行 · 题意仍需核对':'独立 HTML · 结果请结合原题核对'
       currentKind = lesson.kind
@@ -85,7 +87,7 @@ export function mountPlayer({doc,storage,compile,loadTemplate,loadExample}) {
       error.textContent = e.message || '加载失败，请检查代码是否完整。'
       error.hidden = false
       $('error-panel').hidden = false
-      $('copy-input-repair').hidden = e.code === 'template-unavailable'
+      $('copy-input-repair').hidden = e.code === 'template-unavailable' || Boolean(e.code?.startsWith('quota-'))
       announce('没有运行成功，请检查上方提示。')
       error.focus()
     } finally {if(ticket===generation)setBusy(false)}

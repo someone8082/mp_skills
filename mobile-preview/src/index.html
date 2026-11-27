@@ -15,6 +15,36 @@
   <main class="editor" id="editor">
     <header class="masthead"><a class="brand" href="./" aria-label="数理图解首页"><span class="brand-icon" aria-hidden="true">∠</span><span>数理图解<small>随身预览器</small></span></a><span class="local-label">在这台设备运行</span></header>
     <section class="intro"><h1>数理解题与图解</h1><p class="intro-copy">把教材方法和原题合成一份提示词，复制到网页版 AI。需要动画时，再把代码粘贴回来运行。</p></section>
+    <section class="quota-card" aria-label="使用额度">
+      <div class="quota-heading">
+        <strong id="quota-status" role="status">正在查询今日额度…</strong>
+      </div>
+      <details id="quota-redeem" hidden>
+        <summary>兑换邀请码</summary>
+        <form id="quota-redeem-form" class="quota-form">
+          <label for="quota-redeem-code">邀请码</label>
+          <input id="quota-redeem-code" name="code" type="password" minlength="4" maxlength="64" autocomplete="off" required>
+          <button type="submit" class="subtle">兑换</button>
+        </form>
+      </details>
+      <details id="quota-activate" hidden>
+        <summary>管理员激活</summary>
+        <form id="quota-activate-form" class="quota-form">
+          <label for="quota-activate-code">管理员验证码</label>
+          <input id="quota-activate-code" name="code" type="password" minlength="4" maxlength="64" autocomplete="off" required>
+          <button type="submit" class="subtle">激活</button>
+        </form>
+      </details>
+      <details id="quota-invite" hidden>
+        <summary>管理邀请码</summary>
+        <form id="quota-invite-form" class="quota-form">
+          <label for="quota-invite-code">新邀请码</label>
+          <input id="quota-invite-code" name="code" type="password" minlength="4" maxlength="64" autocomplete="new-password" required>
+          <button type="submit" class="subtle">保存</button>
+        </form>
+      </details>
+      <p id="quota-message" class="flow-message" role="status"></p>
+    </section>
     <nav class="flow-switch" aria-label="图解操作">
       <button id="show-preview-input" type="button" aria-pressed="true" aria-controls="preview-input">运行代码</button>
       <button id="show-compose" type="button" aria-pressed="false" aria-controls="prompt-panel">生成提示词</button>
@@ -35,11 +65,11 @@
         <label for="prompt-problem">题目</label>
         <textarea id="prompt-problem" maxlength="8000" placeholder="粘贴完整题目。若有题图，可在 AI 对话里一并发送。"></textarea>
         <div class="prompt-trial-row" id="prompt-trials" aria-label="试用题"></div>
+        <p id="method-recommendations" class="flow-message" role="status"></p>
         <details id="method-picker" class="method-picker">
           <summary>手选教材专题（可选）</summary>
           <label for="prompt-method">高考必刷题、数学讲义和物理专题</label>
-          <select id="prompt-method" disabled><option value="">按题目自动推荐</option></select>
-          <p id="method-load-status" class="flow-message" role="status"></p>
+          <select id="prompt-method"><option value="">按题目自动推荐</option></select>
         </details>
         <button type="submit" class="run-button" id="generate-prompt">生成提示词</button>
       </form>
@@ -71,7 +101,7 @@
     </section>
     <section class="examples" aria-labelledby="examples-heading"><div class="section-head"><h2 id="examples-heading">先试一个示例</h2><span>点选后运行</span></div><div class="example-row"><button type="button" data-example="motion"><span aria-hidden="true">↗</span> 运动</button><button type="button" data-example="circuit"><span aria-hidden="true">Ω</span> 电路</button><button type="button" data-example="section"><span aria-hidden="true">◇</span> 截面</button></div></section>
     <section class="recent" aria-labelledby="recent-heading"><div class="section-head"><h2 id="recent-heading">最近打开</h2><button id="forget" class="text-button" type="button">清除记录</button></div><div id="recent-list"></div><p id="recent-empty" class="empty">运行过的图解会留在这里，最多保留三条。</p></section>
-    <footer class="editor-footer"><p>无需账号 · 无需密钥 · 课件代码不主动上传</p><details><summary>使用说明与支持范围</summary><p>完整 HTML 用于独立图解；JSON 支持一维恒加速度运动、理想串联电路和标准实体截面。其他题型请让模型输出完整单文件 HTML。</p><p>使用手机系统浏览器打开本网站。外部脚本和联网资源受限制，图解应将样式与脚本放在文件内。页面排版和数学结论仍需结合原题核对。</p><p>草稿和最近记录仅保存在当前浏览器，清除浏览器数据后会丢失。首次打开和载入模板需要网络。</p></details></footer>
+    <footer class="editor-footer"><p>免登录使用 · 课件代码在本机运行</p><details><summary>使用说明与支持范围</summary><p>生成提示词和运行图解共用每日额度，按北京时间零点刷新。匿名使用额度与邀请码兑换记录识别当前浏览器。输入验证失败不扣次数。</p><p>完整 HTML 用于独立图解；JSON 支持一维恒加速度运动、理想串联电路和标准实体截面。其他题型请让模型输出完整单文件 HTML。</p><p>使用手机系统浏览器打开本网站。外部脚本和联网资源受限制，图解应将样式与脚本放在文件内。页面排版和数学结论仍需结合原题核对。</p><p>草稿和最近记录仅保存在当前浏览器，清除浏览器数据后会丢失。</p></details></footer>
     </div>
   </main>
   <section class="preview" aria-label="图解预览">
@@ -88,6 +118,7 @@
     </footer>
   </section>
   <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  <script id="method-card-data" type="application/json">[]</script>
   <noscript><p>请使用允许JavaScript的浏览器打开，才能运行交互图解。</p></noscript>
 </body>
 </html>

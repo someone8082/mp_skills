@@ -5,10 +5,10 @@ import { JSDOM } from 'jsdom'
 import { compileLesson } from '../vendor/solver-lab/lesson/compile.mjs'
 import { mountPlayer } from '../src/app.mjs'
 
-async function setup(loadTemplate=()=>Promise.reject(Error('missing template'))) {
+async function setup(loadTemplate=()=>Promise.reject(Error('missing template')), authorizeUse) {
   const html=await readFile(new URL('../src/index.html',import.meta.url),'utf8')
   const dom=new JSDOM(html,{url:'https://example.test/'})
-  const app=mountPlayer({doc:dom.window.document,storage:dom.window.localStorage,compile:compileLesson,loadTemplate})
+  const app=mountPlayer({doc:dom.window.document,storage:dom.window.localStorage,compile:compileLesson,loadTemplate,authorizeUse})
   return {dom,doc:dom.window.document,app}
 }
 test('run, return to editing, rerun and stop unload the previous document',async()=>{
@@ -26,6 +26,25 @@ test('invalid input clears the last successful frame and keeps editable source',
   doc.querySelector('#source').value='{"topic":'; await app.run()
   assert.equal(doc.querySelector('iframe').srcdoc,''); assert.equal(doc.body.dataset.view,'edit')
   assert.ok(doc.querySelector('#error').textContent); assert.equal(doc.querySelector('#source').value,'{"topic":')
+})
+test('invalid input never consumes quota and a denied run never mounts a frame', async () => {
+  let charged = 0
+  const {doc,app,dom} = await setup(undefined, async action => {
+    assert.equal(action, 'run')
+    charged++
+    throw Object.assign(new Error('今天的 20 次机会已用完。'), {code:'quota-daily-limit'})
+  })
+  try {
+    doc.querySelector('#source').value = 'invalid lesson'
+    await app.run()
+    assert.equal(charged, 0)
+    doc.querySelector('#source').value = '<p>课件</p>'
+    await app.run()
+    assert.equal(charged, 1)
+    assert.equal(doc.querySelector('#lesson').srcdoc, '')
+    assert.match(doc.querySelector('#error').textContent, /20 次/)
+    assert.equal(doc.querySelector('#copy-input-repair').hidden, true)
+  } finally { dom.window.close() }
 })
 test('returning to edit cancels an in-flight template load',async()=>{
   let resolveTemplate

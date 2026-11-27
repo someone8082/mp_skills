@@ -3,8 +3,10 @@ import { resolve, dirname, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..')
 const vendor=resolve(root,'vendor/solver-lab')
-let skill=resolve(root,'../skills/solver-lab')
-try {await access(resolve(skill,'lesson/compile.mjs'))}catch{skill=vendor}
+let skill=vendor
+for(const candidate of ['../skills/solver-lab','../solver-lab']) {
+  try {await access(resolve(root,candidate,'lesson/compile.mjs'));skill=resolve(root,candidate);break}catch{}
+}
 const dist=resolve(root,'dist')
 await mkdir(dist,{recursive:true})
 await cp(resolve(root,'src'),dist,{recursive:true})
@@ -61,5 +63,12 @@ for (const dataset of ['math', 'math-bishua-2027', 'physics']) {
 await mkdir(resolve(dist, 'study'), {recursive:true})
 const courseware = JSON.parse(await readFile(resolve(root, 'study/physics-courseware.json'), 'utf8'))
 cards.push(...courseware)
-await writeFile(resolve(dist, 'study/cards.json'), JSON.stringify(cards))
+const cardData = JSON.stringify(cards)
+const pagePath = resolve(dist, 'index.html')
+const page = await readFile(pagePath, 'utf8')
+const cardTag = '<script id="method-card-data" type="application/json">'
+const cardSlot = cardTag + '[]</script>'
+if (!cards.length || !page.includes(cardSlot)) throw Error('Missing method cards or page slot')
+await writeFile(pagePath, page.replace(cardSlot, () => cardTag + cardData.replaceAll('<', '\\u003c') + '</script>'))
+await writeFile(resolve(dist, 'study/cards.json'), cardData)
 console.log(JSON.stringify({ok:true,output:dist,runtimeModules:seen.size}))
