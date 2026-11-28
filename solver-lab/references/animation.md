@@ -28,7 +28,7 @@
 | kind | 用途 | 关键参数 | 联动任务 |
 |---|---|---|---|
 | `motion`（mode: `incline`） | 斜面匀加速下滑：滑块 + G/N 随动 + v 标尺游标 | `a, v0, duration, angleDeg, length, vMax, unit, blockLabel` | 运动学/力学 |
-| `motion`（mode: `freefall`） | 自由落体：下落小球 + 释放点闪烁 + v 标尺游标 | `a, v0, duration, dropHeight, vMax, unit` | 运动学 |
+| `motion`（mode: `freefall`） | 自由落体：释放点、下落小球和速度游标 | `a, v0, duration, dropHeight, vMax, unit` | 运动学 |
 | `circuit-flow` | 串联电路电流流动：3 个错相粒子沿回路循环 | `resistors, current` | 电磁学 |
 | `optics-anim` | 凸透镜光路：三条特殊光线依次画出 + 像点脉冲 | `f, u, objectHeight` | 光学 |
 | `section` + `sweep: true` | 截面扫掠：截平面沿法向扫入，到位后截面显现 | `sweep` | `geometry.section` |
@@ -36,12 +36,12 @@
 
 ## 4. 通用行为约定
 
-- **到达轨道末端即停**：`tEnd = min(duration, 到达底端/落地时刻)`。斜面上 `a=5、length=12` 最多演 2.19 s；超出duration 以 duration 为准，绝不滑块冲出斜面/小球穿地；
-- **v 标尺游标表达实时读数**：SMIL 不能动画文本内容，故不用闪动的数字，而用“游标位置 ∝ v(t)”+ 静态刻度（游标指到几就是几 m/s），更适合教学对照；
-- **循环与单次**：演示型（运动/流动/扫掠）`repeatCount="indefinite"` 循环播放；绘制型（光线/圆规/像点）播放一次并 `fill="freeze"` 保持终值；
+- **运动方向与时长**：下滑或下落为正方向，初速度须非负。播放区间在题设时长、到达底端或减速至静止三者中最早的时间结束。
+- **速度标尺**：速度游标和刻度共用同一条标尺。速度值超出指定标尺上限时，生成器调整上限以容纳整个运动区间。
+- **循环与单次**：运动、电流和扫掠循环播放。光线和圆规描线播放一次并保留完成画面。
 - 上述循环是现有SVG场景的重演，终点回初态不是连续物理运动；自定义综合题播放器按交互参考默认暂停、终点停止。
-- **reduced-motion**：所有 SVG 内置 `@media (prefers-reduced-motion: reduce)` 规则隐藏动画元素，系统开启减少动态时图形退化为静态首帧（运动学即 t=0 初始态）；
-- **自检**：动画 SVG 与静态图一样过 `checkSvg`（闭合、无 NaN/undefined），并断言 SMIL 结构（values/keyTimes 等长、首末 0/1）。结构通过不代表运动方向、阶段条件、讲解或宿主播放已验证。
+- **减少动态**：在支持该设置的浏览器中，运动图显示初始状态，电路保留静态符号和方向，光路、圆规和截面图显示完成状态。
+- **自检**：`checkSvg` 检查基本文档边界和异常数值字样。方向、计算模型和宿主播放需要单独测试。
 
 ## 5. 输入示例
 
@@ -72,14 +72,14 @@
 }
 ```
 
-运行 `node scripts/solve.mjs spec.json --figure out.svg`，`out.svg` 打开即播。
+从仓库根目录运行 `node solver-lab/scripts/solve.mjs spec.json --figure out.svg`，再用支持 SMIL 的浏览器打开 `out.svg`。
 
 ## 6. examples/ 动画清单
 
 - `anim-incline.svg` — 斜面匀加速下滑（真实时间 + v 标尺游标）
 - `anim-freefall.svg` — 自由落体（v = gt）
 - `anim-circuit-flow.svg` — 串联电路电流流动（流速 ∝ I）
-- `anim-optics-rays.svg` — 凸透镜光路绘制 + 像点脉冲
+- `anim-optics-rays.svg` — 逐条展示凸透镜光路和像
 - `anim-section-sweep.svg` — 圆柱斜截面扫掠形成
 - `anim-compass.svg` — 三点定圆圆规绘制
 

@@ -14,7 +14,7 @@
 }
 ```
 
-`figure` 字段可选（省略不出图）。产出挂在 `solution.figure.svg`；CLI 加 `--figure out.svg` 落盘。**每张图都过 `checkSvg` 结构自检**（NaN 坐标、标签缺失、非法路径），自检记录进 `solution.checks`。
+`figure` 字段可选。CLI 用 `node solver-lab/scripts/solve.mjs spec.json --figure out.svg` 导出 SVG。自检记录在 `solution.checks` 中。`checkSvg` 检查文档边界和常见的 `NaN`、`undefined` 输出。路径语法、数学关系、标签和裁切需要另行核验。
 
 ## 2. 图类型（静态 8 种 + 动画 6 种）
 
@@ -24,13 +24,13 @@
 | `solids` | 常见几何体阵列（box/cylinder/cone/sphere） | `fig, title` | 实体认识课 |
 | `incline` | 斜面滑块受力（重力/支持力箭头） | `angleDeg, namedForces, forces, blockLabel` | 力学题 |
 | `circuit` | 串联电路（电源 + 矩形电阻 + 电流表） | `resistors: [R1, R2, ...]` | 电磁学题 |
-| `optics` | 凸透镜光路（物/像/焦点/三条特殊光线） | `f, u` | 光学题 |
+| `optics` | 凸透镜光路（实像或虚像、焦点和特征光线） | `f, u, objectHeight`（厘米） | 光学题 |
 | `pulley` | 定滑轮与绳 | — | 力学题 |
 | `plane-triangle` | 三角形与外接圆（2D 坐标系） | `points, xRange, yRange`（加 `compass: true` 变圆规动画） | `geometry.three-point-circle` |
 | `curve` | 圆锥曲线（2D 坐标系） | `type, a, b, p, xRange, yRange` | `geometry.conic` |
 | `motion` | 🎬 匀变速运动动画（斜面/自由落体，真实时间 + v 标尺游标） | `mode: 'incline'\|'freefall', a, v0, duration, angleDeg, length, dropHeight, vMax, unit` | 运动学/力学 |
 | `circuit-flow` | 🎬 串联电路电流流动（3 个错相粒子，流速 ∝ I） | `resistors, current` | 电磁学题 |
-| `optics-anim` | 🎬 凸透镜光路绘制 + 像点脉冲 | `f, u, objectHeight` | 光学题 |
+| `optics-anim` | 🎬 逐条绘制凸透镜光线，再标出像 | `f, u, objectHeight`（厘米） | 光学题 |
 
 动画的完整口径（SMIL 方案、模型驱动纪律、reduced-motion、tEnd 截断）见 **[animation.md](animation.md)**。
 
@@ -121,7 +121,7 @@ const n = { from: incline.blockCenter(), to: incline.forceEnd(incline.normalDire
 
 ## 8. 示例产物
 
-`examples/` 下十张图（`node scripts/demo.mjs` 重新生成；🎬 为 SMIL 动画，浏览器打开即播放）：
+从仓库根目录运行 `node solver-lab/scripts/demo.mjs` 重建十张 SVG，或加 `--check` 核对已提交示例是否与生成结果一致。🎬 为 SMIL 动画，可下载后用支持 SMIL 的浏览器打开。
 
 静态：
 
@@ -135,6 +135,6 @@ const n = { from: incline.blockCenter(), to: incline.forceEnd(incline.normalDire
 - `anim-incline.svg` — 🎬 斜面匀加速下滑（真实时间 + v 标尺游标）；
 - `anim-freefall.svg` — 🎬 自由落体；
 - `anim-circuit-flow.svg` — 🎬 串联电路电流流动；
-- `anim-optics-rays.svg` — 🎬 凸透镜光路绘制 + 像点脉冲；
+- `anim-optics-rays.svg` — 🎬 逐条展示凸透镜光路和像；
 - `anim-section-sweep.svg` — 🎬 圆柱斜截面扫掠形成；
 - `anim-compass.svg` — 🎬 三点定圆圆规绘制。

@@ -3,24 +3,26 @@
 <style>
 .iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .iso-readout { font-variant-numeric: tabular-nums; }
-@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-only { display: none; }
+  .still-only { display: inline; }
+}
 </style>
 <rect x="18" y="18" width="584" height="264" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 3</text>
 <text x="586" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">凸透镜成像</text>
-<text x="586" y="268" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">透镜成像公式（光学）：v = ≈ 0.15 m</text>
-<line x1="20" y1="170" x2="600" y2="170" stroke="#6b7280" stroke-width="1" stroke-dasharray="6 4"/>
-<path d="M 300 80 Q 326 170 300 260 Q 274 170 300 80 Z" fill="rgba(37,99,235,0.10)" stroke="#2563eb" stroke-width="1.8" opacity="1" />
-<text x="300" y="70" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="400" opacity="1">凸透镜</text>
-<circle cx="240" cy="170" r="3" fill="#1f2937" stroke="none" stroke-width="1" opacity="1"/>
-<circle cx="360" cy="170" r="3" fill="#1f2937" stroke="none" stroke-width="1" opacity="1"/>
-<text x="240" y="190" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">F</text>
-<text x="360" y="190" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">F'</text>
-<line x1="120" y1="170" x2="120" y2="116" stroke="#d97706" stroke-width="2.4"/>
-<text x="120" y="108" font-size="12" fill="#d97706" text-anchor="middle" font-weight="400" opacity="1">物</text>
-<line x1="120" y1="116" x2="300" y2="116" stroke="#dc2626" stroke-width="1.4"/>
-<line x1="300" y1="116" x2="450" y2="251" stroke="#dc2626" stroke-width="1.4"/>
-<line x1="240" y1="170" x2="300" y2="116" stroke="#059669" stroke-width="1.4"/>
-<line x1="300" y1="116" x2="430" y2="116" stroke="#059669" stroke-width="1.4"/>
-<line x1="120" y1="116" x2="460" y2="218" stroke="#7c3aed" stroke-width="1.4"/>
+<text x="586" y="268" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">透镜成像公式（光学）：v ≈ 0.15 m</text>
+<line x1="26" y1="164" x2="594" y2="164" stroke="#6b7280" stroke-width="1" stroke-dasharray="6 4"/>
+<path d="M 389.3333333333333 84 Q 407.3333333333333 164 389.3333333333333 244 Q 371.3333333333333 164 389.3333333333333 84 Z" fill="rgba(37,99,235,0.10)" stroke="#2563eb" stroke-width="1.5" opacity="1" />
+<text x="389.33" y="75" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="400" opacity="1">凸透镜</text>
+<circle cx="283.56" cy="164" r="3" fill="#1f2937" stroke="none" stroke-width="1" opacity="1"/>
+<circle cx="495.11" cy="164" r="3" fill="#1f2937" stroke="none" stroke-width="1" opacity="1"/>
+<text x="283.56" y="180" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">F</text>
+<text x="495.11" y="180" font-size="12" fill="#1f2937" text-anchor="middle" font-weight="400" opacity="1">F′</text>
+<line x1="72" y1="164" x2="72" y2="110" stroke="#d97706" stroke-width="2"/><path d="M 72 110 L 68 117 L 76 117 Z" fill="#d97706" stroke="none" stroke-width="1" opacity="1" /><text x="72" y="101" font-size="12" fill="#d97706" text-anchor="middle" font-weight="400" opacity="1">物</text>
+<path class="lens-ray" d="M 72 110 L 389.33 110 L 548 191" fill="none" stroke="#dc2626" stroke-width="1.5" opacity="1" />
+<path class="lens-ray" d="M 72 110 L 389.33 164 L 548 191" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="1" />
+<path class="lens-ray" d="M 72 110 L 389.33 191 L 548 191" fill="none" stroke="#059669" stroke-width="1.5" opacity="1" />
+<line class="lens-image" x1="548" y1="164" x2="548" y2="191" stroke="#2563eb" stroke-width="2" /><path d="M 548 191 L 544 184 L 552 184 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /><text x="548" y="208" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="400" opacity="1">实像</text>
 </svg>

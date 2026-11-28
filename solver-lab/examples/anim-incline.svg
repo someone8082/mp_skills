@@ -3,44 +3,57 @@
 <style>
 .iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .iso-readout { font-variant-numeric: tabular-nums; }
-@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-only { display: none; }
+  .still-only { display: inline; }
+}
 </style>
 <rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 5</text>
 <text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">斜面匀加速下滑</text>
 <text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">s = v₀t + ½at²；v = v₀ + at（真实时间）</text>
-<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">速度与时间（运动学）：v = ≈ 10 m/s</text>
-<g transform="translate(235.73 208.18) scale(0.73)" class="iso-label"><path d="M -16.41 -46.66 L 438.4 145.59 L 301.89 216.77 L -152.91 24.51 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
-<path d="M 301.89 224.27 L -152.91 32.02 L -152.91 24.51 L 301.89 216.77 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
-<path d="M 438.4 153.1 L 301.89 224.27 L 301.89 216.77 L 438.4 145.59 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />
-<path d="M 0 0 L 262.58 -69.12 L 194.33 -33.54 L -68.25 35.59 Z" fill="#5ab6ae" stroke="#136f6c" stroke-width="0.8" opacity="1" />
-<path d="M 194.33 146.58 L -68.25 35.59 L 194.33 -33.54 Z" fill="#117f78" stroke="#136f6c" stroke-width="0.8" opacity="1" />
-<path d="M 262.58 111 L 194.33 146.58 L 194.33 -33.54 L 262.58 -69.12 Z" fill="#0d9488" stroke="#136f6c" stroke-width="0.8" opacity="1" />
-<line x1="-34.13" y1="17.79" x2="228.46" y2="-51.33" stroke="#6b7280" stroke-width="1.6"/>
-<path d="M 228.46 -51.33 L 223 -46.94 L 221.55 -52.46 Z" fill="#6b7280" stroke="none" stroke-width="1" opacity="1" />
-<g><animateTransform attributeName="transform" type="translate" values="0 0;0.061 -0.016;0.243 -0.064;0.547 -0.144;0.973 -0.256;1.52 -0.4;2.188 -0.576;2.978 -0.784;3.89 -1.024;4.923 -1.296;6.078 -1.6;7.355 -1.936;8.753 -2.304;10.272 -2.704;11.913 -3.136;13.676 -3.6;15.56 -4.096;17.566 -4.624;19.694 -5.184;21.943 -5.776;24.313 -6.4;26.805 -7.056;29.419 -7.744;32.154 -8.465;35.011 -9.217;37.989 -10.001;41.089 -10.817;44.311 -11.665;47.654 -12.545;51.118 -13.457;54.704 -14.401;58.412 -15.377;62.242 -16.385;66.192 -17.425;70.265 -18.497;74.459 -19.601;78.774 -20.737;83.212 -21.905;87.77 -23.105;92.451 -24.338;97.252 -25.602;102.176 -26.898;107.221 -28.226;112.387 -29.586;117.675 -30.978;123.085 -32.402;128.616 -33.858;134.269 -35.346;140.044 -36.866;145.939 -38.418;151.957 -40.003;158.096 -41.619;164.357 -43.267;170.739 -44.947;177.243 -46.659;183.868 -48.403;190.615 -50.179;197.483 -51.987;204.473 -53.827;211.585 -55.7;218.818 -57.604" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M 112.46 -19.46 L 91.98 -8.78 L 91.98 -35.8 L 112.46 -46.48 Z" fill="#d97706" stroke="#985c17" stroke-width="0.8" opacity="1" />
-<path d="M 91.98 -8.78 L 69.24 -18.4 L 69.24 -45.42 L 91.98 -35.8 Z" fill="#b46710" stroke="#985c17" stroke-width="0.8" opacity="1" />
-<path d="M 89.72 -56.09 L 112.46 -46.48 L 91.98 -35.8 L 69.24 -45.42 Z" fill="#e5a356" stroke="#985c17" stroke-width="0.8" opacity="1" />
-<text x="90.85" y="-64.75" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">m</text>
-<line x1="90.85" y1="-32.44" x2="90.85" y2="15.59" stroke="#dc2626" stroke-width="1.6"/>
-<path d="M 90.85 15.59 L 87.99 9.2 L 93.7 9.2 Z" fill="#dc2626" stroke="none" stroke-width="1" opacity="1" />
-<text x="90.85" y="5.59" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="600" opacity="1">G</text>
-<line x1="90.85" y1="-32.44" x2="71.9" y2="-79.45" stroke="#2563eb" stroke-width="1.6"/>
-<path d="M 71.9 -79.45 L 76.94 -74.59 L 71.64 -72.45 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" />
-<text x="71.9" y="-89.45" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">N</text></g>
-<line x1="289.1" y1="154.42" x2="289.1" y2="-25.7" stroke="#1f2937" stroke-width="1.4"/>
-<line x1="289.1" y1="154.42" x2="296.1" y2="154.42" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="158.42" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">0</text>
-<line x1="289.1" y1="118.4" x2="296.1" y2="118.4" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="122.4" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">2.4</text>
-<line x1="289.1" y1="82.38" x2="296.1" y2="82.38" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="86.38" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">4.8</text>
-<line x1="289.1" y1="46.35" x2="296.1" y2="46.35" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="50.35" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">7.2</text>
-<line x1="289.1" y1="10.33" x2="296.1" y2="10.33" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="14.33" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">9.6</text>
-<line x1="289.1" y1="-25.7" x2="296.1" y2="-25.7" stroke="#6b7280" stroke-width="1"/>
-<text x="300.1" y="-21.7" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">12</text>
-<text x="283.1" y="-35.7" font-size="11" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">v/m/s</text>
-<g><animateTransform attributeName="transform" type="translate" values="13.897 5.874;13.897 3.373;13.897 0.871;13.897 -1.631;13.897 -4.132;13.897 -6.634;13.897 -9.136;13.897 -11.637;13.897 -14.139;13.897 -16.641;13.897 -19.142;13.897 -21.644;13.897 -24.146;13.897 -26.648;13.897 -29.149;13.897 -31.651;13.897 -34.153;13.897 -36.654;13.897 -39.156;13.897 -41.658;13.897 -44.159;13.897 -46.661;13.897 -49.163;13.897 -51.664;13.897 -54.166;13.897 -56.668;13.897 -59.169;13.897 -61.671;13.897 -64.173;13.897 -66.674;13.897 -69.176;13.897 -71.678;13.897 -74.18;13.897 -76.681;13.897 -79.183;13.897 -81.685;13.897 -84.186;13.897 -86.688;13.897 -89.19;13.897 -91.691;13.897 -94.193;13.897 -96.695;13.897 -99.196;13.897 -101.698;13.897 -104.2;13.897 -106.701;13.897 -109.203;13.897 -111.705;13.897 -114.206;13.897 -116.708;13.897 -119.21;13.897 -121.712;13.897 -124.213;13.897 -126.715;13.897 -129.217;13.897 -131.718;13.897 -134.22;13.897 -136.722;13.897 -139.223;13.897 -141.725;13.897 -144.227" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M -6 0 L 6 0 L 0 7 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /></g></g>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">速度与时间（运动学）：v ≈ 10 m/s</text>
+<g transform="translate(235.73 208.18) scale(1)" class="iso-label"><path d="M -11.99 -34.08 L 320.24 106.35 L 220.53 158.34 L -111.7 17.91 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 220.53 163.82 L -111.7 23.39 L -111.7 17.91 L 220.53 158.34 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 320.24 111.83 L 220.53 163.82 L 220.53 158.34 L 320.24 106.35 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />
+<path d="M 0 0 L 191.81 -50.49 L 141.95 -24.5 L -49.86 25.99 Z" fill="#5ab6ae" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 141.95 107.08 L -49.86 25.99 L 141.95 -24.5 Z" fill="#117f78" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<path d="M 191.81 81.08 L 141.95 107.08 L 141.95 -24.5 L 191.81 -50.49 Z" fill="#0d9488" stroke="#136f6c" stroke-width="0.8" opacity="1" />
+<line x1="166.88" y1="-37.5" x2="-24.93" y2="13" stroke="#6b7280" stroke-width="1.6"/>
+<path d="M -24.93 13 L -19.47 8.61 L -18.02 14.13 Z" fill="#6b7280" stroke="none" stroke-width="1" opacity="1" />
+<g class="motion-only"><animateTransform attributeName="transform" type="translate" values="0 0;-0.044 0.012;-0.178 0.047;-0.4 0.105;-0.71 0.187;-1.11 0.292;-1.598 0.421;-2.176 0.573;-2.842 0.748;-3.596 0.947;-4.44 1.169;-5.372 1.414;-6.394 1.683;-7.504 1.975;-8.702 2.291;-9.99 2.63;-11.366 2.992;-12.832 3.378;-14.386 3.787;-16.029 4.219;-17.76 4.675;-19.581 5.155;-21.49 5.657;-23.488 6.183;-25.575 6.732;-27.75 7.305;-30.015 7.901;-32.368 8.521;-34.81 9.164;-37.341 9.83;-39.96 10.52;-42.669 11.233;-45.466 11.969;-48.352 12.729;-51.327 13.512;-54.39 14.318;-57.543 15.148;-60.784 16.001;-64.114 16.878;-67.533 17.778;-71.041 18.701;-74.637 19.648;-78.322 20.618;-82.096 21.612;-85.959 22.629;-89.911 23.669;-93.951 24.733;-98.08 25.82;-102.298 26.93;-106.605 28.064;-111.001 29.221;-115.485 30.401;-120.059 31.605;-124.721 32.833;-129.471 34.083;-134.311 35.357;-139.24 36.655;-144.257 37.975;-149.363 39.32;-154.558 40.687;-159.841 42.078" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M 178.05 -39.46 L 163.09 -31.66 L 163.09 -51.4 L 178.05 -59.2 Z" fill="#d97706" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 163.09 -31.66 L 146.48 -38.69 L 146.48 -58.42 L 163.09 -51.4 Z" fill="#b46710" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 161.44 -66.22 L 178.05 -59.2 L 163.09 -51.4 L 146.48 -58.42 Z" fill="#e5a356" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<text x="162.27" y="-74.7" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">m</text>
+<line x1="162.27" y1="-48.94" x2="162.27" y2="-13.86" stroke="#dc2626" stroke-width="1.6"/>
+<path d="M 162.27 -13.86 L 159.41 -20.25 L 165.12 -20.25 Z" fill="#dc2626" stroke="none" stroke-width="1" opacity="1" />
+<text x="162.27" y="-23.86" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="600" opacity="1">G</text>
+<line x1="162.27" y1="-48.94" x2="148.42" y2="-83.28" stroke="#2563eb" stroke-width="1.6"/>
+<path d="M 148.42 -83.28 L 153.46 -78.42 L 148.17 -76.29 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" />
+<text x="148.42" y="-93.28" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">N</text></g><g class="still-only" transform="translate(0 0)"><path d="M 178.05 -39.46 L 163.09 -31.66 L 163.09 -51.4 L 178.05 -59.2 Z" fill="#d97706" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 163.09 -31.66 L 146.48 -38.69 L 146.48 -58.42 L 163.09 -51.4 Z" fill="#b46710" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<path d="M 161.44 -66.22 L 178.05 -59.2 L 163.09 -51.4 L 146.48 -58.42 Z" fill="#e5a356" stroke="#985c17" stroke-width="0.8" opacity="1" />
+<text x="162.27" y="-74.7" font-size="13" fill="#1f2937" text-anchor="middle" font-weight="600" opacity="1">m</text>
+<line x1="162.27" y1="-48.94" x2="162.27" y2="-13.86" stroke="#dc2626" stroke-width="1.6"/>
+<path d="M 162.27 -13.86 L 159.41 -20.25 L 165.12 -20.25 Z" fill="#dc2626" stroke="none" stroke-width="1" opacity="1" />
+<text x="162.27" y="-23.86" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="600" opacity="1">G</text>
+<line x1="162.27" y1="-48.94" x2="148.42" y2="-83.28" stroke="#2563eb" stroke-width="1.6"/>
+<path d="M 148.42 -83.28 L 153.46 -78.42 L 148.17 -76.29 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" />
+<text x="148.42" y="-93.28" font-size="12" fill="#2563eb" text-anchor="middle" font-weight="600" opacity="1">N</text></g>
+<line x1="211.18" y1="112.8" x2="211.18" y2="-18.77" stroke="#1f2937" stroke-width="1.4"/>
+<line x1="211.18" y1="112.8" x2="218.18" y2="112.8" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="116.8" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">0</text>
+<line x1="211.18" y1="86.49" x2="218.18" y2="86.49" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="90.49" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">2.4</text>
+<line x1="211.18" y1="60.17" x2="218.18" y2="60.17" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="64.17" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">4.8</text>
+<line x1="211.18" y1="33.86" x2="218.18" y2="33.86" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="37.86" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">7.2</text>
+<line x1="211.18" y1="7.54" x2="218.18" y2="7.54" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="11.54" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">9.6</text>
+<line x1="211.18" y1="-18.77" x2="218.18" y2="-18.77" stroke="#6b7280" stroke-width="1"/>
+<text x="222.18" y="-14.77" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">12</text>
+<text x="211.18" y="-30.77" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">v (m/s)</text>
+<g class="motion-only"><animateTransform attributeName="transform" type="translate" values="211.178 112.803;211.178 110.975;211.178 109.148;211.178 107.321;211.178 105.493;211.178 103.666;211.178 101.838;211.178 100.011;211.178 98.183;211.178 96.356;211.178 94.529;211.178 92.701;211.178 90.874;211.178 89.046;211.178 87.219;211.178 85.392;211.178 83.564;211.178 81.737;211.178 79.909;211.178 78.082;211.178 76.254;211.178 74.427;211.178 72.6;211.178 70.772;211.178 68.945;211.178 67.117;211.178 65.29;211.178 63.462;211.178 61.635;211.178 59.808;211.178 57.98;211.178 56.153;211.178 54.325;211.178 52.498;211.178 50.671;211.178 48.843;211.178 47.016;211.178 45.188;211.178 43.361;211.178 41.533;211.178 39.706;211.178 37.879;211.178 36.051;211.178 34.224;211.178 32.396;211.178 30.569;211.178 28.741;211.178 26.914;211.178 25.087;211.178 23.259;211.178 21.432;211.178 19.604;211.178 17.777;211.178 15.95;211.178 14.122;211.178 12.295;211.178 10.467;211.178 8.64;211.178 6.812;211.178 4.985;211.178 3.158" keyTimes="0;0.017;0.033;0.05;0.067;0.083;0.1;0.117;0.133;0.15;0.167;0.183;0.2;0.217;0.233;0.25;0.267;0.283;0.3;0.317;0.333;0.35;0.367;0.383;0.4;0.417;0.433;0.45;0.467;0.483;0.5;0.517;0.533;0.55;0.567;0.583;0.6;0.617;0.633;0.65;0.667;0.683;0.7;0.717;0.733;0.75;0.767;0.783;0.8;0.817;0.833;0.85;0.867;0.883;0.9;0.917;0.933;0.95;0.967;0.983;1" dur="2s" begin="0s" additive="replace" repeatCount="indefinite"/><path d="M 0 0 L -9 -4 L -9 4 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /></g><g class="still-only" transform="translate(211.178 112.803)"><path d="M 0 0 L -9 -4 L -9 4 Z" fill="#2563eb" stroke="none" stroke-width="1" opacity="1" /></g></g>
 </svg>

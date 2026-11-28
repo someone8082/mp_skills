@@ -48,7 +48,7 @@ stdout 只给 answer、检查概况和文件路径，不输出完整 HTML/SVG、
 
 ## 打包与安装位置
 
-仓库维护者使用 `node scripts/package-solver-agent.mjs --out <新的发布目录>` 生成其中的 `solver-lab/`；它只包含运行时、参考、元数据、示例和模板，不含 node_modules、测试或 Rolldown 导出器。源码与模板更新后重新打包，不手改清单。
+本仓库已包含可直接复制的 `solver-lab/` 安装目录。维护者可在包含 `scripts/package-solver-agent.mjs` 的原开发仓库运行 `node scripts/package-solver-agent.mjs --out <新的发布目录>` 导出新包。本发布仓库的 `--doctor` 命令可校验安装清单。
 
 复制**整个** solver-lab 文件夹到目标 Agent 支持的 skill 目录。按当前官方说明，Codex 可使用项目级 `.agents/skills/solver-lab/` 或用户级 `~/.agents/skills/solver-lab/`；Claude Code 可使用项目级 `.claude/skills/solver-lab/` 或用户级 `~/.claude/skills/solver-lab/`。已有宿主配置指定其他位置时以实际识别结果为准。其他 Agent 使用其实际支持的 Agent Skills 目录，不能承诺所有产品都自动发现同一路径。复制与替换现有用户级 skill 由用户选择，本任务不自动安装到全局目录。
 

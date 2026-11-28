@@ -22,9 +22,7 @@ import {
   animateTransform,
   blink,
   drawPolyline,
-  ease,
   modelTrack,
-  pulse,
 } from './animate.mjs'
 
 /* ================================================================== */
@@ -227,7 +225,11 @@ export function svgRect(x, y, w, h, { fill = 'none', stroke = 'none', strokeWidt
 const SVG_STYLE = `
 .iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .iso-readout { font-variant-numeric: tabular-nums; }
-@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-only { display: none; }
+  .still-only { display: inline; }
+}
 `
 
 /**
@@ -790,46 +792,100 @@ export function figureCircuit({
  * 凸透镜成像光路（2D）：主轴、透镜、平行光线、焦点、像。
  * @param {{f?: number, u?: number, objectHeight?: number}} options
  */
-export function figureOptics({ f = 10, u = 30, objectHeight = 3 } = {}) {
-  const W = 620
-  const H = 300
-  const axisY = 170
-  const lensX = 300
-  const focalOffset = 60 // f=10 → 60px
-  const parts = []
-  // 主轴
-  parts.push(svgLine(20, axisY, W - 20, axisY, { stroke: INK_SOFT, strokeWidth: 1, dash: '6 4' }))
-  // 透镜（双凸轮廓）
-  const lensPath = `M ${lensX} ${axisY - 90} Q ${lensX + 26} ${axisY} ${lensX} ${axisY + 90} Q ${lensX - 26} ${axisY} ${lensX} ${axisY - 90} Z`
-  parts.push(svgPath(lensPath, { fill: 'rgba(37,99,235,0.10)', stroke: ACCENT, strokeWidth: 1.8 }))
-  parts.push(svgText(lensX, axisY - 100, '凸透镜', { size: 12, fill: ACCENT }))
-  // 焦点
-  const fLeft = lensX - focalOffset
-  const fRight = lensX + focalOffset
-  parts.push(svgCircle(fLeft, axisY, 3, { fill: INK }))
-  parts.push(svgCircle(fRight, axisY, 3, { fill: INK }))
-  parts.push(svgText(fLeft, axisY + 20, 'F', { size: 12 }))
-  parts.push(svgText(fRight, axisY + 20, "F'", { size: 12 }))
-  // 物体（主轴左侧箭头）
-  const objectX = lensX - (u / 10) * focalOffset
-  parts.push(svgLine(objectX, axisY, objectX, axisY - objectHeight * 18, { stroke: PALETTE.amber, strokeWidth: 2.4 }))
-  parts.push(svgText(objectX, axisY - objectHeight * 18 - 8, '物', { size: 12, fill: PALETTE.amber }))
-  // 三条特征光线
-  const objectTop = [objectX, axisY - objectHeight * 18]
-  // 1) 平行主轴 → 过右焦点
-  parts.push(svgLine(objectTop[0], objectTop[1], lensX, objectTop[1], { stroke: PALETTE.red, strokeWidth: 1.4 }))
-  const slope = (axisY - objectTop[1]) / (fRight - lensX)
-  parts.push(svgLine(lensX, objectTop[1], fRight + 90, axisY + slope * 90, { stroke: PALETTE.red, strokeWidth: 1.4 }))
-  // 2) 过左焦点 → 平行主轴
-  const slope2 = (axisY - objectTop[1]) / (lensX - fLeft)
-  parts.push(svgLine(fLeft, axisY, lensX, objectTop[1], { stroke: PALETTE.green, strokeWidth: 1.4 }))
-  parts.push(svgLine(lensX, objectTop[1], lensX + 130, objectTop[1], { stroke: PALETTE.green, strokeWidth: 1.4 }))
-  // 3) 过光心 → 方向不变
-  parts.push(svgLine(objectTop[0], objectTop[1], lensX + 160, axisY + (axisY - objectTop[1]) * (160 / (lensX - objectX)), {
-    stroke: PALETTE.purple,
-    strokeWidth: 1.4,
-  }))
-  return { width: W, height: H, parts }
+export function figureOptics(options) {
+  return lensDiagram(options)
+}
+
+/** Both views use the same thin-lens construction. SVG y points down. */
+function lensDiagram({ f = 10, u = 30, objectHeight = 3 } = {}, animated = false) {
+  if (![f, u, objectHeight].every(n => Number.isFinite(n) && n > 0)) {
+    throw new Error('凸透镜配图要求正的焦距、物距与物高')
+  }
+  const width = 620
+  const height = 300
+  const axisY = 164
+  const distance = Math.max(f, u)
+  const focus = f / distance
+  const object = u / distance
+  const atFocus = Math.abs(object - focus) < 1e-12
+  const imageHeight = atFocus ? Infinity : focus / (object - focus)
+  const imageDistance = object * imageHeight
+  const showImage = Math.abs(imageDistance) <= 8 && Math.abs(imageHeight) <= 8
+  const image = [imageDistance, imageHeight]
+  const left = Math.min(-object, -focus, showImage ? imageDistance : 0)
+  const right = Math.max(focus, showImage ? imageDistance : 0, showImage && imageDistance > 0 ? 0 : 1.4)
+  const xScale = (width - 144) / (right - left)
+  const lensX = 72 - left * xScale
+  const objectTip = [-object, -1]
+  const lensHits = [[0, -1], [0, 0]]
+  const exits = [x => -1 + x / focus, x => x / object]
+  // The object-side focal ray reaches the lens at the same height as the image.
+  // At the focal distance this ray is parallel to the lens and does not reach it.
+  if (!atFocus && showImage) {
+    lensHits.push([0, imageHeight])
+    exits.push(() => imageHeight)
+  }
+  const rays = lensHits.map((hit, i) => [
+    objectTip, hit, showImage && imageDistance > 0 ? image : [right, exits[i](right)],
+  ])
+  const yScale = Math.min(18 * objectHeight, 69 / Math.max(1, ...rays.flat().map(([, y]) => Math.abs(y)),
+    showImage ? Math.abs(imageHeight) : 0))
+  const toScreen = ([x, y]) => [lensX + x * xScale, axisY + y * yScale].map(n => Number(fmt(n)))
+  const [objectX, objectY] = toScreen(objectTip)
+  const [leftFocus] = toScreen([-focus, 0])
+  const [rightFocus] = toScreen([focus, 0])
+  const lensPath = `M ${lensX} 84 Q ${lensX + 18} ${axisY} ${lensX} 244 Q ${lensX - 18} ${axisY} ${lensX} 84 Z`
+  const parts = [
+    svgLine(26, axisY, width - 26, axisY, { stroke: INK_SOFT, dash: '6 4' }),
+    svgPath(lensPath, { fill: 'rgba(37,99,235,0.10)', stroke: ACCENT, strokeWidth: 1.5 }),
+    svgText(lensX, 75, '凸透镜', { size: 12, fill: ACCENT }),
+    svgCircle(leftFocus, axisY, 3, { fill: INK }),
+    svgCircle(rightFocus, axisY, 3, { fill: INK }),
+    svgText(leftFocus, axisY + 16, 'F', { size: 12 }),
+    svgText(rightFocus, axisY + 16, "F′", { size: 12 }),
+  ]
+  function arrow(x, y, label, color, isImage = false) {
+    const tail = y + (y < axisY ? 7 : -7)
+    return (isImage ? `<line class="lens-image" x1="${x}" y1="${axisY}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="2" />`
+      : svgLine(x, axisY, x, y, { stroke: color, strokeWidth: 2 }))
+      + svgPath(`M ${x} ${y} L ${x - 4} ${tail} L ${x + 4} ${tail} Z`, { fill: color })
+      + svgText(x, y + (y < axisY ? -9 : 17), label, { fill: color, size: 12 })
+  }
+  parts.push(arrow(objectX, objectY, '物', PALETTE.amber))
+  const colors = [PALETTE.red, PALETTE.purple, PALETTE.green]
+  const still = []
+  const motion = []
+  for (const [i, ray] of rays.entries()) {
+    const points = ray.map(toScreen)
+    const color = colors[i]
+    const path = drawPolyline(points, { duration: 0.9, begin: `${i * 0.9}s`, color, width: 1.5 })
+    still.push(svgPath(path.d, { stroke: color, strokeWidth: 1.5 }).replace('<path ', '<path class="lens-ray" '))
+    motion.push(path.svg.replace('<path ', '<path class="lens-ray" '))
+  }
+  const imageParts = []
+  if (showImage) {
+    const [x, y] = toScreen(image)
+    if (imageDistance < 0) {
+      for (const [i, hit] of lensHits.entries()) {
+        const [hitX, hitY] = toScreen(hit)
+        imageParts.push(svgLine(hitX, hitY, x, y, { stroke: colors[i], dash: '4 4' }))
+      }
+    }
+    imageParts.push(arrow(x, y, imageDistance > 0 ? '实像' : '虚像', ACCENT, true))
+  } else {
+    imageParts.push(svgText(width - 30, 245, atFocus ? '出射光平行，无有限像' : '像点超出示意范围', {
+      anchor: 'end', size: 12, fill: INK_SOFT,
+    }))
+  }
+  if (animated) {
+    const reveal = rays.length * 0.9
+    motion.push(`<g opacity="0"><set attributeName="opacity" to="1" begin="${reveal}s" fill="freeze"/>${imageParts.join('')}</g>`)
+    parts.push(`<g class="motion-only">${motion.join('')}</g>`,
+      `<g class="still-only">${still.concat(imageParts).join('')}</g>`)
+  } else {
+    parts.push(...still, ...imageParts)
+  }
+  return { width, height, parts }
 }
 
 /**
@@ -904,108 +960,95 @@ export function figureMotionTrack({
   blockLabel = 'm',
   dropHeight = 6,
 } = {}) {
-  const modelS = (t) => v0 * t + 0.5 * a * t * t
-  const modelV = (t) => v0 + a * t
-  // 轨道末端到达时间：到达斜面底端/地面即停（s(t*)=轨道长），
-  // 避免滑块冲出斜面或小球穿地——动画只展示完整运动过程。
   const trackLength = kind === 'freefall' ? dropHeight : length
-  let tEnd = duration
-  if (a > 1e-12 && v0 >= 0) {
-    const tStop = (-v0 + Math.sqrt(v0 * v0 + 2 * a * trackLength)) / a
-    if (tStop > 1e-6 && tStop < duration) tEnd = Math.round(tStop * 1000) / 1000
+  if (![a, v0, duration, trackLength].every(Number.isFinite) || duration <= 0 || trackLength <= 0 || v0 < 0) {
+    throw new Error('运动配图需要有限的加速度、非负初速度、正时长和正轨道长度')
   }
-  const vEnd = v0 + a * tEnd
-  const range = vMax ?? (Math.max(5, Math.ceil(Math.max(Math.abs(v0), Math.abs(vEnd)) / 5) * 5))
+  const modelS = t => Math.min(trackLength, Math.max(0, v0 * t + 0.5 * a * t * t))
+  const modelV = t => Math.max(0, v0 + a * t)
+  // Solve for the first arrival and use the exact time for sampling. Stop at a reversal.
+  const discriminant = v0 * v0 + 2 * a * trackLength
+  const arrivalSpeed = discriminant >= 0 ? v0 + Math.sqrt(discriminant) : 0
+  const arrival = arrivalSpeed > 0 ? 2 * trackLength / arrivalSpeed : Infinity
+  const reversal = a < 0 && v0 > 0 ? -v0 / a : Infinity
+  const tEnd = Math.min(duration, arrival, reversal)
+  const peak = Math.max(v0, modelV(tEnd))
+  const range = Number.isFinite(vMax) && vMax > 0 && vMax >= peak
+    ? vMax : Math.max(5, Math.ceil(peak / 5) * 5)
+
+  function movingGroup(track, body) {
+    const first = track.values.split(';', 1)[0]
+    return `<g class="motion-only">${animateTransform({
+      values: track.values, keyTimes: track.keyTimes, duration: track.duration,
+    })}${body}</g><g class="still-only" transform="translate(${first})">${body}</g>`
+  }
+
+  function speedRuler(camera, x, height) {
+    const atVelocity = v => camera.project([x, width / 2, height * v / range])
+    const base = atVelocity(0)
+    const top = atVelocity(range)
+    const parts = [svgLine(...base, ...top, { stroke: INK, strokeWidth: 1.4 })]
+    for (let i = 0; i <= 5; i += 1) {
+      const v = range * i / 5
+      const [px, py] = atVelocity(v)
+      parts.push(svgLine(px, py, px + 7, py, { stroke: INK_SOFT }))
+      parts.push(svgText(px + 11, py + 4, fmt(v), { size: 12, fill: INK_SOFT, anchor: 'start' }))
+    }
+    parts.push(svgText(top[0], top[1] - 12, `v (${unit})`, { size: 12, fill: INK_SOFT, anchor: 'start' }))
+    const cursor = modelTrack({ duration: tEnd, fps, easing, at: e => atVelocity(modelV(e * tEnd)) })
+    parts.push(movingGroup(cursor, svgPath('M 0 0 L -9 -4 L -9 4 Z', { fill: ACCENT })))
+    return parts
+  }
 
   if (kind === 'freefall') {
-    // 自由落体：竖直轨道 + 下落小球 + v 标尺（世界 z 向）
     const trackX = 2
+    const rulerX = trackX + 3.2
     return {
+      duration: tEnd,
+      speedAtEnd: modelV(tEnd),
       render(camera) {
-        const parts = []
-        // 轨道与地面
         const top = camera.project([trackX, width / 2, dropHeight])
         const bottom = camera.project([trackX, width / 2, 0])
-        parts.push(svgLine(top[0], top[1], bottom[0], bottom[1], { stroke: INK_SOFT, strokeWidth: 1, dash: '4 4' }))
-        parts.push(...isoBox(camera, { x: -1.5, y: -1, z: 0, w: 6, d: width + 2, h: 0.25, color: PALETTE.panel }))
-        // 释放点标记
-        parts.push(blink(top[0], top[1], { r: 3, color: PALETTE.amber, duration: 1.4 }))
-        parts.push(svgText(top[0] - 14, top[1] + 4, '释放点', { size: 11, fill: INK_SOFT, anchor: 'end' }))
-        // 下落小球（世界 z = dropHeight − s(t)）
-        const ballR = 0.45
-        const track = modelTrack({
+        const ball = modelTrack({
           duration: tEnd, fps, easing,
-          at: (e) => {
-            const z = dropHeight - modelS(e * tEnd)
-            const p = camera.project([trackX, width / 2, z])
-            return [p[0] - bottom[0], p[1] - bottom[1]]
-          },
+          at: e => camera.project([trackX, width / 2, dropHeight - modelS(e * tEnd)]),
         })
-      parts.push(
-        `<g transform="translate(${bottom[0]} ${bottom[1]})">`
-        + animateTransform({ type: 'translate', values: track.values, keyTimes: track.keyTimes, duration: track.duration })
-          + svgCircle(0, 0, ballR * 34, { fill: PALETTE.amber, stroke: '#92400e', strokeWidth: 1 })
-          + '</g>',
-        )
-        // v 标尺（右侧竖直）
-        const rulerX = trackX + 3.2
-        const rBase = camera.project([rulerX, width / 2, 0])
-        const rTop = camera.project([rulerX, width / 2, dropHeight])
-        parts.push(svgLine(rBase[0], rBase[1], rTop[0], rTop[1], { stroke: INK, strokeWidth: 1.4 }))
-        for (let i = 0; i <= 5; i += 1) {
-          const v = (range * i) / 5
-          const p = camera.project([rulerX, width / 2, (dropHeight * v) / range])
-          parts.push(svgLine(p[0], p[1], p[0] + 7, p[1], { stroke: INK_SOFT, strokeWidth: 1 }))
-          parts.push(svgText(p[0] + 11, p[1] + 4, String(v), { size: 10, fill: INK_SOFT, anchor: 'start' }))
-        }
-        parts.push(svgText(rTop[0] - 6, rTop[1] - 10, `v/${unit}`, { size: 11, fill: INK_SOFT, anchor: 'start' }))
-        // 游标（位置 ∝ v(t)）
-        const cursorTrack = modelTrack({
-          duration: tEnd, fps, easing,
-          at: (e) => {
-            const p = camera.project([rulerX + 0.55, width / 2, (dropHeight * modelV(e * tEnd)) / range])
-            return [p[0] - rBase[0], p[1] - rBase[1]]
-          },
-        })
-      parts.push(
-        `<g>`
-        + animateTransform({ type: 'translate', values: cursorTrack.values, keyTimes: cursorTrack.keyTimes, duration: cursorTrack.duration })
-          + svgPath(`M -6 0 L 6 0 L 0 7 Z`, { fill: ACCENT })
-          + '</g>',
-        )
-        return parts
+        return [
+          ...isoBox(camera, { x: -1.5, y: -1, z: -0.25, w: 6, d: width + 2, h: 0.25, color: PALETTE.panel }),
+          svgLine(...top, ...bottom, { stroke: INK_SOFT, dash: '4 4' }),
+          svgCircle(...top, 3, { fill: PALETTE.amber }),
+          svgText(top[0] - 14, top[1] + 4, '释放点', { size: 14, fill: INK_SOFT, anchor: 'end' }),
+          movingGroup(ball, svgCircle(0, 0, 0.45 * camera.scale, { fill: PALETTE.amber, stroke: '#92400e' })),
+          ...speedRuler(camera, rulerX, dropHeight),
+        ]
       },
       outlinePoints() {
         return [
-          [-1.5, -1, 0], [4.5, -1, 0], [-1.5, width + 1, 0], [4.5, width + 1, 0],
-          [-1.5, -1, dropHeight], [4.5, -1, dropHeight], [-1.5, width + 1, dropHeight], [4.5, width + 1, dropHeight],
+          [-1.5, -1, 0], [rulerX, -1, 0], [-1.5, width + 1, 0], [rulerX, width + 1, 0],
+          [-1.5, -1, dropHeight], [rulerX, -1, dropHeight],
+          [-1.5, width + 1, dropHeight], [rulerX, width + 1, dropHeight],
         ]
       },
     }
   }
 
   // 斜面版：楔块静态，滑块 + G/N 打包进平移组（沿坡位移 s(t)）
-  const incline = figureIncline({ angleDeg, length, width, showBlock: false })
+  const incline = figureIncline({ angleDeg, length, width, blockAt: 1, showBlock: false })
   const geo = incline.geometry()
   return {
+    duration: tEnd,
+    speedAtEnd: modelV(tEnd),
     render(camera) {
       const parts = []
       // 地面 + 楔块 + 斜面中线（静态层）
       parts.push(...isoBox(camera, { x: -2, y: -1.5, z: 0, w: length + 6, d: width + 3, h: 0.25, color: PALETTE.panel }))
       parts.push(...drawMesh(camera, { vertices: geo.vertices, faces: geo.faces }, { color: PALETTE.teal }))
-      parts.push(...isoArrow(camera, [0, width / 2, 0], [geo.run, width / 2, geo.rise], { color: INK_SOFT }))
-      // 沿坡位移 → 屏幕位移（等轴测下非线性，故逐帧换算）
-      const origin = camera.project([0, width / 2, 0])
-      const screenDelta = (s) => {
-        const p = camera.project([s * geo.cosT, width / 2, s * geo.sinT])
-        return [p[0] - origin[0], p[1] - origin[1]]
-      }
+      parts.push(...isoArrow(camera, [geo.run, width / 2, geo.rise], [0, width / 2, 0], { color: INK_SOFT }))
       const track = modelTrack({
         duration: tEnd, fps, easing,
-        at: (e) => {
+        at: e => {
           const s = modelS(e * tEnd)
-          const d = screenDelta(s)
-          return [d[0], d[1]]
+          return camera.project([-s * geo.cosT, 0, -s * geo.sinT])
         },
       })
       // 滑块 + 受力（G 竖直、N 沿法向；随滑块平移）
@@ -1032,37 +1075,8 @@ export function figureMotionTrack({
         center[1] + geo.normal[1] * 1.5,
         center[2] + geo.normal[2] * 1.5,
       ], { color: ACCENT, label: 'N' }))
-      parts.push(
-        `<g>`
-        + animateTransform({ type: 'translate', values: track.values, keyTimes: track.keyTimes, duration: track.duration })
-        + blockParts.join('\n')
-        + '</g>',
-      )
-      // v 标尺（楔块右侧，世界 z 向）
-      const rulerX = geo.run + 2.4
-      const rBase = camera.project([rulerX, width / 2, 0])
-      const rTop = camera.project([rulerX, width / 2, geo.rise])
-      parts.push(svgLine(rBase[0], rBase[1], rTop[0], rTop[1], { stroke: INK, strokeWidth: 1.4 }))
-      for (let i = 0; i <= 5; i += 1) {
-        const v = (range * i) / 5
-        const p = camera.project([rulerX, width / 2, (geo.rise * v) / range])
-        parts.push(svgLine(p[0], p[1], p[0] + 7, p[1], { stroke: INK_SOFT, strokeWidth: 1 }))
-        parts.push(svgText(p[0] + 11, p[1] + 4, String(v), { size: 10, fill: INK_SOFT, anchor: 'start' }))
-      }
-      parts.push(svgText(rTop[0] - 6, rTop[1] - 10, `v/${unit}`, { size: 11, fill: INK_SOFT, anchor: 'start' }))
-      const cursorTrack = modelTrack({
-        duration: tEnd, fps, easing,
-        at: (e) => {
-          const p = camera.project([rulerX + 0.55, width / 2, (geo.rise * modelV(e * tEnd)) / range])
-          return [p[0] - rBase[0], p[1] - rBase[1]]
-        },
-      })
-      parts.push(
-        `<g>`
-        + animateTransform({ type: 'translate', values: cursorTrack.values, keyTimes: cursorTrack.keyTimes, duration: cursorTrack.duration })
-        + svgPath('M -6 0 L 6 0 L 0 7 Z', { fill: ACCENT })
-        + '</g>',
-      )
+      parts.push(movingGroup(track, blockParts.join('\n')))
+      parts.push(...speedRuler(camera, geo.run + 2.4, geo.rise))
       return parts
     },
     outlinePoints: incline.outlinePoints,
@@ -1091,7 +1105,7 @@ export function figureCircuitFlow({
   parts.push(svgLine(left, bottom - 32, left, bottom, { stroke: INK, strokeWidth: 1.8 }))
   parts.push(svgLine(right, top, right, bottom, { stroke: INK, strokeWidth: 1.8 }))
   parts.push(svgLine(left, bottom, right, bottom, { stroke: INK, strokeWidth: 1.8 }))
-  // 电源（长正短负，正极在左）
+  // 电源（长正短负，上方长线为正极）
   parts.push(svgLine(left - 16, bottom - 46, left + 16, bottom - 46, { stroke: INK, strokeWidth: 3 }))
   parts.push(svgLine(left - 9, bottom - 32, left + 9, bottom - 32, { stroke: INK, strokeWidth: 3 }))
   parts.push(svgText(left, bottom - 58, '电源', { size: 12 }))
@@ -1110,13 +1124,13 @@ export function figureCircuitFlow({
   }
   // 回路路径（从电源正极出发，顺时针）
   const loopPath = `M ${left} ${bottom - 46} L ${left} ${top} L ${right} ${top} L ${right} ${bottom} L ${left} ${bottom} L ${left} ${bottom - 32}`
-  // 电流粒子：3 个错相循环，速度 ∝ current（0.4A → 2.4s 一圈）
+  // 电流粒子：3 个错相循环，0.4 A 对应 1 秒一圈。
   const speed = Math.max(0.6, Math.min(6, 0.4 / Math.max(current, 0.05)))
   const dots = 3
-  for (let i = 0; i < dots; i += 1) {
-    const begin = Math.round(((i * speed) / dots) * 100) / 100
+  for (let i = 0; i < dots && current > 0; i += 1) {
+    const begin = -i * speed / dots
     parts.push(
-      `<circle r="5" fill="${PALETTE.red}" opacity="0.9">`
+      `<circle class="motion-only" r="5" fill="${PALETTE.red}" opacity="0.9">`
       + animateMotion({ path: loopPath, duration: speed, begin: `${begin}s` })
       + '</circle>',
     )
@@ -1124,67 +1138,22 @@ export function figureCircuitFlow({
   // 电流方向 blink 箭头（顶部导线空白段）
   parts.push(svgLine(left + 6, top, left + 36, top, { stroke: PALETTE.accent, strokeWidth: 1.4 }))
   parts.push(svgPath(`M ${left + 36} ${top} l -7 -4 l 0 8 Z`, { fill: PALETTE.accent }))
-  parts.push(blink(left + 52, top - 12, { r: 3, color: PALETTE.accent, duration: speed / 3 }))
-  parts.push(svgText(left + 62, top - 8, `I ≈ ${current} A`, { size: 11, fill: INK_SOFT, anchor: 'start' }))
+  if (current > 0) parts.push(blink(left + 72, bottom - 20, { r: 3, color: PALETTE.accent, duration: speed / 3 }).replace('<circle ', '<circle class="motion-only" '))
+  parts.push(svgText(left + 84, bottom - 16, `I ≈ ${fmt(current)} A`, { size: 12, fill: INK_SOFT, anchor: 'start' }))
   return { width: 560, height: 320, parts }
 }
 
 /**
  * 凸透镜光路绘制动画：三条特殊光线依次画出（错相 begin），
- * 随后像点脉冲高亮。光线路径与 figureOptics 同一套几何。
+ * 光线完成后显示像。光线路径与 figureOptics 共用同一套几何。
  * @param {{f?: number, u?: number, objectHeight?: number}} options
  */
-export function figureOpticsAnim({ f = 10, u = 30, objectHeight = 3 } = {}) {
-  const W = 620
-  const H = 300
-  const axisY = 170
-  const lensX = 300
-  const focalOffset = 60
-  const parts = []
-  // 主轴 / 透镜 / 焦点 / 物体（静态层）
-  parts.push(svgLine(20, axisY, W - 20, axisY, { stroke: INK_SOFT, strokeWidth: 1, dash: '6 4' }))
-  const lensPath = `M ${lensX} ${axisY - 90} Q ${lensX + 26} ${axisY} ${lensX} ${axisY + 90} Q ${lensX - 26} ${axisY} ${lensX} ${axisY - 90} Z`
-  parts.push(svgPath(lensPath, { fill: 'rgba(37,99,235,0.10)', stroke: ACCENT, strokeWidth: 1.8 }))
-  parts.push(svgText(lensX, axisY - 100, '凸透镜', { size: 12, fill: ACCENT }))
-  const fLeft = lensX - focalOffset
-  const fRight = lensX + focalOffset
-  parts.push(svgCircle(fLeft, axisY, 3, { fill: INK }))
-  parts.push(svgCircle(fRight, axisY, 3, { fill: INK }))
-  parts.push(svgText(fLeft, axisY + 20, 'F', { size: 12 }))
-  parts.push(svgText(fRight, axisY + 20, "F'", { size: 12 }))
-  const objectX = lensX - (u / 10) * focalOffset
-  const objectTop = [objectX, axisY - objectHeight * 18]
-  parts.push(svgLine(objectX, axisY, objectTop[0], objectTop[1], { stroke: PALETTE.amber, strokeWidth: 2.4 }))
-  parts.push(svgText(objectX, objectTop[1] - 8, '物', { size: 12, fill: PALETTE.amber }))
-
-  // 三条特征光线（依次画出）
-  const slope = (axisY - objectTop[1]) / (fRight - lensX)
-  const ray1End = [fRight + 90, axisY + slope * 90]
-  parts.push(drawPolyline([objectTop, [lensX, objectTop[1]], ray1End], {
-    duration: 1.1, begin: '0.2s', color: PALETTE.red, width: 1.4,
-  }).svg)
-  parts.push(drawPolyline([[fLeft, axisY], [lensX, objectTop[1]], [lensX + 130, objectTop[1]]], {
-    duration: 1.1, begin: '1.1s', color: PALETTE.green, width: 1.4,
-  }).svg)
-  const ray3EndY = axisY + (axisY - objectTop[1]) * (160 / (lensX - objectX))
-  parts.push(drawPolyline([objectTop, [lensX + 160, ray3EndY]], {
-    duration: 1.1, begin: '2.0s', color: PALETTE.purple, width: 1.4,
-  }).svg)
-
-  // 像点（透镜公式 1/f = 1/u + 1/v；u>f 时成实像）
-  if (u > f) {
-    const v = (f * u) / (u - f)
-    const imageX = lensX + (v / 10) * focalOffset
-    const imageH = objectHeight * 18 * (v / u)
-    parts.push(svgLine(imageX, axisY, imageX, axisY - imageH, { stroke: PALETTE.red, strokeWidth: 2.4 }))
-    parts.push(svgText(imageX, axisY - imageH - 8, '像', { size: 12, fill: PALETTE.red }))
-    parts.push(pulse(imageX, axisY - imageH, { r0: 3, r1: 16, color: PALETTE.red, begin: '3.1s', duration: 1.4 }))
-  }
-  return { width: W, height: H, parts }
+export function figureOpticsAnim(options) {
+  return lensDiagram(options, true)
 }
 
 /**
- * 三点定圆「圆规」动画：半径线旋转扫过 + 圆从 r=0 画到 R + 圆心脉冲。
+ * 三点定圆「圆规」动画：定长半径绕圆心旋转，同时沿圆周描线。
  * @param {ReturnType<typeof createPlot>} plot
  * @param {{points: number[][], center: number[], radius: number}} circle 数学坐标
  */
@@ -1199,29 +1168,18 @@ export function figureCompassCircle(plot, { points, center, radius }) {
   // 圆心
   parts.push(svgCircle(cx, cy, 3, { fill: ACCENT }))
   parts.push(svgText(cx, cy + 18, 'O', { size: 12, fill: ACCENT, weight: '600' }))
-  // 圆（r 0→R，播放一次后保持）
-  const rPx = radius * plot.sx
-  parts.push(
-    `<circle cx="${fmt(cx)}" cy="${fmt(cy)}" r="0" fill="none" stroke="${ACCENT}" stroke-width="1.8">`
-    + animate({ attribute: 'r', values: `0;${fmt(rPx)}`, duration: 1.6, begin: '0.3s', repeat: 0 })
-    + '</circle>',
-  )
-  // 半径线旋转扫过（repeat 0：画一圈即停）
-  const start = plot.to(points[0])
-  parts.push(
-    `<g transform="translate(${fmt(cx)} ${fmt(cy)})">`
-    + animateTransform({
-      type: 'rotate',
-      values: '0;360',
-      duration: 1.6,
-      begin: '0.3s',
-      repeat: 0,
-    })
-    + svgLine(0, 0, start[0] - cx, start[1] - cy, { stroke: PALETTE.red, strokeWidth: 1.4 })
-    + svgText((start[0] - cx) / 2, (start[1] - cy) / 2 - 6, 'R', { size: 11, fill: PALETTE.red })
-    + '</g>',
-  )
-  parts.push(pulse(cx, cy, { r0: 2, r1: 12, color: ACCENT, begin: '2s', duration: 1.4, repeat: 0 }))
+  const rx = radius * plot.sx
+  const [ax, ay] = points[0]
+  const angle = Math.atan2(center[1] - ay, ax - center[0]) * 180 / Math.PI
+  const startAngle = fmt(angle)
+  const timing = { duration: 1.6, begin: '0.3s', repeat: 0 }
+  // Rotate in an isotropic space before applying the plot's y/x scale ratio.
+  const circle = `<circle cx="0" cy="0" r="${rx}" pathLength="360" transform="rotate(${startAngle})" fill="none" stroke="${ACCENT}" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-dasharray="360" stroke-dashoffset="360">`
+    + animate({ attribute: 'stroke-dashoffset', values: '360;0', ...timing }) + '</circle>'
+  const armAnimation = animateTransform({ type: 'rotate', values: '0;360', ...timing })
+  const armLine = `<g>${armAnimation}<g transform="rotate(${startAngle})">${svgLine(0, 0, rx, 0, { stroke: PALETTE.red, strokeWidth: 1.4 })}</g></g>`
+  parts.push(`<g class="motion-only"><g transform="translate(${cx} ${cy}) scale(1 ${plot.sy / plot.sx})">${armLine}${circle}</g></g>`)
+  parts.push(`<g class="still-only">${plotCircle(plot, center, radius, { color: ACCENT }).join('')}</g>`)
   return parts
 }
 

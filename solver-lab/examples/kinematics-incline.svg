@@ -3,13 +3,17 @@
 <style>
 .iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .iso-readout { font-variant-numeric: tabular-nums; }
-@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-only { display: none; }
+  .still-only { display: inline; }
+}
 </style>
 <rect x="18" y="18" width="644" height="384" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 2</text>
 <text x="646" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">斜面滑块：位移</text>
 <text x="34" y="388" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">受力与运动分析</text>
-<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">位移与时间（运动学）：s = ≈ 32 m</text>
+<text x="646" y="388" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">位移与时间（运动学）：s ≈ 6.4 m</text>
 <g transform="translate(252.33 199.39) scale(0.95)" class="iso-label"><path d="M -16.41 -46.66 L 337.33 102.87 L 200.83 174.04 L -152.91 24.51 Z" fill="#f9fafc" stroke="#abafb6" stroke-width="0.8" opacity="1" />
 <path d="M 200.83 181.55 L -152.91 32.02 L -152.91 24.51 L 200.83 174.04 Z" fill="#cbced4" stroke="#abafb6" stroke-width="0.8" opacity="1" />
 <path d="M 337.33 110.38 L 200.83 181.55 L 200.83 174.04 L 337.33 102.87 Z" fill="#f6f7fb" stroke="#abafb6" stroke-width="0.8" opacity="1" />

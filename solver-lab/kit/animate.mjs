@@ -7,9 +7,7 @@
  *   采样成 SMIL values；浏览器侧 calcMode="linear" 播放，不产生任何
  *   「编造」的中间值。动画因此是可复算的：换模型即换动画。
  * - 产物是单个 .svg 文件，浏览器/预览器原生播放，无需 JS 运行时。
- * - 尊重 prefers-reduced-motion：SVG 文档样式（见 figure.mjs 的
- *   SVG_STYLE）在 reduce 时隐藏动画元素，SMIL 随之失效，画面保持基础值
- *   （即动画第 0 帧，对运动学即 t=0 初始态）。
+ * - 需支持减少动态时，由调用方在文档样式中切换完整的动画和静态图层。
  */
 
 /** 数字格式化：3 位小数、去尾零，SMIL values 对空白敏感不能用科学计数法。 */
@@ -154,7 +152,7 @@ export function drawPolyline(points, {
   return {
     d,
     length: len,
-    svg: `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" opacity="${opacity}" stroke-dasharray="${num(len)}">`
+    svg: `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}" opacity="${opacity}" stroke-dasharray="${num(len)}" stroke-dashoffset="${num(len)}">`
       + animate({ attribute: 'stroke-dashoffset', values: track.values, keyTimes: track.keyTimes, duration, begin, repeat })
       + '</path>',
   }

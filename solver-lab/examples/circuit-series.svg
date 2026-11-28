@@ -3,12 +3,16 @@
 <style>
 .iso-label { font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .iso-readout { font-variant-numeric: tabular-nums; }
-@media (prefers-reduced-motion: reduce) { animate, animateTransform, animateMotion { display: none; } }
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-only { display: none; }
+  .still-only { display: inline; }
+}
 </style>
 <rect x="18" y="18" width="524" height="284" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
 <text x="34" y="46" font-size="13" fill="#6b7280" text-anchor="start" font-weight="400" opacity="1">Fig 4</text>
 <text x="526" y="46" font-size="14" fill="#1f2937" text-anchor="end" font-weight="600" opacity="1">串联电路</text>
-<text x="526" y="288" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">串联电阻（电磁学）：R = ≈ 30 Ω</text>
+<text x="526" y="288" font-size="13" fill="#2563eb" text-anchor="end" font-weight="600" opacity="1">串联电阻（电磁学）：R ≈ 30 Ω</text>
 <line x1="120" y1="70" x2="440" y2="70" stroke="#1f2937" stroke-width="1.8"/>
 <line x1="120" y1="70" x2="120" y2="194" stroke="#1f2937" stroke-width="1.8"/>
 <line x1="120" y1="208" x2="120" y2="240" stroke="#1f2937" stroke-width="1.8"/>

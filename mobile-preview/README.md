@@ -17,7 +17,7 @@
 3. 点击「运行图解」。顶部可返回编辑或停止，底部可重新运行；图解故障可通过「图解有问题」生成修复提示，粘回原对话。
 4. JSON 由原内核校验，再嵌入原模板。独立 HTML 的脚本与资源拦截报告可辅助排查。图内的数学推导、控件和排版仍由课件负责。
 
-支持HTML内联脚本、CSS、SVG与data/blob图片；不支持依赖远程脚本、CDN、外部字体或联网接口的课件。JSON支持范围与原solver-lab一致，不能把一般电路硬套串联。最近三条记录与草稿在当前浏览器保存，清除浏览器数据后不再保留。
+支持 HTML 内联脚本、CSS、SVG 与 data/blob 图片。课件须自带资源。JSON 入口接收 `version: 1` 的 `motion`、`circuit`、`section` LessonSpec。旧版 ProblemSpec 用 solver-lab CLI 运行，超出网页模板范围的课件可使用完整 HTML。最近三条记录与草稿保存在当前浏览器，清除浏览器数据后不再保留。
 
 ## 本地开发
 
@@ -46,4 +46,4 @@ HTML在仅开放allow-scripts的iframe内执行，不开放allow-same-origin。�
 
 ## 验证
 
-已完成的具体结果见源工作区`output/mobile-preview-20261106/`。单元/DOM测试与窄视口浏览器检查不等同于安卓或iPhone实机测试；未操作的设备与权限仍标未测。
+验证结果见[仓库发布记录](../docs/validation/release-20261127.md)。[手机截图](../docs/images/mobile-preview/)记录 2026 年 11 月 7 日的浏览器验收，当时的界面可与[历史验证结果](../docs/validation/2026-11-07-mobile-preview.md)对照。

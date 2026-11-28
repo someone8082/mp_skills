@@ -2,7 +2,7 @@
 
 本文件说明旧 `ProblemSpec` 固定任务。各节 givens 片段需放入完整的 `domain/task/givens` 对象后才能喂给 `scripts/solve.mjs`。新交互 HTML 使用 [LessonSpec](lessons.md)，不要混用两种格式。
 
-截面数学统一来自主项目 `src/domain/geometry/`，经 `scripts/build-solver-core.mjs` 生成到 `shared/geometry/`；`kit/master-section.mjs` 只做旧 z 轴坐标与主项目居中 y 轴坐标适配、旧输出分类和指标收窄。不要手改生成文件。源代码变动后从仓库根运行 `node scripts/build-solver-core.mjs`，用 `node scripts/build-solver-core.mjs --check` 校验新鲜度。`shared/manifest.json` 记录源文件与输出文件哈希；自动测试同时核验指纹与输出内容，不把“生成过一次”当作始终同步。
+发布包自带生成好的 `shared/geometry/` 内核。`kit/master-section.mjs` 负责适配坐标、分类及指标。`shared/manifest.json` 记录内核的源文件和生成文件哈希。修改或重新导出内核时，在包含 `src/domain/geometry/` 和 `scripts/build-solver-core.mjs` 的原开发仓库执行构建与 `--check`。本发布仓库可运行 `node solver-lab/scripts/agent.mjs --doctor` 检查安装文件。
 
 ## 1. `geometry.solid-metrics` — 实体度量
 
@@ -113,7 +113,5 @@
 
 ## 8. 精确数口径
 
-- 输入数字支持整数、小数、分数（`3/4`）、根式（`√2`、`√12/2`）；
-- 精确数以 `c·√r` 内部表示，输出 `2√3` 而非 3.4641016151377544；
-- 近似值一律带 ≈ 前缀（`formatApprox`）；
-- 经典精确量（立方体体对角线 √3·a、等边三角形高 √3/2·a）走精确内核。
+- ProblemSpec 的长度和坐标等数值字段用 JSON 数字填写。比如边长 `3/4` 写为 `0.75`，边长 `√2` 可填写数值近似 `1.4142135623730951`。原题中的精确式保留在题干或推导中。
+- `kit/num.mjs` 提供独立的精确数运算。几何任务的数值接口主要使用浮点计算，不能据此承诺符号化结果。经 `formatApprox` 显示的近似值带 `≈`。

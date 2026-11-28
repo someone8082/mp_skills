@@ -56,7 +56,7 @@ import {
   svgDocument,
 } from '../kit/figure.mjs'
 import { add, dot, normalize, planeBasis, polygonArea2, projectPointToPlane, scale, subtract } from '../kit/vecmath.mjs'
-import { animate, animateTransform, modelTrack } from '../kit/animate.mjs'
+import { animate, animateTransform, ease, modelTrack } from '../kit/animate.mjs'
 import { bindFigureRequest } from './figure-bindings.mjs'
 
 /* ------------------------------------------------------------------ */
@@ -316,7 +316,7 @@ function solveFormula(spec) {
     ok: true,
     domain: 'physics',
     task: 'formula',
-    summary: `${result.name}（${result.topicName}）：${target} = ${typeof result.value === 'number' ? approx(result.value) : result.value.map((v) => approx(v)).join(' 或 ')} ${result.unit}`.replace(/-/gu, '−'),
+    summary: `${result.name}（${result.topicName}）：${target} ${typeof result.value === 'number' ? approx(result.value) : result.value.map((v) => approx(v)).join(' 或 ')} ${result.unit}`.replace(/-/gu, '−'),
     steps: [
       step('识别题型并选取公式', `${result.topicName} · ${result.name}`, result.formula, '公式与已知量匹配'),
       step('统一单位', '按公式声明单位换算', JSON.stringify(knowns), '单位量纲一致'),
@@ -469,13 +469,14 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
     const world = sortScene(camera, [{ at: solidAnchor(solid), svg: renderSolidIso(camera, solid) }])
     const overlay = sectionOverlay(camera, solid, section, plane)
     const [lo, hi] = solidBounds(solid)
+    const fitPoints = bboxCorners(lo[0], lo[1], lo[2], hi[0], hi[1], hi[2])
     if (request.sweep) {
       // 扫掠动画：截平面从实体外侧沿法向扫入，到位后截面显现（循环播放）
       const n = normalize(plane.normal)
       const { u, v } = planeBasis(plane)
       const diag = Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2])
-      const size = diag * 0.75
-      const d = diag * 0.9
+      const size = diag * 0.52
+      const d = Math.max(0, ...fitPoints.map(point => dot(subtract(plane.origin, point), n))) + diag * 0.08
       const corners = [
         add(add(plane.origin, scale(u, size)), scale(v, size)),
         subtract(add(plane.origin, scale(u, size)), scale(v, size)),
@@ -484,25 +485,31 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
       ]
       const screen = corners.map((p) => camera.project(p))
       const dAttr = `M ${screen.map((p) => `${p[0].toFixed(2)} ${p[1].toFixed(2)}`).join(' L ')} Z`
-      const start = camera.project(subtract(plane.origin, scale(n, d)))
+      const offset = scale(n, d)
+      const start = camera.project(subtract(plane.origin, offset))
       const end = camera.project(plane.origin)
+      fitPoints.push(...corners, ...corners.map(point => subtract(point, offset)))
+      const arrival = 0.75
       const sweep = modelTrack({
         duration: 2,
-        easing: 'easeInOutCubic',
-        at: (e) => [(start[0] - end[0]) * (1 - e), (start[1] - end[1]) * (1 - e)],
+        at: t => {
+          const remaining = 1 - ease('easeInOutCubic', t / arrival)
+          return [(start[0] - end[0]) * remaining, (start[1] - end[1]) * remaining]
+        },
       })
       world.push(
-        '<g>'
+        '<g class="motion-only">'
         + animateTransform({ type: 'translate', values: sweep.values, keyTimes: sweep.keyTimes, duration: 2 })
         + `<path d="${dAttr}" fill="rgba(37,99,235,0.18)" stroke="#2563eb" stroke-width="1.2"/>`
         + '</g>',
       )
       if (overlay) {
         world.push(
-          '<g opacity="0">'
-          + animate({ attribute: 'opacity', values: '0;0;1;1', keyTimes: '0;0.55;0.7;1', duration: 2 })
+          '<g class="motion-only" opacity="0">'
+          + animate({ attribute: 'opacity', values: '0;1', keyTimes: `0;${arrival}`, duration: 2, calcMode: 'discrete' })
           + overlay
           + '</g>',
+          `<g class="still-only">${overlay}</g>`,
         )
       }
     } else if (overlay) {
@@ -516,7 +523,7 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
       width: 680,
       height: 420,
       world: world.join('\n'),
-      fit: { points: bboxCorners(lo[0], lo[1], lo[2], hi[0], hi[1], hi[2]), camera },
+      fit: { points: fitPoints, camera },
     })
   }
 
@@ -573,16 +580,25 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
       unit: request.unit ?? 'm/s',
       blockLabel: request.blockLabel ?? 'm',
     })
-    const camera = sceneCamera(42, 28, 34)
+    const outline = track.outlinePoints()
+    const projected = sceneCamera(42, 28, 1).projectAll(outline)
+    const xs = projected.map(([x]) => x)
+    const ys = projected.map(([, y]) => y)
+    // Render the ruler and its labels near their final pixel size.
+    const fitScale = Math.min(584 / (Math.max(...xs) - Math.min(...xs)),
+      324 / (Math.max(...ys) - Math.min(...ys)))
+    const camera = sceneCamera(42, 28, fitScale)
     return figureCard({
       fig: request.fig ?? 1,
       title: request.title ?? '匀变速运动',
       hint: request.hint ?? 's = v₀t + ½at²；v = v₀ + at（真实时间）',
-      readout: summary,
+      readout: track.duration < (request.duration ?? 2)
+        ? `t ≈ ${Number(track.duration.toFixed(3))} s 时结束，v ${approx(track.speedAtEnd)} m/s`
+        : summary,
       width: 680,
       height: 420,
       world: track.render(camera).join('\n'),
-      fit: { points: track.outlinePoints(), camera },
+      fit: { points: outline, camera },
     })
   }
 
@@ -620,7 +636,7 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
   }
 
   if (kind === 'optics') {
-    return schematicCard(figureOptics({ f: request.f ?? 10, u: request.u ?? 30 }), {
+    return schematicCard(figureOptics({ f: request.f ?? 10, u: request.u ?? 30, objectHeight: request.objectHeight ?? 3 }), {
       fig: request.fig ?? 1,
       title: request.title ?? '凸透镜成像',
       readout: summary,
@@ -637,15 +653,22 @@ export function buildFigure(spec, solution = null, cameraOverride = null) {
 
   if (kind === 'plane-triangle') {
     const [A, B, C] = request.points
-    const plot = createPlot({ width: 640, height: 420, xRange: request.xRange ?? [-1, 7], yRange: request.yRange ?? [-1, 6] })
     const circle = circleFromThreePoints(A, B, C)
+    const [cx, cy] = circle.center
+    const halfHeight = circle.radius * 1.18
+    const halfWidth = halfHeight * 640 / 420
+    const plot = createPlot({
+      width: 640, height: 420,
+      xRange: request.xRange ?? [cx - halfWidth, cx + halfWidth],
+      yRange: request.yRange ?? [cy - halfHeight, cy + halfHeight],
+    })
     const world = request.compass
       ? [
-        ...plotAxes(plot),
+        ...plotAxes(plot, { grid: !request.card && circle.radius < 25 }),
         ...figureCompassCircle(plot, { points: [A, B, C], center: circle.center, radius: circle.radius }),
       ]
       : [
-        ...plotAxes(plot),
+        ...plotAxes(plot, { grid: !request.card && circle.radius < 25 }),
         ...plotPolyline(plot, [A, B, C], { close: true }),
         ...plotPoint(plot, A, 'A'),
         ...plotPoint(plot, B, 'B'),

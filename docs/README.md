@@ -31,9 +31,11 @@
 node solver-lab/scripts/agent.mjs --doctor
 node solver-lab/scripts/study.mjs --list
 node --test tests/study.test.mjs
+node --test tests/teaching-figures.test.mjs
 node tests/prompt-contracts.mjs
+node solver-lab/scripts/demo.mjs --check
 ```
 
-运行时需要Node.js 18+。本次实际验证使用Node.js 24.22.1。测试只使用Node内置模块，会启动本地CLI子进程；不连接API或网络。
+上述命令使用 Node.js 18 或更新版本和 Node 内置模块。检索测试会启动本地 CLI 子进程，测试无需联网。
 
 `solver-lab/docs/`中的历史开发记录可能提及源项目的npm命令和临时路径；这些不属于当前发布仓库的依赖。源项目临时文件已按安装包、发布校验、验证输出、视觉、资料、草稿、日志和缓存分类归档。发布仓库不复制这些历史临时副本，也不复制资料原文和逐页全文。
